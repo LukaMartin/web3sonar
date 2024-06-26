@@ -34,15 +34,15 @@ export default function BlockDataContainer({
     },
   ];
 
-  // useEffect(() => {
-  //   setInterval(() => {
-  //     router.refresh();
-  //     setLoading(false);
-  //     setTimeout(() => {
-  //       setLoading(true);
-  //     }, 1000);
-  //   }, 10000);
-  // }, [router]);
+  useEffect(() => {
+    setInterval(() => {
+      router.refresh();
+      setLoading(false);
+      setTimeout(() => {
+        setLoading(true);
+      }, 1000);
+    }, 10000);
+  }, [router]);
 
   return (
     <>
