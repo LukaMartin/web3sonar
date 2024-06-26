@@ -8,7 +8,7 @@ export default function LoadingContainer({ loading }: LoadingContainerProps) {
           className={
             loading
               ? "animate-pulseStrong text-center sm:text-left text-2xl pb-8 pl-2 md:pl-3 col-start-1 col-span-4 md:col-start-2 md:col-span-2"
-              : "animate-none text-2xl pb-8 pl-2 md:pl-3 col-start-1 col-span-4 md:col-start-2 md:col-span-2"
+              : "animate-none text-center sm:text-left text-2xl pb-8 pl-2 md:pl-3 col-start-1 col-span-4 md:col-start-2 md:col-span-2"
           }
         >
           Next Update...
