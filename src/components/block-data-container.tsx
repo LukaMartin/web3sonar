@@ -46,7 +46,7 @@ export default function BlockDataContainer({
 
   return (
     <>
-      <section id="gas-dashboard" className="flex xs:justify-center gap-3 md:gap-6 lg:gap-0 lg:justify-between flex-wrap">
+      <section id="gas-dashboard" className="flex justify-center gap-3 md:gap-6 lg:gap-0 lg:justify-between flex-wrap">
         {blockData.map((data) => {
           return (
             <BlockDataItem

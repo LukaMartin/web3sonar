@@ -3,7 +3,7 @@ import { BarLoader } from "react-spinners";
 export default function LoadingBar() {
   return (
       <BarLoader
-        color="#f76c6c"
+        color="#ECA034"
         height={20}
         width={"96%"}
         aria-label="Loading Bar"

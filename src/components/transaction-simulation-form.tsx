@@ -117,12 +117,12 @@ export default function TransactionSimulationForm({
         pattern="^(0x)[0-9a-fA-F]{6-500}$"
         placeholder="0x00..."
         autoComplete="off"
-        required
+        //required
       />
       <FormSubmitButton />
       <button
         type="reset"
-        className="font-semibold text-lg text-gray-950 mt-2 rounded-md p-2 transition hover:scale-[1.01] active:scale-95 bg-light-red hover:bg-light-red/75"
+        className="font-semibold text-lg text-gray-950 mt-2 rounded-md p-2 transition hover:scale-[1.01] active:scale-95 bg-red-600 hover:bg-red-600/75"
       >
         Clear
       </button>

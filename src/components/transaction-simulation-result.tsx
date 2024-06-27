@@ -14,7 +14,7 @@ export default function TransactionSimulationResult({ simulationResult }: Transa
             {simulationResult.simulationStatus}
           </p>
         ) : (
-          <p className="pb-6 text-light-red text-lg">
+          <p className="pb-6 text-red-600 text-lg">
             {simulationResult.simulationStatus}
           </p>
         )}
@@ -33,11 +33,11 @@ export default function TransactionSimulationResult({ simulationResult }: Transa
           <p className="pb-2 text-accent text-lg">Transaction Successful!</p>
         ) : simulationResult.transactionResult !== undefined &&
           !simulationResult.failureMessage ? (
-          <p className="pb-2 text-light-red text-lg">
+          <p className="pb-2 text-red-600 text-lg">
             {capatalize(simulationResult.transactionResult)}
           </p>
         ) : (
-          <p className="pb-2 text-light-red text-lg">
+          <p className="pb-2 text-red-600 text-lg">
             {simulationResult.failureMessage}
           </p>
         )}

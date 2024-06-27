@@ -19,10 +19,8 @@ const config: Config = {
       },
       colors: {
         accent: "#a4f839",
-        "light-red": "#f76c6c",
-        "fuel-yellow": "#eca034",
+        "fuel-yellow": "#FF8D22",
         gold: "#E5D10D",
-        malachite: "#38EC34",
       },
       keyframes: {
         slideIn: {
