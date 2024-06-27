@@ -7,13 +7,13 @@ export default function EstimatedPriceItem({
 }: EstimatedPriceItemProps) {
 
   return confidence > 95 ? (
-    <div className="flex flex-col text-center border-4 border-green-700 rounded-xl p-3 sm:p-6 background-gradient drop-shadow-[0_0px_5px_rgba(56,236,52,0.25)]">
+    <div className="flex flex-col text-center border-4 border-green-600 rounded-xl p-3 sm:p-6 background-gradient drop-shadow-[0_0px_5px_rgba(56,236,52,0.25)]">
       <p className="pb-1 font-semibold">Probability</p>
-      <p className="pb-2 text-green-700">{confidence}%</p>
+      <p className="pb-2 text-green-600">{confidence}%</p>
       <p className="pb-1 font-semibold">Max Priority Fee</p>
-      <p className="pb-2 text-green-700">{maxPriorityFeePerGas}</p>
+      <p className="pb-2 text-green-600">{maxPriorityFeePerGas}</p>
       <p className="pb-1 font-semibold">Max Fee</p>
-      <p className=" text-green-700">{maxFeePerGas}</p>
+      <p className=" text-green-600">{maxFeePerGas}</p>
     </div>
   ) : confidence > 90 ? (
     <div className="flex flex-col text-center border-4 border-accent rounded-xl p-3 sm:p-6 background-gradient drop-shadow-[0_0px_5px_rgba(164,248,57,0.25)]">
