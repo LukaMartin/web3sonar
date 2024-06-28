@@ -1,13 +1,14 @@
 import { TransactionSimulationResultProps } from "@/lib/types";
 import { capatalize } from "@/lib/utils";
 
-
-export default function TransactionSimulationResult({ simulationResult }: TransactionSimulationResultProps) {
+export default function TransactionSimulationResult({
+  simulationResult,
+}: TransactionSimulationResultProps) {
   return (
     <div>
       <h3 className="text-2xl font-semibold pb-[2.2rem]">Simulation Result</h3>
 
-      <div className="border-2 border-white/20 rounded-xl p-6 shadow-[0_0px_8px_rgba(164,248,57,0.35)] min-w-96 max-w-[40rem]">
+      <div className="bg-white/[2%] border-[1px] border-white/20 rounded-xl p-6 shadow-[0_7px_5px_rgba(2,2,2,1)] min-w-96 max-w-[40rem]">
         <h5 className="text-lg font-semibold pb-1">Simulation Status</h5>
         {simulationResult.simulationStatus === "Completed" ? (
           <p className="pb-6 text-accent text-lg">

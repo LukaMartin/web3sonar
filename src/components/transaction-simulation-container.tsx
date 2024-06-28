@@ -6,7 +6,7 @@ import TransactionSimulationForm from "./transaction-simulation-form";
 import TransactionSimulationResult from "./transaction-simulation-result";
 
 export default function TransactionSimulationContainer() {
-  const [visible, setVisible] = useState(false) 
+  const [visible, setVisible] = useState(false);
   const [simulationResult, setSimulationResult] = useState({
     simulationStatus: "-",
     simulatedBlockNumber: "-",
@@ -15,15 +15,14 @@ export default function TransactionSimulationContainer() {
     failureMessage: "",
   });
 
-  const toggleVisible = () => { 
-    const scrolled = document.documentElement.scrollTop; 
-    if (scrolled > 550){ 
-      setVisible(true) 
-    }  
-    else if (scrolled <= 550){ 
-      setVisible(false) 
-    } 
-  }; 
+  const toggleVisible = () => {
+    const scrolled = document.documentElement.scrollTop;
+    if (scrolled > 550) {
+      setVisible(true);
+    } else if (scrolled <= 550) {
+      setVisible(false);
+    }
+  };
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -33,8 +32,8 @@ export default function TransactionSimulationContainer() {
   };
 
   useEffect(() => {
-    window.addEventListener('scroll', toggleVisible); 
-  }, [])
+    window.addEventListener("scroll", toggleVisible);
+  }, []);
 
   return (
     <section
@@ -51,12 +50,13 @@ export default function TransactionSimulationContainer() {
       <div className="flex flex-col justify-between">
         <TransactionSimulationResult simulationResult={simulationResult} />
 
-       {visible && 
-        <GoMoveToTop
-          size={60}
-          className="text-accent self-end hover:cursor-pointer hover:text-accent/75 animate-slideDown"
-          onClick={() => scrollToTop()}
-        />}
+        {visible && (
+          <GoMoveToTop
+            size={60}
+            className="text-accent self-end hover:cursor-pointer hover:text-accent/75 animate-slideDown"
+            onClick={() => scrollToTop()}
+          />
+        )}
       </div>
     </section>
   );

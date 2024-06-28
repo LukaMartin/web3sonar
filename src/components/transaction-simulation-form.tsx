@@ -6,17 +6,19 @@ export default function TransactionSimulationForm({
   setSimulationResult,
 }: TransactionSimultionFormProps) {
   const inputStyles =
-    "background-gradient border-white/20 border-2 rounded-md py-2 pl-2 mb-2 outline-none focus:ring-2 ring-accent";
+    "bg-[#111620] border-white/20 rounded-md py-2 pl-2 mb-3 outline-none focus:ring-2 ring-accent shadow-[0_1px_1px_rgba(2,2,2,1)]";
+  
+  const labelStyles = "font-semibold mb-2"   
 
   return (
     <form
-      action={async formData => {
+      action={async (formData) => {
         const result = await submitTransaction(formData);
-        setSimulationResult(result)
+        setSimulationResult(result);
       }}
-      className="flex flex-col border-2 border-white/20 rounded-xl p-6 w-[30rem] shadow-[0_0px_8px_rgba(164,248,57,0.35)]"
+      className="flex flex-col bg-white/[2%] border-[1px] border-white/20 rounded-xl p-6 w-[30rem] shadow-[0_7px_5px_rgba(2,2,2,1)]"
     >
-      <label htmlFor="contract-address" className="font-semibold mb-1">
+      <label htmlFor="contract-address" className={labelStyles}>
         Contract Address
       </label>
       <input
@@ -30,7 +32,7 @@ export default function TransactionSimulationForm({
         autoComplete="off"
         required
       />
-      <label htmlFor="sender-address" className="font-semibold mb-1">
+      <label htmlFor="sender-address" className={labelStyles}>
         Sender Address
       </label>
       <input
@@ -44,7 +46,7 @@ export default function TransactionSimulationForm({
         autoComplete="off"
         required
       />
-      <label htmlFor="gas-limit" className="font-semibold mb-1">
+      <label htmlFor="gas-limit" className={labelStyles}>
         Gas Limit
       </label>
       <input
@@ -60,7 +62,7 @@ export default function TransactionSimulationForm({
         autoComplete="off"
         required
       />
-      <label htmlFor="max-gas-fee" className="font-semibold mb-1">
+      <label htmlFor="max-gas-fee" className={labelStyles}>
         Max Gas Fee
       </label>
       <input
@@ -75,7 +77,7 @@ export default function TransactionSimulationForm({
         autoComplete="off"
         required
       />
-      <label htmlFor="max-priority-fee" className="font-semibold mb-1">
+      <label htmlFor="max-priority-fee" className={labelStyles}>
         Max Priority Fee
       </label>
       <input
@@ -90,7 +92,7 @@ export default function TransactionSimulationForm({
         autoComplete="off"
         required
       />
-      <label htmlFor="transaction-value" className="font-semibold mb-1">
+      <label htmlFor="transaction-value" className={labelStyles}>
         Transaction Value
       </label>
       <input
@@ -105,7 +107,7 @@ export default function TransactionSimulationForm({
         autoComplete="off"
         required
       />
-      <label htmlFor="transaction-input" className="font-semibold mb-1">
+      <label htmlFor="transaction-input" className={labelStyles}>
         Transaction Input
       </label>
       <input
