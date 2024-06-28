@@ -58,7 +58,6 @@ export type SimulatedTransactionResult = {
   simulatedBlockNumber: string;
   gasUsed: string;
   simulationStatus: string;
-  transactionResult: string;
   failureMessage: string;
 };
 

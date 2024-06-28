@@ -73,7 +73,7 @@ export async function simulateTransaction({
     body: JSON.stringify({
       system: "ethereum",
       network: "main",
-      transactions: [
+      transaction: 
         {
           to: `${contractAddress}`,
           from: `${senderAddress}`,
@@ -83,7 +83,6 @@ export async function simulateTransaction({
           value: Number(`${transactionValue}`) * 1000000000000000000,
           input: `${transactionInput}`,
         },
-      ],
     }),
   });
 
@@ -103,19 +102,10 @@ export async function simulateTransaction({
     simulationStatus = "Completed";
   }
 
-  let transactionResult;
-
-  if (data.msg) {
-    transactionResult = "";
-  } else {
-    transactionResult = data.error[0];
-  }
-
   return {
     simulatedBlockNumber,
     gasUsed,
     simulationStatus,
-    transactionResult,
     failureMessage,
   };
 }

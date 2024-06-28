@@ -10,9 +10,8 @@ export default function TransactionSimulationContainer() {
   const [simulationResult, setSimulationResult] = useState({
     simulationStatus: "-",
     simulatedBlockNumber: "-",
-    transactionResult: "-",
     gasUsed: "-",
-    failureMessage: "",
+    failureMessage: "-",
   });
 
   const toggleVisible = () => {
@@ -38,7 +37,7 @@ export default function TransactionSimulationContainer() {
   return (
     <section
       id="transaction-simulator"
-      className="mt-[7.5rem] hidden gap-x-4 lg:gap-x-16"
+      className="mt-[7.5rem] hidden md-lg:flex gap-x-4 lg:gap-x-16"
     >
       <div>
         <h3 className="text-2xl font-semibold pb-[2.4rem]">

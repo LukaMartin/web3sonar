@@ -1,5 +1,4 @@
 import { TransactionSimulationResultProps } from "@/lib/types";
-import { capatalize } from "@/lib/utils";
 
 export default function TransactionSimulationResult({
   simulationResult,
@@ -29,14 +28,9 @@ export default function TransactionSimulationResult({
         <p className="pb-6 text-gold">{simulationResult.gasUsed}</p>
 
         <h5 className="text-lg font-semibold pb-1">Result</h5>
-        {simulationResult.transactionResult === undefined &&
-        !simulationResult.failureMessage ? (
+        {!simulationResult.failureMessage &&
+        simulationResult.failureMessage !== "-" ? (
           <p className="pb-2 text-accent text-lg">Transaction Successful!</p>
-        ) : simulationResult.transactionResult !== undefined &&
-          !simulationResult.failureMessage ? (
-          <p className="pb-2 text-red-600 text-lg">
-            {capatalize(simulationResult.transactionResult)}
-          </p>
         ) : (
           <p className="pb-2 text-red-600 text-lg">
             {simulationResult.failureMessage}
