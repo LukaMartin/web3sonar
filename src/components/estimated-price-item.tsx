@@ -5,50 +5,29 @@ export default function EstimatedPriceItem({
   maxPriorityFeePerGas,
   maxFeePerGas,
 }: EstimatedPriceItemProps) {
-  return confidence > 95 ? (
+  let textColor = "";
+  {
+    confidence > 95
+      ? (textColor = "text-green-600")
+      : confidence > 90
+      ? (textColor = "text-accent")
+      : confidence > 80
+      ? (textColor = "text-gold")
+      : confidence > 70
+      ? (textColor = "text-fuel-yellow")
+      : (textColor = "text-red-600");
+  }
+
+  return (
     <div className="flex flex-col text-center border-[1px] border-white/20 rounded-xl p-3 sm:p-6 bg-white/[2%] shadow-[0_6px_5px_rgba(2,2,2,1)]">
-      <p className="pb-1 font-semibold">Probability</p>
-      <p className="pb-2 text-green-600">{confidence}%</p>
-      <p className="pb-1 font-semibold">Max Priority Fee</p>
-      <p className="pb-2 text-green-600">{maxPriorityFeePerGas}</p>
-      <p className="pb-1 font-semibold">Max Fee</p>
-      <p className=" text-green-600">{maxFeePerGas}</p>
-    </div>
-  ) : confidence > 90 ? (
-    <div className="flex flex-col text-center border-[1px] border-white/20 rounded-xl p-3 sm:p-6 bg-white/[2%] shadow-[0_6px_5px_rgba(2,2,2,1)]">
-      <p className="pb-1 font-semibold">Probability</p>
-      <p className="pb-2 text-accent">{confidence}%</p>
-      <p className="pb-1 font-semibold">Max Priority Fee</p>
-      <p className="pb-2 text-accent">{maxPriorityFeePerGas}</p>
-      <p className="pb-1 font-semibold">Max Fee</p>
-      <p className=" text-accent">{maxFeePerGas}</p>
-    </div>
-  ) : confidence > 80 ? (
-    <div className="flex flex-col text-center border-[1px] border-white/20 rounded-xl p-3 sm:p-6 bg-white/[2%] shadow-[0_6px_5px_rgba(2,2,2,1)]">
-      <p className="pb-1 font-semibold">Probability</p>
-      <p className="pb-2 text-gold">{confidence}%</p>
-      <p className="pb-1 font-semibold">Max Priority Fee</p>
-      <p className="pb-2 text-gold">{maxPriorityFeePerGas}</p>
-      <p className="pb-1 font-semibold">Max Fee</p>
-      <p className=" text-gold">{maxFeePerGas}</p>
-    </div>
-  ) : confidence > 70 ? (
-    <div className="flex flex-col text-center border-[1px] border-white/20 rounded-xl p-3 sm:p-6 bg-white/[2%] shadow-[0_6px_5px_rgba(2,2,2,1)]">
-      <p className="pb-1 font-semibold">Probability</p>
-      <p className="pb-2 text-fuel-yellow ">{confidence}%</p>
-      <p className="pb-1 font-semibold">Max Priority Fee</p>
-      <p className="pb-2 text-fuel-yellow ">{maxPriorityFeePerGas}</p>
-      <p className="pb-1 font-semibold">Max Fee</p>
-      <p className=" text-fuel-yellow ">{maxFeePerGas}</p>
-    </div>
-  ) : (
-    <div className="flex flex-col text-center border-[1px] border-white/20 rounded-xl p-3 sm:p-6 bg-white/[2%] shadow-[0_6px_5px_rgba(2,2,2,1)]">
-      <p className="pb-1 font-semibold">Probability</p>
-      <p className="pb-2 text-red-600">{confidence}%</p>
-      <p className="pb-1 font-semibold">Max Priority Fee</p>
-      <p className="pb-2 text-red-600">{maxPriorityFeePerGas}</p>
-      <p className="pb-1 font-semibold">Max Fee</p>
-      <p className=" text-red-600">{maxFeePerGas}</p>
+      <p className="pb-1 text-white/80">Probability</p>
+      <p className={`pb-2 ${textColor} font-semibold`}>{confidence}%</p>
+      <p className="pb-1 text-white/80">Max Priority Fee</p>
+      <p className={`pb-2 ${textColor} font-semibold`}>
+        {maxPriorityFeePerGas}
+      </p>
+      <p className="pb-1 text-white/80">Max Fee</p>
+      <p className={`pb-2 ${textColor} font-semibold`}>{maxFeePerGas}</p>
     </div>
   );
 }

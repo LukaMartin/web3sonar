@@ -17,19 +17,19 @@ export default function BlockDataContainer({
 
   const blockData = [
     {
-      name: "Base gas fee",
+      name: "Base Fee",
       value: `${baseFee} Gwei`,
     },
     {
-      name: "Max pending gas fee",
+      name: "Max Pending Fee",
       value: `${maxFee} Gwei`,
     },
     {
-      name: "Pending block number",
+      name: "Pending Block",
       value: pendingBlockNumber,
     },
     {
-      name: "Txs pending in block",
+      name: "Txs Pending in Block",
       value: pendingTransactionCount,
     },
   ];

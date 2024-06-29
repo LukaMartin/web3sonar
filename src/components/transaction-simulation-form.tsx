@@ -119,7 +119,7 @@ export default function TransactionSimulationForm({
         pattern="^(0x)[0-9a-fA-F]{6-500}$"
         placeholder="0x00..."
         autoComplete="off"
-        //required
+        required
       />
       <FormSubmitButton />
       <button
