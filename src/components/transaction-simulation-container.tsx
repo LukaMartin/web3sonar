@@ -12,6 +12,7 @@ export default function TransactionSimulationContainer() {
     simulatedBlockNumber: "-",
     gasUsed: "-",
     failureMessage: "-",
+    error: "",
   });
 
   const toggleVisible = () => {

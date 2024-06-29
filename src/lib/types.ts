@@ -59,6 +59,7 @@ export type SimulatedTransactionResult = {
   gasUsed: string;
   simulationStatus: string;
   failureMessage: string;
+  error: string;
 };
 
 export type TransactionSimulationResultProps = {

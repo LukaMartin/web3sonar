@@ -14,7 +14,7 @@ export async function fetchEthPrice() {
   );
 
   const data = await response.json();
-  
+
   return data.data.amount;
 }
 
@@ -39,21 +39,32 @@ export async function fetchBlockValues() {
   const baseFee = data.blockPrices.map((value: BlockPricesParameter) => {
     return Number(value.baseFeePerGas).toFixed(2);
   });
-  const pendingBlockNumber = data.blockPrices.map((value: BlockPricesParameter) => {
-    return value.blockNumber;
-  });
+  const pendingBlockNumber = data.blockPrices.map(
+    (value: BlockPricesParameter) => {
+      return value.blockNumber;
+    }
+  );
 
-  const pendingTransactionCount = data.blockPrices.map((value: BlockPricesParameter) => {
-    return value.estimatedTransactionCount;
-  });
+  const pendingTransactionCount = data.blockPrices.map(
+    (value: BlockPricesParameter) => {
+      return value.estimatedTransactionCount;
+    }
+  );
 
-  const estimatedPrices = data.blockPrices.map((value: BlockPricesParameter) => {
-    return value.estimatedPrices
-  });
+  const estimatedPrices = data.blockPrices.map(
+    (value: BlockPricesParameter) => {
+      return value.estimatedPrices;
+    }
+  );
 
-  return { baseFee, maxFee, pendingBlockNumber, pendingTransactionCount, estimatedPrices };
-};
-
+  return {
+    baseFee,
+    maxFee,
+    pendingBlockNumber,
+    pendingTransactionCount,
+    estimatedPrices,
+  };
+}
 
 export async function simulateTransaction({
   contractAddress,
@@ -73,16 +84,15 @@ export async function simulateTransaction({
     body: JSON.stringify({
       system: "ethereum",
       network: "main",
-      transaction: 
-        {
-          to: `${contractAddress}`,
-          from: `${senderAddress}`,
-          gas: Number(`${gasLimit}`),
-          maxFeePerGas: Number(`${maxFeePerGas}`) * 1000000000,
-          maxPriorityFeePerGas: Number(`${maxPriorityFeePerGas}`) * 1000000000,
-          value: Number(`${transactionValue}`) * 1000000000000000000,
-          input: `${transactionInput}`,
-        },
+      transaction: {
+        to: `${contractAddress}`,
+        from: `${senderAddress}`,
+        gas: Number(`${gasLimit}`),
+        maxFeePerGas: Number(`${maxFeePerGas}`) * 1000000000,
+        maxPriorityFeePerGas: Number(`${maxPriorityFeePerGas}`) * 1000000000,
+        value: Number(`${transactionValue}`) * 1000000000000000000,
+        input: `${transactionInput}`,
+      },
     }),
   });
 
@@ -93,6 +103,8 @@ export async function simulateTransaction({
   const simulatedBlockNumber = data.simulatedBlockNumber;
 
   const gasUsed = data.gasUsed;
+
+  const error = data.error;
 
   let simulationStatus;
 
@@ -107,6 +119,7 @@ export async function simulateTransaction({
     gasUsed,
     simulationStatus,
     failureMessage,
+    error,
   };
 }
 

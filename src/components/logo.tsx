@@ -6,7 +6,7 @@ export default function Logo() {
     <Image
         src={logo}
         alt="Web 3 Sonar logo"
-        height={60}
+        height={50}
     />
   )
 }
