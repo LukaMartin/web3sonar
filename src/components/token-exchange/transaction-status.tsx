@@ -26,7 +26,7 @@ export default function TransactionStatus({
               className="absolute -top-3 -left-3 text-white/90 hover:text-white/60"
             />
           </button>
-          {txResult && (
+          {txResult && !txResult.message && (
             <a
               href={txResult.lifiExplorerLink}
               target="_blank"
@@ -39,10 +39,13 @@ export default function TransactionStatus({
             <div>
               <p className="text-white/50">Status</p>
               <p className="text-lg">{`${
-                txResult ? txResult.substatus : "Transaction pending..."
+                txResult && !txResult.message
+                  ? txResult.substatus
+                  : "Transaction pending..."
               }`}</p>
             </div>
             {pendingTx && !txResult && <LoadingSpinner />}
+            {txResult?.message && <LoadingSpinner />}
             {pendingTx && txResult && txResult.substatus === "COMPLETED" ? (
               <IoCheckmarkDoneCircleOutline
                 size={50}

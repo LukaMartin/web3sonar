@@ -26,7 +26,7 @@ export default function useFetchQuote({
     setIsLoading(true);
 
     fetch(
-      `https://li.quest/v1/quote?fromChain=${fromChain}&toChain=${toChain}&fromToken=${fromToken}&toToken=${toToken}&fromAmount=${convertedFromAmount}&fromAddress=${fromAddress}`,
+      `https://li.quest/v1/quote?fromChain=${fromChain}&toChain=${toChain}&fromToken=${fromToken}&toToken=${toToken}&fromAmount=${convertedFromAmount}&fromAddress=${fromAddress}?denyBridges=hop`,
       {
         method: "GET",
       }

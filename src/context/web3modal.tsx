@@ -84,7 +84,7 @@ createWeb3Modal({
   chains: chains,
   projectId,
   enableAnalytics: true, // Optional - defaults to your Cloud configuration
-  enableOnramp: true, // Optional - false as default
+  enableOnramp: true,
 });
 
 type Web3ModalProps = {

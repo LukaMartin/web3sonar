@@ -7,7 +7,7 @@ import { Spinner } from "@nextui-org/react";
 const GaugeComponent = dynamic(() => import("react-gauge-component"), {
   ssr: false,
   loading: () => (
-    <div className="flex justify-center items-center h-[12rem]">
+    <div className="flex justify-center items-center h-[10rem]">
       <Spinner size="lg" color="white" />
     </div>
   ),

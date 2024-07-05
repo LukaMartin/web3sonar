@@ -30,9 +30,9 @@ export default function TokenExchangeButton({
   return (
     <>
       {!isConnected && !quote && (
-        <div className="ml-6">
-          <w3m-button />
-        </div>
+        <button className={enabledButtonStyle} onClick={() => open()}>
+          Connect wallet
+        </button>
       )}
       {!isConnected && quote && (
         <button className={enabledButtonStyle} onClick={() => open()}>
