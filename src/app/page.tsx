@@ -1,33 +1,33 @@
-import BlockDataContainer from "@/components/block-data-container";
-import EstimatedPricesContainer from "@/components/estimated-prices-container";
-import TransactionSimulationContainer from "@/components/transaction-simulation-container";
+import CryptoMarketcapChart from "@/components/market-summary/crypto-marketcap-chart";
+import CryptoCurrencyRankingsTable from "@/components/market-summary/cryptocurrency-rankings-table";
+import FearAndGreed from "@/components/market-summary/fear-and-greed";
+import MobileLandingPage from "@/components/mobile-landing-page";
 import {
-  fetchBlockValues,
+  fetchCoinData,
+  fetchCryptoMarketCapData,
+  fetchCryptoNews,
+  fetchFearGreed,
 } from "@/lib/server-utils";
 
 export default async function Home() {
-  const {
-    baseFee,
-    maxFee,
-    pendingBlockNumber,
-    pendingTransactionCount,
-    estimatedPrices,
-  } = await fetchBlockValues();
-  const estimatedPricesFlat = estimatedPrices.flat();
+  const coinData = await fetchCoinData();
+  const { newDataArray, highCoinsPercentage } = await fetchCryptoMarketCapData();
+  const fearAndGreed = await fetchFearGreed();
 
   return (
-    <main className="flex flex-col max-w-7xl mx-auto px-4 md:px-8">
-      <BlockDataContainer
-        baseFee={baseFee}
-        maxFee={maxFee}
-        pendingBlockNumber={pendingBlockNumber}
-        pendingTransactionCount={pendingTransactionCount}
-        estimatedPrices={estimatedPricesFlat}
-      />
-
-      <EstimatedPricesContainer estimatedPrices={estimatedPricesFlat} />
-
-      <TransactionSimulationContainer />
+    <>
+    <main className="hidden xl:flex flex-col max-w-7xl mx-auto px-4 md:px-8">
+      <div className="flex justify-between">
+        <CryptoCurrencyRankingsTable coinData={coinData} />
+        <FearAndGreed fearAndGreed={fearAndGreed} />
+      </div>
+      
+      <CryptoMarketcapChart newDataArray={newDataArray} />
     </main>
+
+    <main className="xl:hidden">
+      <MobileLandingPage />
+    </main>
+    </>
   );
 }

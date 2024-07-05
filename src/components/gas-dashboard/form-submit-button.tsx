@@ -11,7 +11,7 @@ export default function FormSubmitButton() {
       className={
         pending
           ? `${buttonStyles} bg-white/20`
-          : `${buttonStyles} bg-accent hover:bg-accent/75`
+          : `${buttonStyles} bg-green-yellow hover:bg-green-yellow/75`
       }
     >
       {pending ? "Simulating Transaction..." : "Submit"}

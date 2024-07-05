@@ -53,7 +53,7 @@ export default function TransactionSimulationContainer() {
         {visible && (
           <GoMoveToTop
             size={60}
-            className="text-accent self-end hover:cursor-pointer hover:text-accent/75 animate-slideDown"
+            className="text-green-yellow self-end hover:cursor-pointer hover:text-green-yellow/75 animate-slideDown"
             onClick={() => scrollToTop()}
           />
         )}

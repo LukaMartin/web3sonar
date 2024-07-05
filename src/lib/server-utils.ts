@@ -1,6 +1,6 @@
 "use server";
 
-import { SimulateTransactionParameters } from "./types";
+import { SimulateTransactionParameters, TokenMetricsMarketCapData } from "./types";
 import { BlockPricesParameter } from "./types";
 
 export async function fetchEthPrice() {
@@ -144,3 +144,93 @@ export const submitTransaction = async (formData: FormData) => {
 
   return result;
 };
+
+export const fetchCoinData = async () => {
+
+  const response = await fetch("https://deep-index.moralis.io/api/v2.2/market-data/global/market-cap", {
+    method: "GET",
+    headers: {
+      "accept": "application/json",
+      "X-API-Key": `${process.env.MORALIS_API_KEY}`
+    },
+    next: {
+      revalidate: 120,
+    },
+  })
+
+  const data = await response.json();
+
+  return data
+}
+
+export const fetchCryptoMarketCapData = async () => {
+  
+  let date = new Date();
+  let dateOffsetOne = (24*60*60*1000) * 0
+  let dateOffsetTwo = (24*60*60*1000) * 180
+
+  let dateOne = new Date(date.setTime(date.getTime() - dateOffsetOne));
+  let dateTwo = new Date(date.setTime(date.getTime() - dateOffsetTwo));
+  
+  let finalDateOne =  dateOne.toISOString().split('T')[0];
+  let finalDateTwo = dateTwo.toISOString().split('T')[0];
+
+
+  const response = await fetch(`https://api.tokenmetrics.com/v2/market-metrics?startDate=${finalDateTwo}&endDate=${finalDateOne}&limit=1000&page=0`, {
+    method: "GET",
+    headers:  {
+      "accept": "application/json",
+      "api_key": `${process.env.TRADING_METRICS_API_KEY}`
+    },
+    next: {
+      revalidate: 3600,
+    }
+  })
+  
+
+  const data = await response.json();
+
+  const highCoinsPercentage = data.data.map((item: TokenMetricsMarketCapData) => {
+    return item.TM_GRADE_PERC_HIGH_COINS
+  })
+
+  const newDataArray = data.data.map((item: TokenMetricsMarketCapData) => {
+    
+    return {
+      x: item.DATE,
+      y: Number(item.TOTAL_CRYPTO_MCAP).toFixed(0),
+    }
+  })
+
+  return  { newDataArray, highCoinsPercentage }
+}
+
+export const fetchFearGreed = async () => {
+
+  const response = await fetch("https://api.alternative.me/fng/", {
+    method: "GET",
+    next: {
+      revalidate: 3600,
+    },
+  })
+  
+  const data = await response.json();
+
+  return data.data
+}
+
+export const fetchCryptoNews = async () => {
+
+  const response = await fetch("https://api/v1/posts/?auth_token=e1ae69fb429e76b139b921242e2bf9242f0eeac6&public=true", {
+    method: "GET",
+    next: {
+      revalidate: 60,
+    },
+  })
+
+  const data = await response.json();
+
+  console.log("DATA", data);
+
+  return data
+}

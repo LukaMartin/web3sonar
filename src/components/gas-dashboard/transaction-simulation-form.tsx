@@ -16,7 +16,7 @@ export default function TransactionSimulationForm({
         const result = await submitTransaction(formData);
         setSimulationResult(result);
       }}
-      className="flex flex-col bg-white/[2%] border-[1px] border-white/20 rounded-xl p-6 w-[30rem] shadow-[0_7px_5px_rgba(2,2,2,1)]"
+      className="flex flex-col bg-white/[2%] border-[1px] border-white/20 rounded-md p-6 w-[30rem] shadow-[0_7px_5px_rgba(2,2,2,1)]"
     >
       <label htmlFor="contract-address" className={labelStyles}>
         Receiver Address
