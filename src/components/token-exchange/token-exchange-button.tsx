@@ -2,7 +2,8 @@
 
 import { Quote } from "@/lib/token-exchange-quote-types";
 import { findChainId } from "@/lib/utils";
-import { useWeb3Modal, useWeb3ModalAccount } from "@web3modal/ethers/react";
+import { useWeb3Modal } from '@web3modal/wagmi/react'
+import { useAccount } from "wagmi";
 
 type TokenExchangeButtonProps = {
   quote: Quote | null;
@@ -21,8 +22,8 @@ export default function TokenExchangeButton({
   isLoading,
   insufficientFunds,
 }: TokenExchangeButtonProps) {
-  const { open } = useWeb3Modal();
-  const { isConnected, chainId } = useWeb3ModalAccount();
+  const { open } = useWeb3Modal()
+  const { chainId, isConnected } = useAccount()
   let fromChainId = findChainId(fromChain)[0];
   const enabledButtonStyle =
     "h-12 border-white/20 border-[1px] text-lg text-gray-950 font-semibold bg-green-yellow rounded-md mx-6 mt-6 mb-4 hover:bg-green-yellow/70 trasition active:scale-95";

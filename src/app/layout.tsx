@@ -4,7 +4,12 @@ import "./globals.css";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { NextUIProvider } from "@nextui-org/react";
-import { Web3Modal } from "../context/web3modal";
+//import { Web3Modal } from "../context/web3modal";
+import { headers } from 'next/headers'
+import { cookieToInitialState } from 'wagmi'
+
+import { config } from '@/config'
+import Web3ModalProvider from '@/context'
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,6 +23,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const initialState = cookieToInitialState(config, headers().get('cookie'))
   return (
     <html lang="en">
       <body
@@ -25,7 +31,7 @@ export default function RootLayout({
       >
         <NextUIProvider>
           <Header />
-          <Web3Modal>{children}</Web3Modal>
+          <Web3ModalProvider initialState={initialState}>{children}</Web3ModalProvider>
           <Footer />
         </NextUIProvider>
       </body>

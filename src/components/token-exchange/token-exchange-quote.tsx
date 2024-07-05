@@ -12,14 +12,14 @@ export default function TokenExchangeQuote({
   return (
     <>
       {quote.message ? (
-        <section className="w-[375px] h-[200px] flex flex-col justify-center items-center gap-y-6 mx-auto bg-white/[2%] border-[1px] border-white/20 rounded-xl shadow-[0_7px_5px_rgba(2,2,2,1)]">
+        <section className="w-[375px] h-[200px] flex flex-col justify-center items-center gap-y-6 mx-auto bg-white/[2%] border-[1px] border-white/20 rounded-md shadow-[0_7px_5px_rgba(2,2,2,1)]">
           <p className="text-xl font-semibold px-4 text-center">
             {quote.message}
           </p>
           <TbRouteX size={50} />
         </section>
       ) : (
-        <section className="w-[375px] h-[200px] flex flex-col justify-between mx-auto mb-16 py-6 bg-white/[2%] border-[1px] border-white/20 rounded-xl shadow-[0_7px_5px_rgba(2,2,2,1)]">
+        <section className="w-[375px] h-[200px] flex flex-col justify-between mx-auto mb-16 py-6 bg-white/[2%] border-[1px] border-white/20 rounded-md shadow-[0_7px_5px_rgba(2,2,2,1)]">
           <div className="flex justify-between px-6">
             <div className="flex gap-x-6">
               {toToken === "ETH" ? (

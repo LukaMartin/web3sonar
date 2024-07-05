@@ -11,21 +11,17 @@ import { useState, useRef } from "react";
 import TokenSelectFrom from "./token-select-from";
 import useFetchQuote from "@/hooks/useFetchQuote";
 import { convertUsdcAddress, findChainId, getStatus } from "@/lib/utils";
-import {
-  useWeb3ModalAccount,
-  useWeb3ModalProvider,
-  useSwitchNetwork,
-} from "@web3modal/ethers/react";
-import { BrowserProvider } from "ethers";
 import useFetchUserBalance from "@/hooks/useFetchUserBalance";
 import TransactionStatus from "./transaction-status";
 import { TbSwitchVertical } from "react-icons/tb";
 import { TokenExchangeResult } from "@/lib/token-exchange-result-types";
+import { useAccount, useSwitchChain } from "wagmi";
+import { useEthersSigner } from "@/lib/wagmi-ethers";
 
 export default function TokenExchangeInterface() {
-  const { address, chainId, isConnected } = useWeb3ModalAccount();
-  const { walletProvider } = useWeb3ModalProvider();
-  const { switchNetwork } = useSwitchNetwork();
+  const { address, chainId, isConnected } = useAccount();
+  const txSigner = useEthersSigner();
+  const { switchChain } = useSwitchChain();
   const [fromChain, setFromChain] = useState("");
   const [toChain, setToChain] = useState("");
   const [fromToken, setFromToken] = useState("ETH");
@@ -74,17 +70,16 @@ export default function TokenExchangeInterface() {
   const exchangeTokens = async () => {
     setPendingTx(false);
 
-    const provider = new BrowserProvider(walletProvider!);
-    const signer = await provider.getSigner();
+    const signer = txSigner;
 
     fromChainId = findChainId(fromChain)[0];
 
     if (fromChainId !== chainId) {
-      switchNetwork(fromChainId);
+      switchChain({ chainId: fromChainId });
       return;
     }
 
-    const tx = await signer.sendTransaction(quote!.transactionRequest);
+    const tx = await signer!.sendTransaction(quote!.transactionRequest);
     setTxResult(null);
     setPendingTx(true);
     await tx.wait();
@@ -151,7 +146,7 @@ export default function TokenExchangeInterface() {
             fromToken={fromToken}
             inputRef={inputRef}
           />
-          
+
           <TokenExchangeButton
             quote={quote}
             exchangeTokens={exchangeTokens}
