@@ -101,7 +101,6 @@ export default function TokenExchangeInterface() {
         });
 
         setTxResult(result);
-        console.log("RESULT", result);
         if (result.status === "DONE" || result.status === "FAILED") {
           clearInterval(interval);
         }
