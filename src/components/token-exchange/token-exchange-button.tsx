@@ -27,15 +27,22 @@ export default function TokenExchangeButton({
   const enabledButtonStyle =
     "h-12 border-white/20 border-[1px] text-lg text-gray-950 font-semibold bg-green-yellow rounded-md mx-6 mt-6 mb-4 hover:bg-green-yellow/70 trasition active:scale-95";
 
+  const openModal = () => {
+    localStorage.clear()
+    setTimeout(() => {  
+      open();
+    }, 200)
+  }  
+
   return (
     <>
       {!isConnected && !quote && (
-        <button className={enabledButtonStyle} onClick={() => open()}>
+        <button className={enabledButtonStyle} onClick={() => openModal()}>
           Connect wallet
         </button>
       )}
       {!isConnected && quote && (
-        <button className={enabledButtonStyle} onClick={() => open()}>
+        <button className={enabledButtonStyle} onClick={() => openModal()}>
           Connect wallet
         </button>
       )}
