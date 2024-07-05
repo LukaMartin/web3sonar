@@ -5,7 +5,6 @@ import MobileLandingPage from "@/components/mobile-landing-page";
 const DynamicTokenExchangeInterface = dynamic(
   () => import("../../components/token-exchange/token-exchange-interface"),
   {
-    ssr: false,
     loading: () => <TokenExchangeInterfaceSkeleton />,
   }
 );

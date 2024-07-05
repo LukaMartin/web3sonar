@@ -3,7 +3,7 @@ import LoadingSpinner from "./loading-spinner";
 export default function TokenExchangeQuoteSkeleton() {
   return (
     <>
-      <section className="w-[375px] h-[200px] flex flex-col justify-between items-center py-4 mx-auto bg-white/10 border-[1px] border-white/20 rounded-xl animate-slideIn">
+      <section className="w-[375px] h-[200px] flex flex-col justify-between items-center py-4 mx-auto bg-white/10 border-[1px] border-white/20 rounded-md animate-slideIn">
         <div className="flex gap-x-20 animate-pulse">
           <div className="flex">
             <div className="w-16 h-16 rounded-full bg-white/20" />

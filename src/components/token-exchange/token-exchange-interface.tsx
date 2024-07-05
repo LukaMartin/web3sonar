@@ -104,12 +104,12 @@ export default function TokenExchangeInterface() {
         if (result.status === "DONE" || result.status === "FAILED") {
           clearInterval(interval);
         }
-      }, 2000);
+      }, 4000);
 
       setTimeout(() => {
         setFromAount(0);
         clearInput();
-      }, 10000);
+      }, 5000);
     }
   };
 

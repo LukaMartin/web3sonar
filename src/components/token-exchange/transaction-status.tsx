@@ -19,7 +19,7 @@ export default function TransactionStatus({
   return (
     <>
       {pendingTx && (
-        <section className="relative w-[375px] h-[200px] flex flex-col justify-between mx-auto p-4 bg-white/[2%] border-[1px] border-white/20 rounded-xl shadow-[0_7px_5px_rgba(2,2,2,1)] animate-slideUp">
+        <section className="relative w-[375px] h-[200px] flex flex-col justify-between mx-auto p-4 bg-white/[2%] border-[1px] border-white/20 rounded-md shadow-[0_7px_5px_rgba(2,2,2,1)] animate-slideUp">
           <button onClick={() => setPendingTx(false)}>
             <GiCancel
               size={27}
