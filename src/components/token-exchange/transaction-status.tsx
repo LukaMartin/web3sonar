@@ -3,9 +3,10 @@ import { IoCheckmarkDoneCircleOutline } from "react-icons/io5";
 import { GiCancel } from "react-icons/gi";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { shortenTx } from "@/lib/utils";
+import { TokenExchangeResult } from "@/lib/token-exchange-result-types";
 
 type TransactionStatusProps = {
-  txResult: any;
+  txResult: TokenExchangeResult | null;
   pendingTx: boolean;
   setPendingTx: any;
 };
@@ -18,7 +19,7 @@ export default function TransactionStatus({
   return (
     <>
       {pendingTx && (
-        <section className="relative w-[350px] h-[200px] flex flex-col justify-between mx-auto p-4 bg-white/[2%] border-[1px] border-white/20 rounded-xl shadow-[0_7px_5px_rgba(2,2,2,1)] animate-slideUp">
+        <section className="relative w-[375px] h-[200px] flex flex-col justify-between mx-auto p-4 bg-white/[2%] border-[1px] border-white/20 rounded-xl shadow-[0_7px_5px_rgba(2,2,2,1)] animate-slideUp">
           <button onClick={() => setPendingTx(false)}>
             <GiCancel
               size={27}
@@ -49,20 +50,25 @@ export default function TransactionStatus({
               />
             ) : pendingTx && txResult && txResult.status === "PENDING" ? (
               <LoadingSpinner />
-            ) : pendingTx && txResult ? (
+            ) : pendingTx && txResult && !txResult.message ? (
               <GiCancel size={50} className="text-red-600" />
             ) : null}
           </div>
           <div className="flex flex-col">
-            {txResult && <p className="text-white/50 mt-4">View in explorer</p>}
+            {txResult && !txResult.message && (
+              <p className="text-white/50 mt-4">View in explorer</p>
+            )}
             <div className="flex mt-2 mr-1 justify-between">
-              {txResult && (
+              {txResult && !txResult.message && (
                 <>
                   <div className="flex gap-x-4">
                     <p className="text-white/50">Sending</p>
                     {txResult.sending.txLink && (
                       <a target="_blank" href={txResult.sending.txLink}>
-                        <FaExternalLinkAlt size={25} className="hover:text-white/60"/>
+                        <FaExternalLinkAlt
+                          size={25}
+                          className="hover:text-white/60"
+                        />
                       </a>
                     )}
                   </div>
@@ -70,7 +76,10 @@ export default function TransactionStatus({
                     <p className="text-white/50">Receiving</p>
                     {txResult.receiving.txLink && (
                       <a target="_blank" href={txResult.receiving.txLink}>
-                        <FaExternalLinkAlt size={25} className="hover:text-white/60"/>
+                        <FaExternalLinkAlt
+                          size={25}
+                          className="hover:text-white/60"
+                        />
                       </a>
                     )}
                   </div>

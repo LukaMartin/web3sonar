@@ -132,3 +132,4 @@ export type TokenMetricsMarketCapData = {
   TM_GRADE_SIGNAL: number;
   LAST_TM_GRADE_SIGNAL: number;
 };
+

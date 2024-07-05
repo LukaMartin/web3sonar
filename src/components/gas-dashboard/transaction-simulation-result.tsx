@@ -12,7 +12,7 @@ export default function TransactionSimulationResult({
       <div className="bg-white/[2%] border-[1px] border-white/20 rounded-md p-6 shadow-[0_7px_5px_rgba(2,2,2,1)] min-w-96 max-w-[40rem]">
         <h5 className={headingStyles}>Simulation Status</h5>
         {simulationResult.simulationStatus === "Completed" ? (
-          <p className="pb-6 text-accent text-lg">
+          <p className="pb-6 text-green-yellow text-lg">
             {simulationResult.simulationStatus}
           </p>
         ) : simulationResult.simulationStatus === "-" ? (
@@ -51,7 +51,7 @@ export default function TransactionSimulationResult({
         {!simulationResult.failureMessage &&
         simulationResult.failureMessage !== "-" &&
         !simulationResult.error ? (
-          <p className="pb-2 text-accent text-lg">Transaction Successful!</p>
+          <p className="pb-2 text-green-yellow text-lg">Transaction Successful!</p>
         ) : simulationResult.failureMessage === "-" ? (
           <p className="text-white/80">{simulationResult.failureMessage}</p>
         ) : simulationResult.error ? (

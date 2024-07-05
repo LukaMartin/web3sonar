@@ -85,6 +85,10 @@ export const shortenTx = (transaction: string) => {
   let length;
   let shortenedLength;
 
+  if (!transaction) {
+    return;
+  }
+
   if(transaction.length) {
     length = transaction.length;
     shortenedLength = transaction.length - 5;

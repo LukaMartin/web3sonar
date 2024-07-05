@@ -20,6 +20,7 @@ import { BrowserProvider } from "ethers";
 import useFetchUserBalance from "@/hooks/useFetchUserBalance";
 import TransactionStatus from "./transaction-status";
 import { TbSwitchVertical } from "react-icons/tb";
+import { TokenExchangeResult } from "@/lib/token-exchange-result-types";
 
 export default function TokenExchangeInterface() {
   const { address, chainId, isConnected } = useWeb3ModalAccount();
@@ -30,7 +31,7 @@ export default function TokenExchangeInterface() {
   const [fromToken, setFromToken] = useState("ETH");
   const [toToken, setToToken] = useState("ETH");
   const [fromAmount, setFromAount] = useState(0);
-  const [txResult, setTxResult] = useState("");
+  const [txResult, setTxResult] = useState<TokenExchangeResult | null>(null);
   const [pendingTx, setPendingTx] = useState(false);
   const inputRef = useRef<any>(null);
   const insufficientFunds = useFetchUserBalance({
@@ -50,7 +51,7 @@ export default function TokenExchangeInterface() {
     toUsdcTokenAddress = convertUsdcAddress(toChain)[0];
   }
 
-  const switchChains = () => {
+  const swapChains = () => {
     setFromChain(toChain);
     setToChain(fromChain);
   };
@@ -84,12 +85,14 @@ export default function TokenExchangeInterface() {
     }
 
     const tx = await signer.sendTransaction(quote!.transactionRequest);
+    setTxResult(null);
     setPendingTx(true);
     await tx.wait();
 
     if (fromChain !== toChain) {
       let result;
-      do {
+
+      const interval = setInterval(async () => {
         result = await getStatus({
           bridge: quote!.tool,
           fromChain: fromChain,
@@ -98,7 +101,11 @@ export default function TokenExchangeInterface() {
         });
 
         setTxResult(result);
-      } while (result.status !== "DONE" && result.status !== "FAILED");
+        console.log("RESULT", result);
+        if (result.status === "DONE" || result.status === "FAILED") {
+          clearInterval(interval);
+        }
+      }, 2000);
 
       setTimeout(() => {
         setFromAount(0);
@@ -109,7 +116,7 @@ export default function TokenExchangeInterface() {
 
   return (
     <>
-      <div className="flex w-[800px] mx-auto">
+      <div className="flex w-[850px] mx-auto">
         <section className="w-[375px] flex flex-col mb-12 mx-auto bg-white/[2%] border-[1px] border-white/20 rounded-md shadow-[0_7px_5px_rgba(2,2,2,1)]">
           <div className="flex px-3 py-2 mt-3 justify-center">
             {isConnected && <w3m-account-button />}
@@ -125,7 +132,7 @@ export default function TokenExchangeInterface() {
           <div className="flex justify-between items-center px-6 py-4 mt-4">
             <p className="text-white/80 text-xl">To</p>
             <div className="flex">
-              <button onClick={() => switchChains()}>
+              <button onClick={() => swapChains()}>
                 <TbSwitchVertical
                   size={37}
                   className="mr-4 bg-[#111620] p-2 rounded-full hover:bg-white/[7%]"
