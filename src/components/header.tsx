@@ -11,7 +11,7 @@ export default function Header() {
 
   const routes = [
     {
-      name: "Market Summary",
+      name: "Market Stats",
       path: "/",
     },
     // {
