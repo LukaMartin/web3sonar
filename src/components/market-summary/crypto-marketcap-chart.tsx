@@ -1,5 +1,6 @@
 "use client";
 
+import { reverseDate } from "@/lib/utils";
 import { Line } from "@nivo/line";
 
 type CryptoMarketcapChartProps = {
@@ -98,14 +99,10 @@ export default function CryptoMarketcapChart({
                 {slice.points.map((point) => (
                   <>
                     <div key={point.data.xFormatted}>
-                      {point.data.xFormatted}
+                      {reverseDate(point.data.xFormatted as string)}
                     </div>
                     <div>
-                      $
-                      {(Number(point.data.yFormatted) / 1000000000000).toFixed(
-                        3
-                      )}{" "}
-                      T
+                      Market Cap: ${(Number(point.data.yFormatted) / 1000000000000).toFixed(2)}T
                     </div>
                   </>
                 ))}
