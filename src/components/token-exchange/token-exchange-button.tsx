@@ -23,7 +23,7 @@ export default function TokenExchangeButton({
   insufficientFunds,
 }: TokenExchangeButtonProps) {
   const { open } = useWeb3Modal()
-  const { chainId, isConnected } = useAccount()
+  const { chainId, isConnected, isConnecting } = useAccount()
   let fromChainId = findChainId(fromChain)[0];
   const enabledButtonStyle =
     "h-12 border-white/20 border-[1px] text-lg text-gray-950 font-semibold bg-green-yellow rounded-md mx-6 mt-6 mb-4 hover:bg-green-yellow/70 trasition active:scale-95";
@@ -32,12 +32,12 @@ export default function TokenExchangeButton({
     <>
       {!isConnected && !quote && (
         <button className={enabledButtonStyle} onClick={() => open()}>
-          Connect wallet
+          {isConnecting ? "Connecting..." : "Connect wallet"}
         </button>
       )}
       {!isConnected && quote && (
         <button className={enabledButtonStyle} onClick={() => open()}>
-          Connect wallet
+          {isConnecting ? "Connecting..." : "Connect wallet"}
         </button>
       )}
       {isConnected && !quote && (
