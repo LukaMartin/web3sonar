@@ -66,8 +66,52 @@ export default function CryptoMarketcapChart({
           }}
           height={500}
           width={1200}
+          pointSize={0}
+          lineWidth={3}
           colors={["#a4f839"]}
           theme={theme}
+          enableSlices="x"
+          enableTouchCrosshair
+          defs={[
+            {
+              id: "gradientC",
+              type: "linearGradient",
+              colors: [
+                { offset: 0, color: "#fff" },
+                { offset: 100, color: "#000" },
+              ],
+            },
+          ]}
+          fill={[{ match: "*", id: "gradientC" }]}
+          enableArea
+          sliceTooltip={({ slice }) => {
+            return (
+              <div
+                style={{
+                  background: "rgba(255 255 255 / 0.9)",
+                  padding: "9px 12px",
+                  border: "1px solid #ccc",
+                  color: "rgba(3 17 18 / 1)",
+                  fontWeight: "bold",
+                }}
+              >
+                {slice.points.map((point) => (
+                  <>
+                    <div key={point.data.xFormatted}>
+                      {point.data.xFormatted}
+                    </div>
+                    <div>
+                      $
+                      {(Number(point.data.yFormatted) / 1000000000000).toFixed(
+                        3
+                      )}{" "}
+                      T
+                    </div>
+                  </>
+                ))}
+              </div>
+            );
+          }}
         />
       </div>
     </section>
