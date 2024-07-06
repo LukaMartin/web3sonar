@@ -28,8 +28,6 @@ export default function useFetchUserBalance({
     const userBalance = await provider!.getBalance(address!);
     const formattedBalance = convertToEth(Number(userBalance));
 
-    console.log("USER BALANCE", userBalance);
-
     if (formattedBalance < fromAmount! && chainId === fromChainId) {
       setInsufficientFunds(true);
     }

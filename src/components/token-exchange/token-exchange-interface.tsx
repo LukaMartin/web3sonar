@@ -7,7 +7,7 @@ import ChainSelectTo from "./chain-select-to";
 import TokenSelectTo from "./token-select-to";
 import TokenExchangeQuote from "./token-exchange-quote";
 import TokenExchangeQuoteSkeleton from "./token-exchange-quote-skeleton";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import TokenSelectFrom from "./token-select-from";
 import useFetchQuote from "@/hooks/useFetchQuote";
 import { convertUsdcAddress, findChainId, getStatus } from "@/lib/utils";
@@ -19,7 +19,7 @@ import { useAccount, useSwitchChain } from "wagmi";
 import { useEthersSigner } from "@/lib/wagmi-ethers";
 
 export default function TokenExchangeInterface() {
-  const { address, chainId, isConnected } = useAccount();
+  const { address, chainId, isConnected, isDisconnected } = useAccount();
   const txSigner = useEthersSigner();
   const { switchChain } = useSwitchChain();
   const [fromChain, setFromChain] = useState("");
@@ -46,6 +46,10 @@ export default function TokenExchangeInterface() {
   if (toChain && toToken === "USDC") {
     toUsdcTokenAddress = convertUsdcAddress(toChain)[0];
   }
+
+  useEffect(() => {
+    console.log("DISCONNECTED", isDisconnected);
+  }, [isDisconnected]);
 
   const swapChains = () => {
     setFromChain(toChain);
