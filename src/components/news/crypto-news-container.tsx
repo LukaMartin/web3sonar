@@ -3,7 +3,7 @@
 import { CryptoNewsData } from "@/lib/types";
 import { useState } from "react";
 import CryptoNewsCardContainer from "./crypto-news-card-container";
-import clsx from "clsx";
+import { cn } from "@/lib/utils";
 
 type CryptoNewsContainerProps = {
   generalNews: CryptoNewsData[];
@@ -20,13 +20,11 @@ export default function CryptoNewsContainer({
     "text-white/75 mb-6 bg-white/[2%] border-white/20 border-[1px] rounded-md px-4 py-2 hover:bg-white/[5%] hover:text-white active:scale-[0.97]";
   const [toggleView, setToggleView] = useState("general");
 
-  console.log("NFT NEWS", nftNews);
-
   return (
     <section className="flex flex-col w-full">
       <div className="flex gap-x-[0.85rem]">
         <button
-          className={clsx(`${buttonStyles}`, {
+          className={cn(`${buttonStyles}`, {
             "text-white bg-white/[10%]": toggleView === "general",
           })}
           onClick={() => setToggleView("general")}
@@ -34,7 +32,7 @@ export default function CryptoNewsContainer({
           General Crypto
         </button>
         <button
-          className={clsx(`${buttonStyles}`, {
+          className={cn(`${buttonStyles}`, {
             "text-white bg-white/[10%]": toggleView === "tickers",
           })}
           onClick={() => setToggleView("tickers")}

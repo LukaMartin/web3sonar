@@ -4,7 +4,7 @@ import { capatalize } from "@/lib/utils";
 export default function TransactionSimulationResult({
   simulationResult,
 }: TransactionSimulationResultProps) {
-  const headingStyles = "text-lg pb-1 text-white/80";
+  const headingStyles = "text-[17px] pb-2 text-white/80";
   return (
     <div>
       <h3 className="text-2xl font-semibold pb-[2.2rem]">Simulation Result</h3>

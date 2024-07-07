@@ -8,7 +8,7 @@ export default function TransactionSimulationForm({
   const inputStyles =
     "bg-[#111620] border-white/20 rounded-md py-2 pl-2 mb-3 outline-none focus:ring-2 ring-accent shadow-[0_1px_1px_rgba(2,2,2,1)]";
 
-  const labelStyles = "text-white/80 text-lg mb-2";
+  const labelStyles = "text-white/80 mb-2";
 
   return (
     <form
