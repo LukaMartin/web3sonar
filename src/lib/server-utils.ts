@@ -154,7 +154,7 @@ export const fetchCoinData = async () => {
       "X-API-Key": `${process.env.MORALIS_API_KEY}`
     },
     next: {
-      revalidate: 600,
+      revalidate: 300,
     },
   })
 
