@@ -32,6 +32,8 @@ export default async function Home() {
   const { newDataArray, highCoinsPercentage } =
     await fetchCryptoMarketCapData();
   const fearAndGreed = await fetchFearGreed();
+  const news = await fetchCryptoNews();
+  //console.log("NEWS", news)
 
   return (
     <>

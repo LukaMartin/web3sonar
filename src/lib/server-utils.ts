@@ -154,7 +154,7 @@ export const fetchCoinData = async () => {
       "X-API-Key": `${process.env.MORALIS_API_KEY}`
     },
     next: {
-      revalidate: 120,
+      revalidate: 600,
     },
   })
 
@@ -221,7 +221,7 @@ export const fetchFearGreed = async () => {
 
 export const fetchCryptoNews = async () => {
 
-  const response = await fetch("https://api/v1/posts/?auth_token=e1ae69fb429e76b139b921242e2bf9242f0eeac6&public=true", {
+  const response = await fetch("https://cryptopanic.com/api/v1/posts/?auth_token=e1ae69fb429e76b139b921242e2bf9242f0eeac6&public=true", {
     method: "GET",
     next: {
       revalidate: 60,
