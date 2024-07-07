@@ -154,7 +154,7 @@ export const fetchCoinData = async () => {
       "X-API-Key": `${process.env.MORALIS_API_KEY}`
     },
     next: {
-      revalidate: 300,
+      revalidate: 30000,
     },
   })
 
@@ -221,16 +221,32 @@ export const fetchFearGreed = async () => {
 
 export const fetchCryptoNews = async () => {
 
-  const response = await fetch("https://cryptopanic.com/api/v1/posts/?auth_token=e1ae69fb429e76b139b921242e2bf9242f0eeac6&public=true", {
+  const generalResponse = await fetch("https://cryptonews-api.com/api/v1/category?section=general&items=9&page=1&token=qglrdr1zt0jdszdtlrzrt6gsj2ipkrbgupszx00f", {
     method: "GET",
     next: {
-      revalidate: 60,
+      revalidate: 600,
     },
   })
 
-  const data = await response.json();
+  const generalNews = await generalResponse.json();
+  
+  const tickerResponse = await fetch("https://cryptonews-api.com/api/v1?tickers=BTC,ETH,SOL&items=9&page=1&token=qglrdr1zt0jdszdtlrzrt6gsj2ipkrbgupszx00f", {
+    method: "GET",
+    next: {
+      revalidate: 600,
+    },
+  })
 
-  console.log("DATA", data);
+  const tickerNews = await tickerResponse.json();
 
-  return data
+  const nftResponse = await fetch("https://cryptonews-api.com/api/v1/category?section=general&items=9&topic=NFT&page=1&token=qglrdr1zt0jdszdtlrzrt6gsj2ipkrbgupszx00f", {
+    method: "GET",
+    next: {
+      revalidate: 600,
+    },
+  })
+
+  const nftNews = await nftResponse.json();
+
+  return { generalNews, tickerNews, nftNews }
 }

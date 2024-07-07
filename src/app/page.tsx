@@ -1,18 +1,17 @@
-import CryptoMarketcapChart from "@/components/market-summary/crypto-marketcap-chart";
-import CryptoCurrencyRankingsTable from "@/components/market-summary/cryptocurrency-rankings-table";
-import FearAndGreedSkeleton from "@/components/market-summary/fear-and-greed-skeleton";
-import BreakoutStrategySkeleton from "@/components/market-summary/breakout-strategy-skeleton";
+import CryptoMarketcapChart from "@/components/market-stats/crypto-marketcap-chart";
+import CryptoCurrencyRankingsTable from "@/components/market-stats/cryptocurrency-rankings-table";
+import FearAndGreedSkeleton from "@/components/market-stats/fear-and-greed-skeleton";
+import BreakoutStrategySkeleton from "@/components/market-stats/breakout-strategy-skeleton";
 import MobileLandingPage from "@/components/mobile-landing-page";
 import {
   fetchCoinData,
   fetchCryptoMarketCapData,
-  fetchCryptoNews,
   fetchFearGreed,
 } from "@/lib/server-utils";
 import dynamic from "next/dynamic";
 
 const DynamicFearAndGreed = dynamic(
-  () => import("../components/market-summary/fear-and-greed"),
+  () => import("../components/market-stats/fear-and-greed"),
   {
     ssr: false,
     loading: () => <FearAndGreedSkeleton />,
@@ -20,7 +19,7 @@ const DynamicFearAndGreed = dynamic(
 );
 
 const DynamicBreakoutStrategyChart = dynamic(
-  () => import("../components/market-summary/breakout-strategy-chart"),
+  () => import("../components/market-stats/breakout-strategy-chart"),
   {
     ssr: false,
     loading: () => <BreakoutStrategySkeleton />,
@@ -32,8 +31,6 @@ export default async function Home() {
   const { newDataArray, highCoinsPercentage } =
     await fetchCryptoMarketCapData();
   const fearAndGreed = await fetchFearGreed();
-  const news = await fetchCryptoNews();
-  //console.log("NEWS", news)
 
   return (
     <>

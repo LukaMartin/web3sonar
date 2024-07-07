@@ -17,7 +17,7 @@ export function convertToWei(number: number) {
 }
 
 export function convertToEth(number: number) {
-  return number / 1000000000000000000
+  return number / 1000000000000000000;
 }
 
 export function convertUsdcUp(number: number) {
@@ -43,15 +43,15 @@ export function convertUsdcAddress(chainName: string) {
 }
 
 export function addFees(arr: FeeCosts[]) {
-    let sum = 0;
+  let sum = 0;
 
-    arr.forEach(data => {
-      if (Number(data.amountUSD) > 0) {
-        sum += Number(data.amountUSD)
-      }
-    });
-    
-    return Number(sum).toFixed(2) ;
+  arr.forEach((data) => {
+    if (Number(data.amountUSD) > 0) {
+      sum += Number(data.amountUSD);
+    }
+  });
+
+  return Number(sum).toFixed(2);
 }
 
 export function findChainId(chainName: string) {
@@ -63,19 +63,26 @@ export function findChainId(chainName: string) {
     if (name == chainName) {
       chainId.push(id);
     }
-
   });
 
   return chainId;
 }
 
-export const getStatus = async ({ bridge, fromChain, toChain, txHash }: GetStatusParams) => {
-  const result = await fetch(`https://li.quest/v1/status?bridge=${bridge}&fromChain=${fromChain}&toChain=${toChain}&txHash=${txHash}`, {
-      method: "GET"
-  });
+export const getStatus = async ({
+  bridge,
+  fromChain,
+  toChain,
+  txHash,
+}: GetStatusParams) => {
+  const result = await fetch(
+    `https://li.quest/v1/status?bridge=${bridge}&fromChain=${fromChain}&toChain=${toChain}&txHash=${txHash}`,
+    {
+      method: "GET",
+    }
+  );
 
-  const data = result.json()
-  return data
+  const data = result.json();
+  return data;
 };
 
 export const shortenTx = (transaction: string) => {
@@ -89,7 +96,7 @@ export const shortenTx = (transaction: string) => {
     return;
   }
 
-  if(transaction.length) {
+  if (transaction.length) {
     length = transaction.length;
     shortenedLength = transaction.length - 5;
   }
@@ -97,7 +104,7 @@ export const shortenTx = (transaction: string) => {
   substringOne = transaction.substring(0, 4);
 
   if (length && shortenedLength) {
-  subStringTwo = transaction.substring(shortenedLength, length)
+    subStringTwo = transaction.substring(shortenedLength, length);
   }
 
   finalString = substringOne + ".." + subStringTwo;
@@ -106,8 +113,19 @@ export const shortenTx = (transaction: string) => {
 };
 
 export const reverseDate = (date: string) => {
-  let newDate = date.split('-');
+  let newDate = date.split("-");
   let formattedDate = newDate[2] + "-" + newDate[1] + "-" + newDate[0];
 
-  return formattedDate
-}
+  return formattedDate;
+};
+
+export const shortenNewsTitle = (headline: string) => {
+  let shortenedHeadline = "";
+
+  if (headline.length > 70) {
+    shortenedHeadline = headline.substring(0, 70) + "...";
+    return shortenedHeadline;
+  } else {
+    return headline;
+  }
+};

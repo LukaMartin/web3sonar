@@ -17,6 +17,10 @@ const nextConfig = {
             {
                 protocol: 'https',
                 hostname: 'tm-prtnr-plan.s3.amazonaws.com'
+            },
+            {
+                protocol: 'https',
+                hostname: 'crypto.snapi.dev'
             }
         ]
     },

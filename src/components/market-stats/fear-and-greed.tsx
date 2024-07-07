@@ -17,7 +17,7 @@ export default function FearAndGreed({ fearAndGreed }: FearAndGreedProps) {
 
   return (
     <section className="flex flex-col">
-      <h2 className="text-lg text-white/85 mb-4">Fear and Greed Index</h2>
+      <h3 className="text-lg text-white/85 mb-4">Fear and Greed Index</h3>
       <div className="bg-white/[2%] border-[1px] border-white/20 rounded-md w-[24rem] h-[15rem] shadow-[0_7px_7px_rgba(2,2,2,1)]">
         <div className="w-[24rem]">
           <GaugeComponent

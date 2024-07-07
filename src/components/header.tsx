@@ -11,13 +11,13 @@ export default function Header() {
 
   const routes = [
     {
-      name: "Market Stats",
+      name: "Market Insights",
       path: "/",
     },
-    // {
-    //   name: "Portfolio",
-    //   path: "/portfolio",
-    // },
+    {
+      name: "News",
+      path: "/news",
+    },
     {
       name: "Token Exchange",
       path: "/token-exchange",

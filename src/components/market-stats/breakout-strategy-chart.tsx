@@ -26,7 +26,7 @@ export default function BreakoutStrategyChart({
 
   return (
     <section>
-      <h2 className="text-lg text-white/85 mb-4">Breakout Strategy</h2>
+      <h3 className="text-lg text-white/85 mb-4">Breakout Strategy</h3>
 
       <div className="bg-white/[2%] border-[1px] border-white/20 rounded-md h-[16rem] w-full shadow-[0_7px_7px_rgba(2,2,2,1)]">
         <ResponsivePie

@@ -29,9 +29,9 @@ export default function CryptoCurrencyRankingsTable({
   return (
     <section>
       <div className="flex justify-between items-center mb-4 w-[44rem]">
-        <h2 className="text-white/85 text-lg">
+        <h3 className="text-white/85 text-lg">
           Cryptocurrenices by Market Cap
-        </h2>
+        </h3>
         <p>Page {currentPage} of 10</p>
       </div>
       <table className=" bg-white/[2%] rounded-md shadow-[0_7px_7px_rgba(2,2,2,1)] border-collapse outline outline-1 outline-white/20 table-fixed">
