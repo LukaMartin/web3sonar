@@ -71,14 +71,6 @@ export default function BreakoutStrategyChart({
               itemOpacity: 1,
               symbolSize: 18,
               symbolShape: "circle",
-              effects: [
-                {
-                  on: "hover",
-                  style: {
-                    itemTextColor: "#000",
-                  },
-                },
-              ],
             },
           ]}
           tooltip={({ datum: { id, value, color } }) => (
