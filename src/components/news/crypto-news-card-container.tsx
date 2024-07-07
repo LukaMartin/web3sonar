@@ -1,5 +1,5 @@
 import { CryptoNewsData } from "@/lib/types";
-import { shortenNewsTitle } from "@/lib/utils";
+import { shortenNewsSource, shortenNewsTitle } from "@/lib/utils";
 import { Image } from "@nextui-org/react";
 
 type CryptoNewsCardContainerProps = {
@@ -30,7 +30,7 @@ export default function CryptoNewsCardContainer({ data }: CryptoNewsCardContaine
                 />
                 <div className="flex justify-between">
                   <div className="flex flex-col">
-                    <p>{article.source_name}</p>
+                    <p>{shortenNewsSource(article.source_name)}</p>
                     <p className="text-sm text-white/60">Source</p>
                   </div>
                   <div className="flex flex-col">
