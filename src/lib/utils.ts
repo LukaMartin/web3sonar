@@ -120,7 +120,7 @@ export const reverseDate = (date: string) => {
 };
 
 export const shortenNewsTitle = (headline: string) => {
-  return headline.length > 70 ? headline.substring(0, 70) + "..." : headline
+  return headline.length > 65 ? headline.substring(0, 65) + "..." : headline
 };
 
 export const shortenNewsSource = (source: string) => {

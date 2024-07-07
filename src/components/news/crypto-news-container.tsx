@@ -39,7 +39,7 @@ export default function CryptoNewsContainer({
         >
           BTC/ETH/SOL
         </button>
-        {/* <button className={buttonStyles} onClick={() => setToggleView("nfts")}>NFTs</button> */}
+        <button className={buttonStyles} onClick={() => setToggleView("nfts")}>NFTs</button>
       </div>
       {toggleView === "general" && (
         <CryptoNewsCardContainer data={generalNews} />
