@@ -224,7 +224,7 @@ export const fetchCryptoNews = async () => {
   const generalResponse = await fetch("https://cryptonews-api.com/api/v1/category?section=general&items=9&page=1&token=qglrdr1zt0jdszdtlrzrt6gsj2ipkrbgupszx00f", {
     method: "GET",
     next: {
-      revalidate: 600,
+      revalidate: 300,
     },
   })
 
@@ -233,7 +233,7 @@ export const fetchCryptoNews = async () => {
   const tickerResponse = await fetch("https://cryptonews-api.com/api/v1?tickers=BTC,ETH,SOL&items=9&page=1&token=qglrdr1zt0jdszdtlrzrt6gsj2ipkrbgupszx00f", {
     method: "GET",
     next: {
-      revalidate: 600,
+      revalidate: 300,
     },
   })
 
@@ -242,7 +242,7 @@ export const fetchCryptoNews = async () => {
   const nftResponse = await fetch("https://cryptonews-api.com/api/v1/category?section=general&items=9&topic=NFT&page=1&token=qglrdr1zt0jdszdtlrzrt6gsj2ipkrbgupszx00f", {
     method: "GET",
     next: {
-      revalidate: 600,
+      revalidate: 3600,
     },
   })
 

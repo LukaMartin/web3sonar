@@ -1,9 +1,10 @@
 "use client";
 
 import { CryptoNewsData } from "@/lib/types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import CryptoNewsCardContainer from "./crypto-news-card-container";
-import { cn } from "@/lib/utils";
+import NewsToggleButton from "./news-toggle-button";
 
 type CryptoNewsContainerProps = {
   generalNews: CryptoNewsData[];
@@ -11,35 +12,50 @@ type CryptoNewsContainerProps = {
   nftNews: CryptoNewsData[];
 };
 
+const paths = [
+  {
+    path: "general",
+    name: "General Crypto",
+  },
+  {
+    path: "tickers",
+    name: "BTC/ETH/SOL",
+  },
+  {
+    path: "nfts",
+    name: "NFTs",
+  },
+];
+
 export default function CryptoNewsContainer({
   generalNews,
   tickerNews,
   nftNews,
 }: CryptoNewsContainerProps) {
-  const buttonStyles =
-    "text-white/75 mb-6 bg-white/[2%] border-white/20 border-[1px] rounded-md px-4 py-2 hover:bg-white/[5%] hover:text-white active:scale-[0.97]";
   const [toggleView, setToggleView] = useState("general");
+  const router = useRouter();
+
+  useEffect(() => {
+    setInterval(() => {
+      router.refresh();
+    }, 301000);
+  }, [router]);
 
   return (
     <section className="flex flex-col w-full">
       <div className="flex gap-x-[0.85rem]">
-        <button
-          className={cn(`${buttonStyles}`, {
-            "text-white bg-white/[10%]": toggleView === "general",
-          })}
-          onClick={() => setToggleView("general")}
-        >
-          General Crypto
-        </button>
-        <button
-          className={cn(`${buttonStyles}`, {
-            "text-white bg-white/[10%]": toggleView === "tickers",
-          })}
-          onClick={() => setToggleView("tickers")}
-        >
-          BTC/ETH/SOL
-        </button>
-        <button className={buttonStyles} onClick={() => setToggleView("nfts")}>NFTs</button>
+        {paths.map((path) => {
+          return (
+            <NewsToggleButton
+              key={path.name}
+              toggleView={toggleView}
+              setToggleView={setToggleView}
+              path={path.path}
+            >
+              {path.name}
+            </NewsToggleButton>
+          );
+        })}
       </div>
       {toggleView === "general" && (
         <CryptoNewsCardContainer data={generalNews} />

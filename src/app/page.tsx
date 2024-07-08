@@ -28,8 +28,7 @@ const DynamicBreakoutStrategyChart = dynamic(
 
 export default async function Home() {
   const coinData = await fetchCoinData();
-  const { newDataArray, highCoinsPercentage } =
-    await fetchCryptoMarketCapData();
+  const { newDataArray, highCoinsPercentage } = await fetchCryptoMarketCapData();
   const fearAndGreed = await fetchFearGreed();
 
   return (

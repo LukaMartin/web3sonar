@@ -4,6 +4,7 @@ import { fetchCryptoNews } from "@/lib/server-utils";
 
 export default async function News() {
   const { generalNews, tickerNews, nftNews } = await fetchCryptoNews();
+
   return (
     <>
       <main className="hidden xl:flex flex-col max-w-7xl mx-auto px-4 md:px-8">
