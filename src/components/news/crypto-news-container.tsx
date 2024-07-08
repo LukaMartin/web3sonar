@@ -33,13 +33,6 @@ export default function CryptoNewsContainer({
   nftNews,
 }: CryptoNewsContainerProps) {
   const [toggleView, setToggleView] = useState("general");
-  const router = useRouter();
-
-  useEffect(() => {
-    setInterval(() => {
-      router.refresh();
-    }, 301000);
-  }, [router]);
 
   return (
     <section className="flex flex-col w-full">
