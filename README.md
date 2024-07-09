@@ -1,10 +1,10 @@
-# ETHEREUM GAS TRACKER
+## Web 3 Sonar
 
-This applicaton tracks the current gas prices on Ethereum which can be very helpful when creating transactions on Ethereum. The data provided is from BlockNative. The data currently updates every ~10 seconds to give users up to date, accurate gas prices.
+This applicaton aims to provide web 3 participants with a suite of tools to help them through their day to day interactions with crypto and web3. The application currently is composed of market insights, crypto news, a token exchange ui and a gas dashboard to track ethereum gas prices. The gas dashboard also includes a transaction simulator.
 
-The tech stack used for the application is TypeScript, NextJs and Tailwind CSS.
+The tech stack used for the application is TypeScript, React, NextJs, Wagmi, Ethers, Shadcn UI and Tailwind CSS.
 
-To use the application head to: https://ethereum-gas-track.vercel.app/
+To use the application head to: https://www.web3sonar.xyz/
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
