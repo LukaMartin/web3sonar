@@ -97,13 +97,13 @@ export default function TokenExchangeModal({
                     </div>
                   )}
                 {txResult && txResult.message && (
-                  <div className="flex gap-x-2">
+                  <div className="flex gap-x-4">
                     <p>Pending Transaction</p>
                     <Spinner color="primary" />
                   </div>
                 )}
                 {!txResult && (
-                  <div className="flex gap-x-2">
+                  <div className="flex gap-x-4">
                     <p>Pending Transaction</p>
                     <Spinner color="primary" />
                   </div>
