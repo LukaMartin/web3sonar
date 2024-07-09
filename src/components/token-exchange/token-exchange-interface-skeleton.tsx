@@ -4,16 +4,15 @@ export default function TokenExchangeInterfaceSkeleton() {
       <div className="w-[375px] h-[575px] flex flex-col mx-auto mb-12 bg-white/10 border-[1px] border-white/20 rounded-md animate-pulseStrong">
         <div className="px-7 mt-14 flex justify-between">
           <div className="bg-white/20 h-6 w-12 rounded-md" />
-          <div className="bg-white/20 h-7 w-28 rounded-md" />
         </div>
 
         <div className="px-7 mt-4">
           <div className="w-full bg-white/20 h-14 rounded-md" />
         </div>
 
-        <div className="px-7 mt-8 flex justify-between">
+        <div className="px-7 mt-8 flex justify-between items-center w-[62%]">
           <div className="bg-white/20 h-6 w-7 rounded-md" />
-          <div className="bg-white/20 h-7 w-28 rounded-md" />
+          <div className="bg-white/20 h-9 w-9 rounded-full mb-1" />
         </div>
 
         <div className="px-7 mt-4">

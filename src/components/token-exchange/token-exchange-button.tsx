@@ -1,30 +1,28 @@
 "use client";
 
 import { Quote } from "@/lib/token-exchange-quote-types";
-import { findChainId } from "@/lib/utils";
-import { useWeb3Modal } from '@web3modal/wagmi/react'
+import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { useAccount } from "wagmi";
 
 type TokenExchangeButtonProps = {
   quote: Quote | null;
   exchangeTokens: () => void;
   fromAmount: number;
-  fromChain: string;
   isLoading: boolean;
   insufficientFunds: boolean;
+  onOpen: () => void;
 };
 
 export default function TokenExchangeButton({
   quote,
   exchangeTokens,
   fromAmount,
-  fromChain,
   isLoading,
   insufficientFunds,
+  onOpen,
 }: TokenExchangeButtonProps) {
-  const { open } = useWeb3Modal()
-  const { chainId, isConnected } = useAccount();
-  let fromChainId = findChainId(fromChain)[0];
+  const { open } = useWeb3Modal();
+  const { isConnected } = useAccount();
   const enabledButtonStyle =
     "h-12 border-white/20 border-[1px] text-lg text-gray-950 font-semibold bg-green-yellow rounded-md mx-6 mt-6 mb-4 hover:bg-green-yellow/70 trasition active:scale-95";
 
@@ -52,7 +50,10 @@ export default function TokenExchangeButton({
               ? "bg-white/50 hover:bg-white/50"
               : "bg-green-yellow hover:bg-green-yellow/70"
           } h-12 border-white/20 border-[1px] text-lg text-gray-950 font-semibold rounded-md mx-6 mt-6 mb-4 transition active:scale-95`}
-          onClick={() => exchangeTokens()}
+          onClick={() => {
+            exchangeTokens();
+            onOpen();
+          }}
           disabled={
             isLoading ||
             !fromAmount ||
@@ -60,13 +61,7 @@ export default function TokenExchangeButton({
             (quote.message as boolean | undefined)
           }
         >
-          {`${
-            insufficientFunds
-              ? "Insufficient funds"
-              : fromChainId !== chainId
-              ? "Switch network"
-              : "Exchange"
-          }`}
+          {`${insufficientFunds ? "Insufficient funds" : "Exchange"}`}
         </button>
       )}
     </>

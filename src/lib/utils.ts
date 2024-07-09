@@ -2,7 +2,9 @@ import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { chains } from "./constants";
 import { FeeCosts } from "./token-exchange-quote-types";
-import { GetStatusParams } from "./types";
+import { CheckAndSetAllowanceParams, GetStatusParams } from "./types";
+import { Contract } from "ethers";
+import { erc20Abi } from "viem";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -26,20 +28,6 @@ export function convertUsdcUp(number: number) {
 
 export function convertUsdcDown(number: number) {
   return number / 1000000;
-}
-
-export function convertUsdcAddress(chainName: string) {
-  let filteredUsdcAddress: string[] = [];
-
-  chains.map((chain) => {
-    const { name, usdcAddress } = chain;
-
-    if (name == chainName && usdcAddress) {
-      filteredUsdcAddress.push(usdcAddress);
-    }
-  });
-
-  return filteredUsdcAddress;
 }
 
 export function addFees(arr: FeeCosts[]) {
@@ -120,9 +108,27 @@ export const reverseDate = (date: string) => {
 };
 
 export const shortenNewsTitle = (headline: string) => {
-  return headline.length > 65 ? headline.substring(0, 65) + "..." : headline
+  return headline.length > 65 ? headline.substring(0, 65) + "..." : headline;
 };
 
 export const shortenNewsSource = (source: string) => {
-  return source.includes("The") ? source.substring(3, source.length) : source
-}
+  return source.includes("The") ? source.substring(3, source.length) : source;
+};
+
+export const checkAndSetAllowance = async ({
+  wallet,
+  tokenAddress,
+  approvalAddress,
+  amount,
+  fromToken,
+}: CheckAndSetAllowanceParams) => {
+  // Transactions with the native token don't need approval
+  if (fromToken === "ETH") {
+    return;
+  }
+
+  const erc20 = new Contract(tokenAddress, erc20Abi, wallet);
+
+  const approveTx = await erc20.approve(approvalAddress, convertUsdcUp(amount));
+  await approveTx.wait();
+};

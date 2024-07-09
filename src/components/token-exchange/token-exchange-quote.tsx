@@ -2,8 +2,11 @@ import { addFees, convertToEth, convertUsdcDown } from "@/lib/utils";
 import { TbRouteX } from "react-icons/tb";
 import ethLogo from "../../../public/eth-logo.svg";
 import usdcLogo from "../../../public/usd-coin-usdc-logo.svg";
+import usdtLogo from "../../../public/tether-usdt-logo.svg";
 import Image from "next/image";
 import { TokenExchangeQuoteProps } from "@/lib/token-exchange-quote-types";
+import { usdcAddresses, usdtAddresses, wethAddresses } from "@/lib/constants";
+import CircularProgressIndicator from "./circular-progress";
 
 export default function TokenExchangeQuote({
   quote,
@@ -22,23 +25,27 @@ export default function TokenExchangeQuote({
         <section className="w-[375px] h-[200px] flex flex-col justify-between mx-auto mb-16 py-6 bg-white/[2%] border-[1px] border-white/20 rounded-md shadow-[0_7px_5px_rgba(2,2,2,1)]">
           <div className="flex justify-between px-6">
             <div className="flex gap-x-6">
-              {toToken === "ETH" ? (
+              {toToken === "ETH" || wethAddresses.includes(toToken) ? (
                 <Image
                   src={ethLogo}
                   alt="Ethereum Logo"
                   height={55}
                   width={55}
                 />
-              ) : (
+              ) : usdcAddresses.includes(toToken) ? (
                 <Image src={usdcLogo} alt="USDC Logo" height={55} width={55} />
-              )}
+              ) : usdtAddresses.includes(toToken) ? (
+                <Image src={usdtLogo} alt="USDT Logo" height={55} width={55} />
+              ) : null}
               <div className="pt-2">
                 <p className="text-2xl">
-                  {toToken === "ETH" &&
-                  convertToEth(Number(quote.estimate.toAmount)) < 0.1
+                  {toToken === "ETH" ||
+                  (wethAddresses.includes(toToken) &&
+                    convertToEth(Number(quote.estimate.toAmount)) < 0.1)
                     ? convertToEth(Number(quote.estimate.toAmount)).toFixed(3)
-                    : toToken === "ETH" &&
-                      convertToEth(Number(quote.estimate.toAmount)) >= 0.1
+                    : toToken === "ETH" ||
+                      (wethAddresses.includes(toToken) &&
+                        convertToEth(Number(quote.estimate.toAmount)) >= 0.1)
                     ? convertToEth(Number(quote.estimate.toAmount)).toFixed(4)
                     : convertUsdcDown(Number(quote?.estimate.toAmount)).toFixed(
                         2
@@ -49,9 +56,9 @@ export default function TokenExchangeQuote({
                 </p>
               </div>
             </div>
+
             <div className="pt-3">
-              <p className="text-lg">${addFees(quote.estimate.feeCosts)}</p>
-              <p className="text-sm text-white/50 text-right">Fees</p>
+              <CircularProgressIndicator />
             </div>
           </div>
 
@@ -70,7 +77,12 @@ export default function TokenExchangeQuote({
               </div>
             </div>
 
-            <div className="flex flex-col pt-1 text-right">
+            <div className="pt-2">
+              <p className="text-lg">${addFees(quote.estimate.feeCosts)}</p>
+              <p className="text-sm text-white/50">Fees</p>
+            </div>
+
+            <div className="flex flex-col pt-1">
               <p className="pt-1 text-lg">
                 {quote.estimate.executionDuration < 60
                   ? `${Math.round(quote.estimate.executionDuration)} s`

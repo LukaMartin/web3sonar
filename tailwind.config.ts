@@ -108,7 +108,15 @@ const config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate"), nextui()],
+  plugins: [require("tailwindcss-animate"), nextui({
+    themes: {
+      light: {
+        colors: {
+          success: "#a4f839"
+        },
+      },
+    },
+  })],
 } satisfies Config
 
 export default config

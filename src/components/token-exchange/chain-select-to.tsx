@@ -19,7 +19,7 @@ export default function ChainSelectTo({
 }: ChainSelectToProps) {
   return (
     <Select onValueChange={setToChain} value={toChain}>
-      <SelectTrigger className="w-[325px] h-14 ml-6 bg-[#111620] border-white/20">
+      <SelectTrigger className="w-[55%] h-14 bg-[#111620] border-white/20">
         <SelectValue placeholder="Select chain" />
       </SelectTrigger>
       <SelectContent>
@@ -30,8 +30,8 @@ export default function ChainSelectTo({
                 <Image
                   src={chain.logo}
                   alt="Chain Logo"
-                  height={35}
-                  width={35}
+                  height={25}
+                  width={25}
                 />
                 {chain.name}
               </div>

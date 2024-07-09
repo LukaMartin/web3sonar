@@ -1,3 +1,5 @@
+import { ContractRunner, JsonRpcSigner } from "ethers";
+
 export type BlockDataContainerProps = {
   baseFee: number;
   maxFee: number;
@@ -73,6 +75,7 @@ export type FetchQuoteProps = {
   toToken: string;
   fromAmount: number;
   fromAddress: string;
+  awaitingConfirmation: boolean;
 };
 
 export type GetStatusParams = {
@@ -146,5 +149,20 @@ export type CryptoNewsData = {
 };
 
 export type CryptoNews = {
-  data: CryptoNewsData[]
-}
+  data: CryptoNewsData[];
+};
+
+export type CheckAndSetAllowanceParams = {
+  wallet: ContractRunner | JsonRpcSigner;
+  tokenAddress: string;
+  approvalAddress: string;
+  amount: number;
+  fromToken: string;
+};
+
+export type ChainTokens = {
+  name: string;
+  symbol: string;
+  logo: string;
+  tokenAddress: string;
+};

@@ -14,13 +14,10 @@ export default function TokenExchangeQuoteSkeleton() {
             </div>
           </div>
 
-          <div className="pt-5">
-            <div className="h-5 w-12 ml-4 bg-white/20 rounded-sm mb-2" />
-            <div className="h-3 w-8 ml-8 bg-white/20 rounded-sm" />
-          </div>
+          <div className="w-12 h-12 rounded-full bg-white/20 mt-4 ml-6"/>
         </div>
 
-        <div className="flex gap-x-24 animate-pulse">
+        <div className="flex gap-x-5 animate-pulse">
           <div className="flex">
             <div className="w-16 h-16 rounded-full bg-white/20 pb-1" />
 
@@ -32,7 +29,12 @@ export default function TokenExchangeQuoteSkeleton() {
 
           <div className="pt-4">
             <div className="h-5 w-12 ml-4 bg-white/20 rounded-sm mb-2" />
-            <div className="h-3 w-8 ml-8 bg-white/20 rounded-sm" />
+            <div className="h-3 w-8 ml-4 bg-white/20 rounded-sm" />
+          </div>
+
+          <div className="pt-4">
+            <div className="h-5 w-12 ml-4 bg-white/20 rounded-sm mb-2" />
+            <div className="h-3 w-8 ml-4 bg-white/20 rounded-sm" />
           </div>
         </div>
       </section>

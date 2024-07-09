@@ -7,49 +7,40 @@ import ChainSelectTo from "./chain-select-to";
 import TokenSelectTo from "./token-select-to";
 import TokenExchangeQuote from "./token-exchange-quote";
 import TokenExchangeQuoteSkeleton from "./token-exchange-quote-skeleton";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
 import TokenSelectFrom from "./token-select-from";
 import useFetchQuote from "@/hooks/useFetchQuote";
-import { convertUsdcAddress, findChainId, getStatus } from "@/lib/utils";
+import { checkAndSetAllowance, findChainId, getStatus } from "@/lib/utils";
 import useFetchUserBalance from "@/hooks/useFetchUserBalance";
-import TransactionStatus from "./transaction-status";
 import { TbSwitchVertical } from "react-icons/tb";
 import { TokenExchangeResult } from "@/lib/token-exchange-result-types";
 import { useAccount, useSwitchChain } from "wagmi";
 import { useEthersSigner } from "@/lib/wagmi-ethers";
+import { useDisclosure } from "@nextui-org/react";
+import TokenExchangeModal from "./token-exchange-modal";
+import CircularProgressIndicator from "./circular-progress";
 
 export default function TokenExchangeInterface() {
-  const { address, chainId, isConnected, isDisconnected } = useAccount();
+  const { address, chainId, isConnected } = useAccount();
   const txSigner = useEthersSigner();
   const { switchChain } = useSwitchChain();
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [fromChain, setFromChain] = useState("");
   const [toChain, setToChain] = useState("");
-  const [fromToken, setFromToken] = useState("ETH");
-  const [toToken, setToToken] = useState("ETH");
-  const [fromAmount, setFromAount] = useState(0);
+  const [fromToken, setFromToken] = useState("");
+  const [toToken, setToToken] = useState("");
+  const [fromAmount, setFromAmount] = useState(0);
   const [txResult, setTxResult] = useState<TokenExchangeResult | null>(null);
-  const [pendingTx, setPendingTx] = useState(false);
+  const [awaitingConfirmation, setAwaitingConfirmation] = useState(false);
+  const [settingAllowance, setSettingAllowance] = useState(false);
   const inputRef = useRef<any>(null);
   const insufficientFunds = useFetchUserBalance({
     address,
     fromAmount,
     fromChain,
+    fromToken,
   });
-  let fromUsdcTokenAddress = null;
-  let toUsdcTokenAddress = null;
-  let fromChainId = null;
-
-  if (fromChain && fromToken === "USDC") {
-    fromUsdcTokenAddress = convertUsdcAddress(fromChain)[0];
-  }
-
-  if (toChain && toToken === "USDC") {
-    toUsdcTokenAddress = convertUsdcAddress(toChain)[0];
-  }
-
-  useEffect(() => {
-    console.log("DISCONNECTED", isDisconnected)
-  }, [isDisconnected])
+  let fromChainId = findChainId(fromChain)[0];
 
   const swapChains = () => {
     setFromChain(toChain);
@@ -63,54 +54,74 @@ export default function TokenExchangeInterface() {
   const { quote, isLoading } = useFetchQuote({
     fromChain: fromChain,
     toChain: toChain,
-    fromToken: fromUsdcTokenAddress ? fromUsdcTokenAddress : fromToken,
-    toToken: toUsdcTokenAddress ? toUsdcTokenAddress : toToken,
+    fromToken: fromToken,
+    toToken: toToken,
     fromAmount: fromAmount,
     fromAddress: address
       ? address
       : "0xF11aeCE59d2E3959b625bbd664e4A8400e941Fb9",
+    awaitingConfirmation: awaitingConfirmation,
   });
 
   const exchangeTokens = async () => {
-    setPendingTx(false);
-
+    setAwaitingConfirmation(true);
+    setTxResult(null);
     const signer = txSigner;
 
-    fromChainId = findChainId(fromChain)[0];
-
-    if (fromChainId !== chainId) {
-      switchChain({ chainId: fromChainId });
-      return;
+    if (fromToken !== "ETH") {
+      setSettingAllowance(true);
+      await checkAndSetAllowance({
+        wallet: signer!,
+        tokenAddress: quote!.action.fromToken.address,
+        approvalAddress: quote!.estimate.approvalAddress,
+        amount: fromAmount,
+        fromToken: fromToken,
+      });
+      setSettingAllowance(false);
     }
 
     const tx = await signer!.sendTransaction(quote!.transactionRequest);
-    setTxResult(null);
-    setPendingTx(true);
+    setAwaitingConfirmation(false);
     await tx.wait();
 
-    if (fromChain !== toChain) {
-      let result;
+    let result;
 
-      const interval = setInterval(async () => {
-        result = await getStatus({
-          bridge: quote!.tool,
-          fromChain: fromChain,
-          toChain: toChain,
-          txHash: tx.hash,
-        });
+    const interval = setInterval(async () => {
+      result = await getStatus({
+        bridge: quote!.tool,
+        fromChain: fromChain,
+        toChain: toChain,
+        txHash: tx.hash,
+      });
 
-        setTxResult(result);
-        if (result.status === "DONE" || result.status === "FAILED") {
-          clearInterval(interval);
-        }
-      }, 4000);
+      setTxResult(result);
+      if (result.status === "DONE" || result.status === "FAILED") {
+        clearInterval(interval);
+      }
+    }, 4000);
 
-      setTimeout(() => {
-        setFromAount(0);
-        clearInput();
-      }, 5000);
-    }
+    setTimeout(() => {
+      setFromAmount(0);
+      clearInput();
+    }, 5000);
   };
+
+  useEffect(() => {
+    if (isConnected && fromChainId !== chainId) {
+      switchChain({ chainId: fromChainId });
+      return;
+    }
+  }, [chainId, fromChainId, isConnected, switchChain]);
+
+  useEffect(() => {
+    setFromAmount(0);
+    clearInput();
+  }, [fromChain]);
+
+  useEffect(() => {
+    setFromAmount(0);
+    clearInput();
+  }, [toChain]);
 
   return (
     <>
@@ -120,32 +131,45 @@ export default function TokenExchangeInterface() {
             {isConnected && <w3m-account-button />}
           </div>
 
-          <div className="flex justify-between items-center mt-2 px-6 py-4">
-            <p className="text-xl text-white/80">From</p>
-            <TokenSelectFrom setFromToken={setFromToken} />
+          <p className="text-xl text-white/80 ml-6 mt-4">From</p>
+
+          <div className="flex justify-between items-center mt-6 px-6">
+            <ChainSelectFrom
+              fromChain={fromChain}
+              setFromChain={setFromChain}
+            />
+            <TokenSelectFrom
+              fromToken={fromToken}
+              setFromToken={setFromToken}
+              fromChain={fromChain}
+            />
           </div>
 
-          <ChainSelectFrom fromChain={fromChain} setFromChain={setFromChain} />
-
-          <div className="flex justify-between items-center px-6 py-4 mt-4">
+          <div className="w-[61%] flex justify-between items-center px-6 mt-6">
             <p className="text-white/80 text-xl">To</p>
             <div className="flex">
               <button onClick={() => swapChains()}>
                 <TbSwitchVertical
                   size={37}
-                  className="mr-4 bg-[#111620] p-2 rounded-full hover:bg-white/[7%]"
+                  className="bg-[#111620] p-2 rounded-full hover:bg-white/[7%]"
                 />
               </button>
-              <TokenSelectTo setToToken={setToToken} />
             </div>
           </div>
 
-          <ChainSelectTo toChain={toChain} setToChain={setToChain} />
+          <div className="flex justify-between items-center px-6 mt-6">
+            <ChainSelectTo toChain={toChain} setToChain={setToChain} />
+            <TokenSelectTo
+              toToken={toToken}
+              setToToken={setToToken}
+              toChain={toChain}
+            />
+          </div>
 
           <p className="text-white/80 text-xl p-6">Amount</p>
 
           <TokenExchangeInput
-            setFromAmount={setFromAount}
+            setFromAmount={setFromAmount}
             fromAmount={fromAmount}
             fromToken={fromToken}
             inputRef={inputRef}
@@ -155,9 +179,9 @@ export default function TokenExchangeInterface() {
             quote={quote}
             exchangeTokens={exchangeTokens}
             fromAmount={fromAmount}
-            fromChain={fromChain}
             isLoading={isLoading}
             insufficientFunds={insufficientFunds}
+            onOpen={onOpen}
           />
 
           <p className="text-sm text-white/50 pb-4 pr-6 self-end">
@@ -179,10 +203,14 @@ export default function TokenExchangeInterface() {
             <TokenExchangeQuote quote={quote} toToken={toToken} />
           ) : null}
 
-          <TransactionStatus
+          <TokenExchangeModal
+            isOpen={isOpen}
+            onOpenChange={onOpenChange}
+            settingAllowance={settingAllowance}
+            awaitingConfirmation={awaitingConfirmation}
             txResult={txResult}
-            pendingTx={pendingTx}
-            setPendingTx={setPendingTx}
+            fromChain={fromChain}
+            toChain={toChain}
           />
         </section>
       </div>

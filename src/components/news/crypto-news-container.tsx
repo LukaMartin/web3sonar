@@ -1,8 +1,7 @@
 "use client";
 
 import { CryptoNewsData } from "@/lib/types";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState } from "react";
 import CryptoNewsCardContainer from "./crypto-news-card-container";
 import NewsToggleButton from "./news-toggle-button";
 
