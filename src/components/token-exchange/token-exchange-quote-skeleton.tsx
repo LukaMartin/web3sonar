@@ -1,4 +1,4 @@
-import LoadingSpinner from "./loading-spinner";
+import { Spinner } from "@nextui-org/react";
 
 export default function TokenExchangeQuoteSkeleton() {
   return (
@@ -41,7 +41,7 @@ export default function TokenExchangeQuoteSkeleton() {
 
       <div className="flex gap-x-6 w-[375px] mx-auto mb-6">
         <h3 className="text-2xl mt-4 ml-1 animate-pulse">Fetching quote..</h3>
-        <LoadingSpinner />
+        <Spinner color="default" className="pt-5" />
       </div>
     </>
   );

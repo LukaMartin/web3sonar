@@ -6,7 +6,6 @@ import {
   ModalFooter,
 } from "@nextui-org/react";
 import { Spinner } from "@nextui-org/react";
-import { TokenExchangeResult } from "@/lib/token-exchange-result-types";
 import { chains } from "@/lib/constants";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -19,11 +18,13 @@ import { useTokenExchangeStore } from "@/stores/token-exchange-store";
 
 type TokenExchangeModalProps = {
   isOpen: boolean;
+  onClose: () => void;
   onOpenChange: () => void;
 };
 
 export default function TokenExchangeModal({
   isOpen,
+  onClose,
   onOpenChange,
 }: TokenExchangeModalProps) {
   const settingAllowance = useTokenExchangeStore((state) => state.settingAllowance);
@@ -38,11 +39,17 @@ export default function TokenExchangeModal({
     chains.map((chain) => {
       if (chain.name === fromChain) {
         setFromLogo(chain.logo);
-      } else if (chain.name === toChain) {
-        setToLogo(chain.logo);
       }
     });
-  }, [fromChain, toChain]);
+  }, [fromChain]);
+
+  useEffect(() => {
+    chains.map((chain) => {
+      if (chain.name === toChain) {
+        setToLogo(chain.logo)
+      }
+    })
+  }, [toChain])
 
   return (
     <>
@@ -50,6 +57,7 @@ export default function TokenExchangeModal({
         backdrop="opaque"
         isOpen={isOpen}
         onOpenChange={onOpenChange}
+        onClose={onClose}
         classNames={{
           backdrop:
             "bg-gradient-to-t from-zinc-900 to-zinc-900/10 backdrop-opacity-20",

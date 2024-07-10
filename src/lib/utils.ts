@@ -5,6 +5,7 @@ import { FeeCosts } from "./token-exchange-quote-types";
 import { CheckAndSetAllowanceParams, GetStatusParams } from "./types";
 import { Contract } from "ethers";
 import { erc20Abi } from "viem";
+import wethABi from "@/abi/wethAbi.json"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -122,7 +123,6 @@ export const checkAndSetAllowance = async ({
   amount,
   fromToken,
 }: CheckAndSetAllowanceParams) => {
-  // Transactions with the native token don't need approval
   if (fromToken === "ETH") {
     return;
   }
@@ -130,7 +130,7 @@ export const checkAndSetAllowance = async ({
   const erc20 = new Contract(tokenAddress, erc20Abi, wallet);
 
   if (wethAddresses.includes(fromToken)) {
-    const approveTx = await erc20.approve(approvalAddress, convertToWei(amount));
+    const approveTx = await erc20.approve(approvalAddress, BigInt(convertToWei(amount)));
     await approveTx.wait();
   } else {
     const approveTx = await erc20.approve(approvalAddress, convertUsdcUp(amount));

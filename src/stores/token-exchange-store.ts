@@ -16,6 +16,9 @@ type Store = {
     quote: Quote | null;
     isLoading: boolean;
     insufficientFunds: boolean;
+    fetchQuoteErrorMessage: string;
+    allowanceErrorMessage: string;
+    transactionErrorMessage: string;
     setFromChain: (chain: string) => void;
     setToChain: (chain: string) => void;
     setFromToken: (token: string) => void;
@@ -40,6 +43,9 @@ export const useTokenExchangeStore = create<Store>((set, get) => ({
     quote: null,
     isLoading: false,
     insufficientFunds: false,
+    fetchQuoteErrorMessage: "",
+    allowanceErrorMessage: "",
+    transactionErrorMessage: "",
     setFromChain: (chain: string) => {
         set(() => ({
             fromChain: chain
@@ -85,30 +91,41 @@ export const useTokenExchangeStore = create<Store>((set, get) => ({
             isLoading: true
         }))
         
-        const response = await fetch(
-            `https://li.quest/v1/quote?fromChain=${get().fromChain}&toChain=${get().toChain}&fromToken=${get().fromToken}&toToken=${get().toToken}&fromAmount=${fromAmount}&fromAddress=${address}`,
-            {
-                method: "GET",
+        try {
+            const response = await fetch(
+                `https://li.quest/v1/quote?fromChain=${get().fromChain}&toChain=${get().toChain}&fromToken=${get().fromToken}&toToken=${get().toToken}&fromAmount=${fromAmount}&fromAddress=${address}`,
+                {
+                    method: "GET",
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error();
             }
-        );
-
-        const data = await response.json();
-
-        if (data.message) {
-            set(() => ({
-            quote: data
-        }))
-        } else if (!data.message) {
-            set(() => ({
+    
+            const data = await response.json();
+    
+            if (data.message) {
+                set(() => ({
                 quote: data
             }))
-        }  
-   
-        setTimeout(() => {
+            } else if (!data.message) {
+                set(() => ({
+                    quote: data
+                }))
+            }  
+       
+            setTimeout(() => {
+                set(() => ({
+                    isLoading: false
+                }))
+            }, 3000);
+        } catch(error) {
             set(() => ({
-                isLoading: false
+                fetchQuoteErrorMessage: "Error fetching quote. Please try again."
             }))
-        }, 3000);
+            return;
+        }     
     },
     exchangeTokens: async (txSigner: JsonRpcSigner | undefined, clearInput: () => void) => {
         set(() => ({
@@ -123,23 +140,41 @@ export const useTokenExchangeStore = create<Store>((set, get) => ({
       set(() => ({
         settingAllowance: true
       }))
-      await checkAndSetAllowance({
-        wallet: signer!,
-        tokenAddress: get().quote!.action.fromToken.address,
-        approvalAddress: get().quote!.estimate.approvalAddress,
-        amount: get().fromAmount,
-        fromToken: get().fromToken,
-      });
-      set(() => ({
-        settingAllowance: false
-      }))
+      try {
+        await checkAndSetAllowance({
+            wallet: signer!,
+            tokenAddress: get().quote!.action.fromToken.address,
+            approvalAddress: get().quote!.estimate.approvalAddress,
+            amount: get().fromAmount,
+            fromToken: get().fromToken,
+          });
+        set(() => ({
+            settingAllowance: false
+        }))
+      } catch(error) {
+        console.log("ERROR", error)
+        set(() => ({
+            allowanceErrorMessage: "Set allowance failed. Please try again."
+        }))
+        return;
+      }
     }
 
-    const tx = await signer!.sendTransaction(get().quote!.transactionRequest);
-    set(() => ({
-        awaitingConfirmation: false
-    }))
-    await tx.wait();
+    let tx;
+
+    try {
+        tx = await signer!.sendTransaction(get().quote!.transactionRequest);
+        set(() => ({
+            awaitingConfirmation: false
+        }))
+        await tx.wait();
+    } catch(error) {
+        set(() => ({
+            transactionErrorMessage: "Transaction failed. Please try again."
+        }))
+        return;
+    }
+    
 
     let result: TokenExchangeResult | null;
 

@@ -16,6 +16,7 @@ import { useDisclosure } from "@nextui-org/react";
 import TokenExchangeModal from "./token-exchange-modal";
 import { useTokenExchangeStore } from "@/stores/token-exchange-store";
 import { wethAddresses } from "@/lib/constants";
+import { Toaster, toast } from 'sonner'
 
 export default function TokenExchangeInterface() {
   const { address, chainId, isConnected } = useAccount();
@@ -28,11 +29,14 @@ export default function TokenExchangeInterface() {
   const quote = useTokenExchangeStore((state) => state.quote);
   const isLoading = useTokenExchangeStore((state) => state.isLoading)
   const awaitingConfirmation = useTokenExchangeStore((state) => state.awaitingConfirmation);
+  const fetchQuoteErrorMessage = useTokenExchangeStore((state) => state.fetchQuoteErrorMessage);
+  const allowanceErrorMessage = useTokenExchangeStore((state) => state.allowanceErrorMessage);
+  const transactionErrorMessage = useTokenExchangeStore((state) => state.transactionErrorMessage);
   const setFromChain = useTokenExchangeStore((state) => state.setFromChain);
   const setToChain = useTokenExchangeStore((state) => state.setToChain);
   const setFromAmount = useTokenExchangeStore((state) => state.setFromAmount);
   const fetchQuote = useTokenExchangeStore((state) => state.fetchQuote)
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const inputRef = useRef<any>(null);
   const interval = useRef<any>(null);
   let fromChainId = findChainId(fromChain)[0];
@@ -86,6 +90,26 @@ export default function TokenExchangeInterface() {
     setFromAmount(0);
     clearInput();
   }, [toChain, setFromAmount]);
+
+  useEffect(() => {
+    if (allowanceErrorMessage) {
+      toast.error(allowanceErrorMessage);
+      onClose();
+    }
+  }, [allowanceErrorMessage, onClose]);
+
+  useEffect(() => {
+    if (transactionErrorMessage) {
+      toast.error(transactionErrorMessage);
+      onClose();
+    }
+  }, [transactionErrorMessage, onClose]);
+
+  useEffect(() => {
+    if (fetchQuoteErrorMessage) {
+      toast.error(fetchQuoteErrorMessage)
+    }
+  }, [fetchQuoteErrorMessage])
 
   return (
     <>
@@ -155,9 +179,11 @@ export default function TokenExchangeInterface() {
 
           <TokenExchangeModal
             isOpen={isOpen}
+            onClose={onClose}
             onOpenChange={onOpenChange}
           />
         </section>
+        <Toaster richColors/>
       </div>
     </>
   );
