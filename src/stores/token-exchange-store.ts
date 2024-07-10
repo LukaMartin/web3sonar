@@ -185,6 +185,9 @@ export const useTokenExchangeStore = create<Store>((set, get) => ({
           }));
         }
         set(() => ({
+          awaitingConfirmation: false,
+        }));
+        set(() => ({
           fromAmount: 0,
         }));
         clearInput();
@@ -210,6 +213,9 @@ export const useTokenExchangeStore = create<Store>((set, get) => ({
           transactionErrorMessage: "Transaction failed. Please try again.",
         }));
       }
+      set(() => ({
+        awaitingConfirmation: false,
+      }));
       set(() => ({
         fromAmount: 0,
       }));
