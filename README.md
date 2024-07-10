@@ -2,7 +2,7 @@
 
 This applicaton aims to provide web 3 participants with a suite of tools to help them through their day to day interactions with crypto and web3. The application currently is composed of market insights, crypto news, a token exchange ui and a gas dashboard to track ethereum gas prices. The gas dashboard also includes a transaction simulator.
 
-The tech stack used for the application is TypeScript, React, NextJs, Wagmi, Ethers, Shadcn UI and Tailwind CSS.
+The tech stack used for the application is TypeScript, React, NextJs, Wagmi, Ethers, Shadcn UI, Tailwind CSS and Zustand for state management.
 
 To use the application head to: https://www.web3sonar.xyz/
 
