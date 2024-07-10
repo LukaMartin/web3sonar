@@ -1,28 +1,35 @@
 "use client";
 
-import { Quote } from "@/lib/token-exchange-quote-types";
+import useFetchUserBalance from "@/hooks/useFetchUserBalance";
+import { useEthersSigner } from "@/lib/wagmi-ethers";
+import { useTokenExchangeStore } from "@/stores/token-exchange-store";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { useAccount } from "wagmi";
 
 type TokenExchangeButtonProps = {
-  quote: Quote | null;
-  exchangeTokens: () => void;
-  fromAmount: number;
-  isLoading: boolean;
-  insufficientFunds: boolean;
   onOpen: () => void;
+  clearInput: () => void;
 };
 
 export default function TokenExchangeButton({
-  quote,
-  exchangeTokens,
-  fromAmount,
-  isLoading,
-  insufficientFunds,
   onOpen,
+  clearInput,
 }: TokenExchangeButtonProps) {
   const { open } = useWeb3Modal();
-  const { isConnected } = useAccount();
+  const { isConnected, address } = useAccount();
+  const fromAmount = useTokenExchangeStore((state) => state.fromAmount);
+  const fromChain = useTokenExchangeStore((state) => state.fromChain);
+  const fromToken = useTokenExchangeStore((state) => state.fromToken);
+  const isLoading = useTokenExchangeStore((state) => state.isLoading);
+  const quote = useTokenExchangeStore((state) => state.quote);
+  const exchangeTokens = useTokenExchangeStore((state) => state.exchangeTokens);
+  const txSigner = useEthersSigner();
+  const insufficientFunds = useFetchUserBalance({
+    address,
+    fromAmount,
+    fromChain,
+    fromToken,
+  });
   const enabledButtonStyle =
     "h-12 border-white/20 border-[1px] text-lg text-gray-950 font-semibold bg-green-yellow rounded-md mx-6 mt-6 mb-4 hover:bg-green-yellow/70 trasition active:scale-95";
 
@@ -51,7 +58,7 @@ export default function TokenExchangeButton({
               : "bg-green-yellow hover:bg-green-yellow/70"
           } h-12 border-white/20 border-[1px] text-lg text-gray-950 font-semibold rounded-md mx-6 mt-6 mb-4 transition active:scale-95`}
           onClick={() => {
-            exchangeTokens();
+            exchangeTokens(txSigner, clearInput);
             onOpen();
           }}
           disabled={

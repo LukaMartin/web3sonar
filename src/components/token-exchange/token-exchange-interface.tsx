@@ -7,40 +7,42 @@ import ChainSelectTo from "./chain-select-to";
 import TokenSelectTo from "./token-select-to";
 import TokenExchangeQuote from "./token-exchange-quote";
 import TokenExchangeQuoteSkeleton from "./token-exchange-quote-skeleton";
-import { useState, useRef, useEffect, useMemo } from "react";
+import { useRef, useEffect } from "react";
 import TokenSelectFrom from "./token-select-from";
-import useFetchQuote from "@/hooks/useFetchQuote";
-import { checkAndSetAllowance, findChainId, getStatus } from "@/lib/utils";
-import useFetchUserBalance from "@/hooks/useFetchUserBalance";
+import { convertToWei, convertUsdcUp, findChainId } from "@/lib/utils";
 import { TbSwitchVertical } from "react-icons/tb";
-import { TokenExchangeResult } from "@/lib/token-exchange-result-types";
 import { useAccount, useSwitchChain } from "wagmi";
-import { useEthersSigner } from "@/lib/wagmi-ethers";
 import { useDisclosure } from "@nextui-org/react";
 import TokenExchangeModal from "./token-exchange-modal";
-import CircularProgressIndicator from "./circular-progress";
+import { useTokenExchangeStore } from "@/stores/token-exchange-store";
+import { wethAddresses } from "@/lib/constants";
 
 export default function TokenExchangeInterface() {
   const { address, chainId, isConnected } = useAccount();
-  const txSigner = useEthersSigner();
   const { switchChain } = useSwitchChain();
+  const fromChain = useTokenExchangeStore((state) => state.fromChain);
+  const toChain = useTokenExchangeStore((state) => state.toChain);
+  const fromToken = useTokenExchangeStore((state) => state.fromToken);
+  const toToken = useTokenExchangeStore((state) => state.toToken);
+  const fromAmount = useTokenExchangeStore((state) => state.fromAmount);
+  const quote = useTokenExchangeStore((state) => state.quote);
+  const isLoading = useTokenExchangeStore((state) => state.isLoading)
+  const awaitingConfirmation = useTokenExchangeStore((state) => state.awaitingConfirmation);
+  const setFromChain = useTokenExchangeStore((state) => state.setFromChain);
+  const setToChain = useTokenExchangeStore((state) => state.setToChain);
+  const setFromAmount = useTokenExchangeStore((state) => state.setFromAmount);
+  const fetchQuote = useTokenExchangeStore((state) => state.fetchQuote)
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [fromChain, setFromChain] = useState("");
-  const [toChain, setToChain] = useState("");
-  const [fromToken, setFromToken] = useState("");
-  const [toToken, setToToken] = useState("");
-  const [fromAmount, setFromAmount] = useState(0);
-  const [txResult, setTxResult] = useState<TokenExchangeResult | null>(null);
-  const [awaitingConfirmation, setAwaitingConfirmation] = useState(false);
-  const [settingAllowance, setSettingAllowance] = useState(false);
   const inputRef = useRef<any>(null);
-  const insufficientFunds = useFetchUserBalance({
-    address,
-    fromAmount,
-    fromChain,
-    fromToken,
-  });
+  const interval = useRef<any>(null);
   let fromChainId = findChainId(fromChain)[0];
+  let convertedFromAmount = 0;
+
+  if (fromToken === "ETH" || wethAddresses.includes(fromToken)) {
+    convertedFromAmount = convertToWei(fromAmount!);
+  } else {
+    convertedFromAmount = convertUsdcUp(fromAmount!);
+  }
 
   const swapChains = () => {
     setFromChain(toChain);
@@ -51,60 +53,22 @@ export default function TokenExchangeInterface() {
     inputRef.current.value = null;
   };
 
-  const { quote, isLoading } = useFetchQuote({
-    fromChain: fromChain,
-    toChain: toChain,
-    fromToken: fromToken,
-    toToken: toToken,
-    fromAmount: fromAmount,
-    fromAddress: address
-      ? address
-      : "0xF11aeCE59d2E3959b625bbd664e4A8400e941Fb9",
-    awaitingConfirmation: awaitingConfirmation,
-  });
-
-  const exchangeTokens = async () => {
-    setAwaitingConfirmation(true);
-    setTxResult(null);
-    const signer = txSigner;
-
-    if (fromToken !== "ETH") {
-      setSettingAllowance(true);
-      await checkAndSetAllowance({
-        wallet: signer!,
-        tokenAddress: quote!.action.fromToken.address,
-        approvalAddress: quote!.estimate.approvalAddress,
-        amount: fromAmount,
-        fromToken: fromToken,
-      });
-      setSettingAllowance(false);
+  useEffect(() => {
+    if (fromChain && toChain && fromToken && toToken && fromAmount && address) {
+      fetchQuote(address, convertedFromAmount);
     }
+  }, [fromChain, toChain, fromToken, toToken, fromAmount, address, fetchQuote, convertedFromAmount]);
 
-    const tx = await signer!.sendTransaction(quote!.transactionRequest);
-    setAwaitingConfirmation(false);
-    await tx.wait();
-
-    let result;
-
-    const interval = setInterval(async () => {
-      result = await getStatus({
-        bridge: quote!.tool,
-        fromChain: fromChain,
-        toChain: toChain,
-        txHash: tx.hash,
-      });
-
-      setTxResult(result);
-      if (result.status === "DONE" || result.status === "FAILED") {
-        clearInterval(interval);
-      }
-    }, 4000);
-
-    setTimeout(() => {
-      setFromAmount(0);
-      clearInput();
-    }, 5000);
-  };
+  useEffect(() => {
+    if (fromChain && toChain && fromToken && toToken && fromAmount && address && !awaitingConfirmation) {
+      interval.current = setInterval(() => {
+        fetchQuote(address, convertedFromAmount);
+      }, 50000)
+    } else {
+      clearInterval(interval.current);
+      interval.current = null;
+    }
+  }, [awaitingConfirmation, fromChain, toChain, fromToken, toToken, fromAmount, address, fetchQuote, convertedFromAmount]);
 
   useEffect(() => {
     if (isConnected && fromChainId !== chainId) {
@@ -116,12 +80,12 @@ export default function TokenExchangeInterface() {
   useEffect(() => {
     setFromAmount(0);
     clearInput();
-  }, [fromChain]);
+  }, [fromChain, setFromAmount]);
 
   useEffect(() => {
     setFromAmount(0);
     clearInput();
-  }, [toChain]);
+  }, [toChain, setFromAmount]);
 
   return (
     <>
@@ -135,13 +99,8 @@ export default function TokenExchangeInterface() {
 
           <div className="flex justify-between items-center mt-6 px-6">
             <ChainSelectFrom
-              fromChain={fromChain}
-              setFromChain={setFromChain}
             />
             <TokenSelectFrom
-              fromToken={fromToken}
-              setFromToken={setFromToken}
-              fromChain={fromChain}
             />
           </div>
 
@@ -158,30 +117,21 @@ export default function TokenExchangeInterface() {
           </div>
 
           <div className="flex justify-between items-center px-6 mt-6">
-            <ChainSelectTo toChain={toChain} setToChain={setToChain} />
+            <ChainSelectTo 
+            />
             <TokenSelectTo
-              toToken={toToken}
-              setToToken={setToToken}
-              toChain={toChain}
             />
           </div>
 
           <p className="text-white/80 text-xl p-6">Amount</p>
 
           <TokenExchangeInput
-            setFromAmount={setFromAmount}
-            fromAmount={fromAmount}
-            fromToken={fromToken}
             inputRef={inputRef}
           />
 
           <TokenExchangeButton
-            quote={quote}
-            exchangeTokens={exchangeTokens}
-            fromAmount={fromAmount}
-            isLoading={isLoading}
-            insufficientFunds={insufficientFunds}
             onOpen={onOpen}
+            clearInput={clearInput}
           />
 
           <p className="text-sm text-white/50 pb-4 pr-6 self-end">
@@ -200,17 +150,12 @@ export default function TokenExchangeInterface() {
           {isLoading && fromAmount ? (
             <TokenExchangeQuoteSkeleton />
           ) : quote && !isLoading && fromAmount ? (
-            <TokenExchangeQuote quote={quote} toToken={toToken} />
+            <TokenExchangeQuote/>
           ) : null}
 
           <TokenExchangeModal
             isOpen={isOpen}
             onOpenChange={onOpenChange}
-            settingAllowance={settingAllowance}
-            awaitingConfirmation={awaitingConfirmation}
-            txResult={txResult}
-            fromChain={fromChain}
-            toChain={toChain}
           />
         </section>
       </div>

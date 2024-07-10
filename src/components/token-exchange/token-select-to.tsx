@@ -7,20 +7,14 @@ import {
 } from "@/components/ui/select";
 import { chains } from "@/lib/constants";
 import { ChainTokens } from "@/lib/types";
+import { useTokenExchangeStore } from "@/stores/token-exchange-store";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-type TokenSelectToProps = {
-  toToken: string;
-  setToToken: (token: string) => void;
-  toChain: string;
-};
-
-export default function TokenSelectTo({
-  toToken,
-  setToToken,
-  toChain,
-}: TokenSelectToProps) {
+export default function TokenSelectTo() {
+  const toToken = useTokenExchangeStore((state) => state.toToken);
+  const setToToken = useTokenExchangeStore((state) => state.setToToken);
+  const toChain = useTokenExchangeStore((state) => state.toChain);
   const [tokens, setTokens] = useState<ChainTokens[]>([]);
 
   useEffect(() => {

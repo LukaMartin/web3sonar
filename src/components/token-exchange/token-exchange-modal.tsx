@@ -15,26 +15,22 @@ import { FaExternalLinkAlt } from "react-icons/fa";
 import { IoCheckmarkDoneCircleOutline } from "react-icons/io5";
 import { RxCrossCircled } from "react-icons/rx";
 import { shortenTx } from "@/lib/utils";
+import { useTokenExchangeStore } from "@/stores/token-exchange-store";
 
 type TokenExchangeModalProps = {
   isOpen: boolean;
   onOpenChange: () => void;
-  settingAllowance: boolean;
-  awaitingConfirmation: boolean;
-  txResult: TokenExchangeResult | null;
-  fromChain: string;
-  toChain: string;
 };
 
 export default function TokenExchangeModal({
   isOpen,
   onOpenChange,
-  settingAllowance,
-  awaitingConfirmation,
-  txResult,
-  fromChain,
-  toChain,
 }: TokenExchangeModalProps) {
+  const settingAllowance = useTokenExchangeStore((state) => state.settingAllowance);
+  const awaitingConfirmation = useTokenExchangeStore((state) => state.awaitingConfirmation);
+  const fromChain = useTokenExchangeStore((state) => state.fromChain)
+  const toChain = useTokenExchangeStore((state) => state.toChain)
+  const txResult = useTokenExchangeStore((state) => state.txResult)
   const [fromLogo, setFromLogo] = useState("");
   const [toLogo, setToLogo] = useState("");
 

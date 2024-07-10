@@ -6,17 +6,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { chains } from "@/lib/constants";
+import { useTokenExchangeStore } from "@/stores/token-exchange-store";
 import Image from "next/image";
 
-type ChainSelectToProps = {
-  setToChain: (chain: string) => void;
-  toChain: string;
-};
-
-export default function ChainSelectTo({
-  setToChain,
-  toChain,
-}: ChainSelectToProps) {
+export default function ChainSelectTo() {
+  const toChain = useTokenExchangeStore((state) => state.toChain);
+  const setToChain = useTokenExchangeStore((state) => state.setToChain);
+  
   return (
     <Select onValueChange={setToChain} value={toChain}>
       <SelectTrigger className="w-[55%] h-14 bg-[#111620] border-white/20">

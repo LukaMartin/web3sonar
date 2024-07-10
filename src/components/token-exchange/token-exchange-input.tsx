@@ -1,20 +1,18 @@
 import useFetchEthPrice from "@/hooks/useFetchEthPrice";
 import { wethAddresses } from "@/lib/constants";
+import { useTokenExchangeStore } from "@/stores/token-exchange-store";
 import { useEffect, useState } from "react";
 
 type TokenExchangeInputProps = {
-  fromAmount: number;
-  setFromAmount: (amount: number) => void;
-  fromToken: string;
   inputRef: any;
 };
 
 export default function TokenExchangeInput({
-  fromAmount,
-  setFromAmount,
-  fromToken,
   inputRef,
 }: TokenExchangeInputProps) {
+  const fromToken = useTokenExchangeStore((state) => state.fromToken);
+  const fromAmount = useTokenExchangeStore((state) => state.fromAmount);
+  const setFromAmount = useTokenExchangeStore((state) => state.setFromAmount);
   const [input, setInput] = useState(0);
   const ethPrice = useFetchEthPrice();
   let fromUsd = 0;
