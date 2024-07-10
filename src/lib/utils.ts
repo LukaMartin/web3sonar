@@ -5,7 +5,6 @@ import { FeeCosts } from "./token-exchange-quote-types";
 import { CheckAndSetAllowanceParams, GetStatusParams } from "./types";
 import { Contract } from "ethers";
 import { erc20Abi } from "viem";
-import wethABi from "@/abi/wethAbi.json"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
