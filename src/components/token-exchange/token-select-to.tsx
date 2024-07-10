@@ -27,7 +27,7 @@ export default function TokenSelectTo() {
 
   return (
     <Select onValueChange={setToToken} value={toToken} disabled={!toChain}>
-      <SelectTrigger className="w-[42%] h-14 bg-[#111620] border-white/20">
+      <SelectTrigger className="w-[42%] h-14 bg-white/[4%] border-white/20">
         <SelectValue placeholder="Token" />
       </SelectTrigger>
       <SelectContent>

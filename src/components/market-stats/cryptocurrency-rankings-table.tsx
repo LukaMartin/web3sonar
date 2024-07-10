@@ -30,11 +30,11 @@ export default function CryptoCurrencyRankingsTable({
     <section>
       <div className="flex justify-between items-center mb-4 w-[44rem]">
         <h3 className="text-white/85 text-lg">
-          Cryptocurrenices by Market Cap
+          Top Cryptocurrenices by Market Cap
         </h3>
         <p>Page {currentPage} of 10</p>
       </div>
-      <table className=" bg-white/[2%] rounded-md shadow-[0_7px_7px_rgba(2,2,2,1)] border-collapse outline outline-1 outline-white/20 table-fixed">
+      <table className=" bg-white/[3%] rounded-md shadow-[0_7px_7px_rgba(2,2,2,1)] border-collapse outline outline-1 outline-white/20 table-fixed">
         <thead>
           <tr className="text-sm text-white/90">
             <th className="text-left pt-6 pb-4 pl-6 w-24">RANK</th>

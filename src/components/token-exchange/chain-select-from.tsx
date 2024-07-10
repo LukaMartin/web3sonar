@@ -15,7 +15,7 @@ export default function ChainSelectFrom() {
   
   return (
     <Select onValueChange={setFromChain} value={fromChain}>
-      <SelectTrigger className="w-[55%] h-14 bg-[#111620] border-white/20">
+      <SelectTrigger className="w-[55%] h-14 bg-white/[4%] border-white/20">
         <SelectValue placeholder="Select chain" />
       </SelectTrigger>
       <SelectContent>

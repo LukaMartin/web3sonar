@@ -9,7 +9,7 @@ export default function TransactionSimulationResult({
     <div>
       <h3 className="text-2xl font-semibold pb-[2.2rem]">Simulation Result</h3>
 
-      <div className="bg-white/[2%] border-[1px] border-white/20 rounded-md p-6 shadow-[0_7px_5px_rgba(2,2,2,1)] min-w-96 max-w-[40rem]">
+      <div className="bg-white/[3%] border-[1px] border-white/20 rounded-md p-6 shadow-[0_7px_5px_rgba(2,2,2,1)] min-w-96 max-w-[40rem]">
         <h5 className={headingStyles}>Simulation Status</h5>
         {simulationResult.simulationStatus === "Completed" ? (
           <p className="pb-6 text-green-yellow text-lg">

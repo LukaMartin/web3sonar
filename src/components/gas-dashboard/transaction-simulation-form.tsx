@@ -6,7 +6,7 @@ export default function TransactionSimulationForm({
   setSimulationResult,
 }: TransactionSimultionFormProps) {
   const inputStyles =
-    "bg-[#111620] border-white/20 rounded-md py-2 pl-2 mb-3 outline-none focus:ring-2 ring-accent shadow-[0_1px_1px_rgba(2,2,2,1)]";
+    "bg-white/[4%] border-white/20 rounded-md py-2 pl-2 mb-3 outline-none focus:ring-2 ring-accent shadow-[0_1px_1px_rgba(2,2,2,1)]";
 
   const labelStyles = "text-white/80 mb-2";
 
@@ -16,7 +16,7 @@ export default function TransactionSimulationForm({
         const result = await submitTransaction(formData);
         setSimulationResult(result);
       }}
-      className="flex flex-col bg-white/[2%] border-[1px] border-white/20 rounded-md p-6 w-[30rem] shadow-[0_7px_5px_rgba(2,2,2,1)]"
+      className="flex flex-col bg-white/[3%] border-[1px] border-white/20 rounded-md p-6 w-[30rem] shadow-[0_7px_5px_rgba(2,2,2,1)]"
     >
       <label htmlFor="contract-address" className={labelStyles}>
         Receiver Address

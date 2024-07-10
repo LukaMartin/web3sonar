@@ -15,7 +15,7 @@ export default function CryptoNewsCardContainer({
         return (
           <div
             key={article.title}
-            className="flex flex-col justify-between p-6 w-[32%] h-[400px] bg-white/[2%] border-white/20 border-[1px] rounded-md shadow-[0_7px_7px_rgba(2,2,2,1)] transition hover:scale-[1.025]"
+            className="flex flex-col justify-between p-6 w-[32%] h-[400px] bg-white/[3%] border-white/20 border-[1px] rounded-md shadow-[0_7px_7px_rgba(2,2,2,1)] transition hover:scale-[1.025]"
           >
             <a href={article.news_url} target="_blank">
               <p className="mb-4 text-lg hover:text-white/60">

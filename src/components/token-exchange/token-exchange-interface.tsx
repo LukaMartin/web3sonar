@@ -16,7 +16,7 @@ import { useDisclosure } from "@nextui-org/react";
 import TokenExchangeModal from "./token-exchange-modal";
 import { useTokenExchangeStore } from "@/stores/token-exchange-store";
 import { wethAddresses } from "@/lib/constants";
-import { Toaster, toast } from "sonner";
+import { useToast } from "../ui/use-toast";
 
 export default function TokenExchangeInterface() {
   const { address, chainId, isConnected } = useAccount();
@@ -39,6 +39,7 @@ export default function TokenExchangeInterface() {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const inputRef = useRef<any>(null);
   const interval = useRef<any>(null);
+  const { toast } = useToast()
   let fromChainId = findChainId(fromChain)[0];
   let convertedFromAmount = 0;
 
@@ -93,28 +94,43 @@ export default function TokenExchangeInterface() {
 
   useEffect(() => {
     if (allowanceErrorMessage) {
-      toast.error(allowanceErrorMessage);
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: allowanceErrorMessage,
+        className: "py-3 px-4"
+      })
       onClose();
     }
-  }, [allowanceErrorMessage, onClose]);
+  }, [allowanceErrorMessage, toast, onClose]);
 
   useEffect(() => {
     if (transactionErrorMessage) {
-      toast.error(transactionErrorMessage);
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: transactionErrorMessage,
+        className: "py-3 px-4"
+      })
       onClose();
     }
-  }, [transactionErrorMessage, onClose]);
+  }, [transactionErrorMessage, toast, onClose]);
 
   useEffect(() => {
     if (fetchQuoteErrorMessage) {
-      toast.error(fetchQuoteErrorMessage);
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: fetchQuoteErrorMessage,
+        className: "py-3 px-4"
+      })
     }
-  }, [fetchQuoteErrorMessage]);
+  }, [fetchQuoteErrorMessage, toast]);
 
   return (
     <>
       <div className="flex w-[850px] mx-auto">
-        <section className="w-[375px] flex flex-col mb-12 mx-auto bg-white/[2%] border-[1px] border-white/20 rounded-md shadow-[0_7px_5px_rgba(2,2,2,1)]">
+        <section className="w-[375px] flex flex-col mb-12 mx-auto bg-white/[3%] border-[1px] border-white/20 rounded-md shadow-[0_7px_5px_rgba(2,2,2,1)]">
           <div className="flex px-3 py-2 mt-3 justify-center">
             {isConnected && <w3m-account-button />}
           </div>
@@ -174,7 +190,6 @@ export default function TokenExchangeInterface() {
             onOpenChange={onOpenChange}
           />
         </section>
-        <Toaster  richColors/>
       </div>
     </>
   );

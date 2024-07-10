@@ -35,7 +35,7 @@ export default function TokenExchangeInput({
       <input
         onChange={(e) => setInput(Number(e.target.value))}
         type="number"
-        className="h-14 border-white/20 border-[1px] bg-[#111620] rounded-md mx-6 pl-2 text-xl"
+        className="h-14 border-white/20 border-[1px] bg-white/[4%] rounded-md mx-6 pl-2 text-xl"
         placeholder="0"
         ref={inputRef}
         required

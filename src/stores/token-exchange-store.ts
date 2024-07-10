@@ -93,6 +93,9 @@ export const useTokenExchangeStore = create<Store>((set, get) => ({
     set(() => ({
       isLoading: true,
     }));
+    set(() => ({
+      fetchQuoteErrorMessage: "",
+    }));
 
     try {
       const response = await fetch(
@@ -147,6 +150,13 @@ export const useTokenExchangeStore = create<Store>((set, get) => ({
     set(() => ({
       txResult: null,
     }));
+    set(() => ({
+      allowanceErrorMessage: "",
+    }));
+    set(() => ({
+      transactionErrorMessage: "",
+    }));
+
     const signer = txSigner;
 
     if (get().fromToken !== "ETH") {
@@ -165,9 +175,9 @@ export const useTokenExchangeStore = create<Store>((set, get) => ({
           settingAllowance: false,
         }));
       } catch (error: any) {
-        if (error.message.includes("user rejected action")) {
+        if (error.message.includes("user rejected")) {
           set(() => ({
-            transactionErrorMessage: "User rejected transaction.",
+            allowanceErrorMessage: "User rejected transaction.",
           }));
         } else {
           set(() => ({
@@ -191,7 +201,7 @@ export const useTokenExchangeStore = create<Store>((set, get) => ({
       }));
       await tx.wait();
     } catch (error: any) {
-      if (error.message.includes("user rejected action")) {
+      if (error.message.includes("user rejected")) {
         set(() => ({
           transactionErrorMessage: "User rejected transaction.",
         }));

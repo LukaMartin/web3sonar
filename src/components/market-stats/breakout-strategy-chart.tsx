@@ -39,7 +39,7 @@ export default function BreakoutStrategyChart({
           content="The breakout strategy represents the proportion of the top 300 coins by market cap, that are trading above or below their monthly highs and lows. This data is provided by Token Metrics."
         />
       </div>
-      <div className="relative bg-white/[2%] border-[1px] border-white/20 rounded-md h-[16rem] w-full shadow-[0_7px_7px_rgba(2,2,2,1)]">
+      <div className="relative bg-white/[3%] border-[1px] border-white/20 rounded-md h-[16rem] w-full shadow-[0_7px_7px_rgba(2,2,2,1)]">
         <ResponsivePie
           data={data}
           theme={{

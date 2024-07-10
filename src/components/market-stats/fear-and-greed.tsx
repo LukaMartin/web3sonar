@@ -30,7 +30,7 @@ export default function FearAndGreed({ fearAndGreed }: FearAndGreedProps) {
           content="The fear and greed index is a gauge to measure investor sentiment. When the sentiment overly fearful it indicates that the market over-sold. When investors are too greedy it indicates a correction in the market is likely. This data is provided by Alternative Me."
         />
       </div>
-      <div className="bg-white/[2%] border-[1px] border-white/20 rounded-md w-[24rem] h-[15rem] shadow-[0_7px_7px_rgba(2,2,2,1)]">
+      <div className="bg-white/[3%] border-[1px] border-white/20 rounded-md w-[24rem] h-[15rem] shadow-[0_7px_7px_rgba(2,2,2,1)]">
         <div className="w-[24rem]">
           <GaugeComponent
             type="semicircle"

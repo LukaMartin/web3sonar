@@ -4,10 +4,11 @@ import "./globals.css";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { NextUIProvider } from "@nextui-org/react";
-import { headers } from 'next/headers'
-import { cookieToInitialState } from 'wagmi'
-import { wagmiConfig } from '@/config'
-import Web3ModalProvider from '@/context'
+import { headers } from "next/headers";
+import { cookieToInitialState } from "wagmi";
+import { wagmiConfig } from "@/config";
+import Web3ModalProvider from "@/context";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,15 +22,21 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const initialState = cookieToInitialState(wagmiConfig, headers().get('cookie'))
+  const initialState = cookieToInitialState(
+    wagmiConfig,
+    headers().get("cookie")
+  );
   return (
     <html lang="en">
       <body
-        className={`${inter.className} bg-gray-950 text-white overflow-y-scroll`}
+        className={`${inter.className} bg-gray-950 text-white min-h-[100vh] overflow-y-scroll`}
       >
         <NextUIProvider>
           <Header />
-          <Web3ModalProvider initialState={initialState}>{children}</Web3ModalProvider>
+          <Web3ModalProvider initialState={initialState}>
+            {children}
+            <Toaster />
+          </Web3ModalProvider>
           <Footer />
         </NextUIProvider>
       </body>
