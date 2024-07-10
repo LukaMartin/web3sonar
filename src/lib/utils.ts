@@ -1,6 +1,6 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { chains } from "./constants";
+import { chains, wethAddresses } from "./constants";
 import { FeeCosts } from "./token-exchange-quote-types";
 import { CheckAndSetAllowanceParams, GetStatusParams } from "./types";
 import { Contract } from "ethers";
@@ -129,6 +129,12 @@ export const checkAndSetAllowance = async ({
 
   const erc20 = new Contract(tokenAddress, erc20Abi, wallet);
 
-  const approveTx = await erc20.approve(approvalAddress, convertUsdcUp(amount));
-  await approveTx.wait();
+  if (wethAddresses.includes(fromToken)) {
+    const approveTx = await erc20.approve(approvalAddress, convertToWei(amount));
+    await approveTx.wait();
+  } else {
+    const approveTx = await erc20.approve(approvalAddress, convertUsdcUp(amount));
+    await approveTx.wait();
+  }
+
 };
