@@ -71,7 +71,7 @@ export default function TokenExchangeModal({
                   !txResult.message &&
                   txResult.substatus === "COMPLETED" && (
                     <div className="flex gap-x-1 items-center">
-                      <p>Tranasaction Completed </p>
+                      <p>Tranasaction completed </p>
                       <IoCheckmarkDoneCircleOutline
                         size={40}
                         className="text-green-600"
@@ -83,7 +83,7 @@ export default function TokenExchangeModal({
                   txResult.substatus === "FAILED" && (
                     <>
                       <p>
-                        Tranasaction Failed{" "}
+                        Tranasaction failed{" "}
                         <RxCrossCircled size={20} className="text-red-600" />
                       </p>
                       <p className="text-sm">
@@ -96,19 +96,19 @@ export default function TokenExchangeModal({
                   !txResult.message &&
                   txResult.status === "PENDING" && (
                     <div className="flex gap-x-4">
-                      <p>Pending Transaction</p>
+                      <p>Pending transaction</p>
                       <Spinner color="primary" />
                     </div>
                   )}
                 {txResult && txResult.message && (
                   <div className="flex gap-x-4">
-                    <p>Pending Transaction</p>
+                    <p>Pending transaction</p>
                     <Spinner color="primary" />
                   </div>
                 )}
                 {!txResult && (
                   <div className="flex gap-x-4">
-                    <p>Pending Transaction</p>
+                    <p>Pending transaction</p>
                     <Spinner color="primary" />
                   </div>
                 )}

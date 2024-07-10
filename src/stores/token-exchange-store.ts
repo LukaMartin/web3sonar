@@ -165,7 +165,6 @@ export const useTokenExchangeStore = create<Store>((set, get) => ({
           settingAllowance: false,
         }));
       } catch (error: any) {
-        console.log("ERROR", error);
         if (error.message.includes("user rejected action")) {
           set(() => ({
             transactionErrorMessage: "User rejected transaction.",
@@ -188,7 +187,6 @@ export const useTokenExchangeStore = create<Store>((set, get) => ({
       }));
       await tx.wait();
     } catch (error: any) {
-      console.log("ERROR", error);
       if (error.message.includes("user rejected action")) {
         set(() => ({
           transactionErrorMessage: "User rejected transaction.",
