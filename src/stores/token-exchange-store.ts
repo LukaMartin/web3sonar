@@ -174,6 +174,10 @@ export const useTokenExchangeStore = create<Store>((set, get) => ({
             allowanceErrorMessage: "Set allowance failed. Please try again.",
           }));
         }
+        set(() => ({
+          fromAmount: 0,
+        }));
+        clearInput();
         return;
       }
     }
@@ -196,6 +200,10 @@ export const useTokenExchangeStore = create<Store>((set, get) => ({
           transactionErrorMessage: "Transaction failed. Please try again.",
         }));
       }
+      set(() => ({
+        fromAmount: 0,
+      }));
+      clearInput();
       return;
     }
 

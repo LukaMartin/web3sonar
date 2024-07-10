@@ -60,7 +60,7 @@ export default function TokenExchangeModal({
         onClose={onClose}
         classNames={{
           backdrop:
-            "bg-gradient-to-t from-zinc-900 to-zinc-900/10 backdrop-opacity-20",
+            "bg-gradient-to-t from-gray-950 to-gray-900/10 backdrop-opacity-20",
         }}
       >
         <ModalContent className="bg-white text-gray-950 w-[340px] h-[275px]">
