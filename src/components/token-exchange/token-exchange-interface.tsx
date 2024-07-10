@@ -16,7 +16,7 @@ import { useDisclosure } from "@nextui-org/react";
 import TokenExchangeModal from "./token-exchange-modal";
 import { useTokenExchangeStore } from "@/stores/token-exchange-store";
 import { wethAddresses } from "@/lib/constants";
-import { Toaster, toast } from 'sonner'
+import { Toaster, toast } from "sonner";
 
 export default function TokenExchangeInterface() {
   const { address, chainId, isConnected } = useAccount();
@@ -27,7 +27,7 @@ export default function TokenExchangeInterface() {
   const toToken = useTokenExchangeStore((state) => state.toToken);
   const fromAmount = useTokenExchangeStore((state) => state.fromAmount);
   const quote = useTokenExchangeStore((state) => state.quote);
-  const isLoading = useTokenExchangeStore((state) => state.isLoading)
+  const isLoading = useTokenExchangeStore((state) => state.isLoading);
   const awaitingConfirmation = useTokenExchangeStore((state) => state.awaitingConfirmation);
   const fetchQuoteErrorMessage = useTokenExchangeStore((state) => state.fetchQuoteErrorMessage);
   const allowanceErrorMessage = useTokenExchangeStore((state) => state.allowanceErrorMessage);
@@ -35,7 +35,7 @@ export default function TokenExchangeInterface() {
   const setFromChain = useTokenExchangeStore((state) => state.setFromChain);
   const setToChain = useTokenExchangeStore((state) => state.setToChain);
   const setFromAmount = useTokenExchangeStore((state) => state.setFromAmount);
-  const fetchQuote = useTokenExchangeStore((state) => state.fetchQuote)
+  const fetchQuote = useTokenExchangeStore((state) => state.fetchQuote);
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const inputRef = useRef<any>(null);
   const interval = useRef<any>(null);
@@ -67,7 +67,7 @@ export default function TokenExchangeInterface() {
     if (fromChain && toChain && fromToken && toToken && fromAmount && address && !awaitingConfirmation) {
       interval.current = setInterval(() => {
         fetchQuote(address, convertedFromAmount);
-      }, 50000)
+      }, 50000);
     } else {
       clearInterval(interval.current);
       interval.current = null;
@@ -107,9 +107,9 @@ export default function TokenExchangeInterface() {
 
   useEffect(() => {
     if (fetchQuoteErrorMessage) {
-      toast.error(fetchQuoteErrorMessage)
+      toast.error(fetchQuoteErrorMessage);
     }
-  }, [fetchQuoteErrorMessage])
+  }, [fetchQuoteErrorMessage]);
 
   return (
     <>
@@ -122,10 +122,8 @@ export default function TokenExchangeInterface() {
           <p className="text-xl text-white/80 ml-6 mt-4">From</p>
 
           <div className="flex justify-between items-center mt-6 px-6">
-            <ChainSelectFrom
-            />
-            <TokenSelectFrom
-            />
+            <ChainSelectFrom />
+            <TokenSelectFrom />
           </div>
 
           <div className="w-[61%] flex justify-between items-center px-6 mt-6">
@@ -141,22 +139,15 @@ export default function TokenExchangeInterface() {
           </div>
 
           <div className="flex justify-between items-center px-6 mt-6">
-            <ChainSelectTo 
-            />
-            <TokenSelectTo
-            />
+            <ChainSelectTo />
+            <TokenSelectTo />
           </div>
 
           <p className="text-white/80 text-xl p-6">Amount</p>
 
-          <TokenExchangeInput
-            inputRef={inputRef}
-          />
+          <TokenExchangeInput inputRef={inputRef} />
 
-          <TokenExchangeButton
-            onOpen={onOpen}
-            clearInput={clearInput}
-          />
+          <TokenExchangeButton onOpen={onOpen} clearInput={clearInput} />
 
           <p className="text-sm text-white/50 pb-4 pr-6 self-end">
             Powered by{" "}
@@ -174,7 +165,7 @@ export default function TokenExchangeInterface() {
           {isLoading && fromAmount ? (
             <TokenExchangeQuoteSkeleton />
           ) : quote && !isLoading && fromAmount ? (
-            <TokenExchangeQuote/>
+            <TokenExchangeQuote />
           ) : null}
 
           <TokenExchangeModal
@@ -183,7 +174,7 @@ export default function TokenExchangeInterface() {
             onOpenChange={onOpenChange}
           />
         </section>
-        <Toaster richColors/>
+        <Toaster  richColors/>
       </div>
     </>
   );
