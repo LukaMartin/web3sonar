@@ -30,7 +30,6 @@
     "react-gauge-component": "^1.2.21",
     "react-icons": "^5.2.1",
     "react-spinners": "^0.13.8",
-    "react-tooltip": "^5.27.1",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
     "viem": "^2.17.1",
