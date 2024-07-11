@@ -8,7 +8,7 @@ export default function Footer() {
       <div className="flex justify-between items-center mt-8">
         <Logo />
         <div className="flex justify-end items-center gap-x-4">
-          <a target="_blank" href="https://github.com/LukaMartin/">
+          <a target="_blank" href="https://github.com/LukaMartin/web3sonar">
             <FaGithub size={40} className="hover:text-white/60" />
           </a>
           <div className="flex items-center gap-x-2">
