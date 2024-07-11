@@ -10,15 +10,15 @@ export default function CryptoNewsCardContainer({
   data,
 }: CryptoNewsCardContainerProps) {
   return (
-    <div className="flex flex-wrap justify-between gap-y-6">
+    <div className="flex flex-wrap gap-6">
       {data.map((article) => {
         return (
           <div
             key={article.title}
-            className="flex flex-col justify-between p-6 w-[32%] h-[400px] bg-white/[3%] border-white/20 border-[1px] rounded-md shadow-[0_7px_7px_rgba(2,2,2,1)] transition hover:scale-[1.025]"
+            className="flex flex-col justify-between p-6 flex-1 basis-80 max-w-[475px] sm:max-w-[48%] max-h-[450px] bg-white/[3%] border-white/20 border-[1px] rounded-md shadow-[0_7px_7px_rgba(2,2,2,1)] transition hover:scale-[1.025] overflow-hidden"
           >
             <a href={article.news_url} target="_blank">
-              <p className="mb-4 text-lg hover:text-white/60">
+              <p className="mb-4 font-semibold hover:text-white/60">
                 {shortenNewsTitle(article.title)}
               </p>
             </a>
@@ -27,8 +27,8 @@ export default function CryptoNewsCardContainer({
                 src={article.image_url}
                 alt="News article image"
                 height={350}
-                width={350}
-                className="rounded-md mb-6"
+                width={500}
+                className="rounded-md mb-6 mt-2 object-cover"
               />
               <div className="flex justify-between">
                 <div className="flex flex-col">

@@ -4,6 +4,7 @@ import { CryptoNewsData } from "@/lib/types";
 import { useState } from "react";
 import CryptoNewsCardContainer from "./crypto-news-card-container";
 import NewsToggleButton from "./news-toggle-button";
+import { motion } from "framer-motion";
 
 type CryptoNewsContainerProps = {
   generalNews: CryptoNewsData[];
@@ -14,7 +15,7 @@ type CryptoNewsContainerProps = {
 const paths = [
   {
     path: "general",
-    name: "General Crypto",
+    name: "General News",
   },
   {
     path: "tickers",
@@ -35,7 +36,7 @@ export default function CryptoNewsContainer({
 
   return (
     <section className="flex flex-col w-full">
-      <div className="flex gap-x-[0.85rem]">
+      <div className="flex gap-x-8 mb-4">
         {paths.map((path) => {
           return (
             <NewsToggleButton

@@ -8,7 +8,9 @@ export default async function News() {
   return (
     <>
       <main className="hidden xl:flex flex-col max-w-7xl mx-auto px-4 md:px-8">
-        <h2 className="text-[40px] font-semibold mb-10">News Headlines</h2>
+        <h2 className="text-[32px] lg:text-[40px] font-semibold mb-6">
+          News Headlines
+        </h2>
         <CryptoNewsContainer
           generalNews={generalNews.data}
           tickerNews={tickerNews.data}
