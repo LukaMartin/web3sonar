@@ -33,7 +33,7 @@ export default async function Home() {
 
   return (
     <>
-      <main className="hidden xl:flex flex-col max-w-7xl mx-auto px-4 md:px-8">
+      <main className="hidden xl:flex flex-col max-w-7xl mx-auto mb-20 px-4 md:px-8">
         <div className="flex justify-between">
           <CryptoCurrencyRankingsTable coinData={coinData} />
 

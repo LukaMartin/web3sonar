@@ -4,7 +4,7 @@ import TransactionSimulationContainer from "@/components/gas-dashboard/transacti
 import MobileLandingPage from "@/components/mobile-landing-page";
 import { fetchBlockValues } from "@/lib/server-utils";
 
-export default async function Home() {
+export default async function GasDashboard() {
   const {
     baseFee,
     maxFee,
@@ -16,7 +16,7 @@ export default async function Home() {
 
   return (
     <>
-      <main className="hidden xl:flex flex-col max-w-7xl mx-auto px-4 md:px-8">
+      <main className="hidden xl:flex flex-col max-w-7xl mx-auto mb-20 px-4 md:px-8">
         <BlockDataContainer
           baseFee={baseFee}
           maxFee={maxFee}
