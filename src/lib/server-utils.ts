@@ -213,7 +213,7 @@ export const fetchCryptoMarketCapData = async () => {
     method: "POST",
     headers: {
       "content-type": "application/json",
-      "x-api-key": "becf72c4-87c6-4d0c-908f-9182351a6073",
+      "x-api-key": `${process.env.LIVE_COIN_WATCH_API_KEY}`,
     },
     body: JSON.stringify({
       currency: "USD",
