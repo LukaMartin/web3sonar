@@ -81,7 +81,7 @@ export default function CryptoMarketcapChart({
           width={1200}
           pointSize={0}
           lineWidth={3}
-          colors={["#DC2626", "#16A34A"]}
+          colors={["#FACC15", "#16A34A"]}
           theme={theme}
           enableSlices="x"
           enableTouchCrosshair
