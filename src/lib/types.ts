@@ -166,3 +166,8 @@ export type ChainTokens = {
   logo: string;
   tokenAddress: string;
 };
+
+export type CryptoMarketcapData = {
+  x: string;
+  y: number;
+}

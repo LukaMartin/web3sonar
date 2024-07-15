@@ -163,7 +163,7 @@ export const fetchCoinData = async () => {
   return data
 }
 
-export const fetchCryptoMarketCapData = async () => {
+export const fetchBreakoutStrategy = async () => {
   
   let date = new Date();
   let dateOffsetOne = (24*60*60*1000) * 0
@@ -202,7 +202,46 @@ export const fetchCryptoMarketCapData = async () => {
     }
   })
 
-  return  { newDataArray, highCoinsPercentage }
+  return  highCoinsPercentage 
+}
+
+export const fetchCryptoMarketCapData = async () => {
+  let endDate = Date.now();
+  let startDate = Date.now() - 15778458000;
+
+  const response = await fetch("https://api.livecoinwatch.com/overview/history", {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      "x-api-key": "becf72c4-87c6-4d0c-908f-9182351a6073",
+    },
+    body: JSON.stringify({
+      currency: "USD",
+      start: startDate,
+      end: endDate,
+    }),
+    next: {
+      revalidate: 180,
+    }
+  })
+
+  const data = await response.json();
+
+  const cryptoTotalMarketcap = data.map((item: any) => {
+    return {
+      x: new Date(item.date).toISOString().split('T')[0],
+      y: item.cap
+    }
+  });
+
+  const altcoinTotalMarketcap = data.map((item: any) => {
+    return {
+      x: new Date(item.date).toISOString().split('T')[0],
+      y: item.cap * (1 - item.btcDominance)
+    }
+  })
+
+  return { cryptoTotalMarketcap, altcoinTotalMarketcap }
 }
 
 export const fetchFearGreed = async () => {

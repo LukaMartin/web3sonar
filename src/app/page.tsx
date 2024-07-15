@@ -5,6 +5,7 @@ import BreakoutStrategySkeleton from "@/components/market-stats/breakout-strateg
 import MobileLandingPage from "@/components/mobile-landing-page";
 import {
   fetchCoinData,
+  fetchBreakoutStrategy,
   fetchCryptoMarketCapData,
   fetchFearGreed,
 } from "@/lib/server-utils";
@@ -28,8 +29,10 @@ const DynamicBreakoutStrategyChart = dynamic(
 
 export default async function Home() {
   const coinData = await fetchCoinData();
-  const { newDataArray, highCoinsPercentage } = await fetchCryptoMarketCapData();
+  const highCoinsPercentage = await fetchBreakoutStrategy();
   const fearAndGreed = await fetchFearGreed();
+  const { cryptoTotalMarketcap, altcoinTotalMarketcap } =
+    await fetchCryptoMarketCapData();
 
   return (
     <>
@@ -45,7 +48,10 @@ export default async function Home() {
           </div>
         </div>
 
-        <CryptoMarketcapChart newDataArray={newDataArray} />
+        <CryptoMarketcapChart
+          cryptoTotalMarketCap={cryptoTotalMarketcap}
+          altcoinTotalMarketcap={altcoinTotalMarketcap}
+        />
       </main>
 
       <main className="xl:hidden">
