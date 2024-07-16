@@ -25,7 +25,7 @@ export default function TokenExchange() {
             possible through Web 3 Sonar.
           </p>
           <p className="text-sm">
-            The situation has since been contained, It poses no further risk to
+            The situation has since been contained. It poses no further risk to
             users as reported by LI.FI. Please refer to the LI.FI{" "}
             <a
               className="underline hover:text-white/60"
