@@ -59,15 +59,15 @@ export default function TokenExchangeInterface() {
   };
 
   useEffect(() => {
-    if (fromChain && toChain && fromToken && toToken && fromAmount && address) {
-      fetchQuote(address, convertedFromAmount);
+    if (fromChain && toChain && fromToken && toToken && fromAmount) {
+      fetchQuote(address ? address : "0xF11aeCE59d2E3959b625bbd664e4A8400e941Fb9", convertedFromAmount);
     }
   }, [fromChain, toChain, fromToken, toToken, fromAmount, address, fetchQuote, convertedFromAmount]);
 
   useEffect(() => {
-    if (fromChain && toChain && fromToken && toToken && fromAmount && address && !awaitingConfirmation) {
+    if (fromChain && toChain && fromToken && toToken && fromAmount && !awaitingConfirmation) {
       interval.current = setInterval(() => {
-        fetchQuote(address, convertedFromAmount);
+        fetchQuote(address ? address : "0xF11aeCE59d2E3959b625bbd664e4A8400e941Fb9", convertedFromAmount);
       }, 50000);
     } else {
       clearInterval(interval.current);
