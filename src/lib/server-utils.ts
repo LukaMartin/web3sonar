@@ -207,7 +207,7 @@ export const fetchBreakoutStrategy = async () => {
 
 export const fetchCryptoMarketCapData = async () => {
   let endDate = Date.now();
-  let startDate = Date.now() - 15778458000;
+  let startDate = Date.now() - 7889229001;
 
   const response = await fetch("https://api.livecoinwatch.com/overview/history", {
     method: "POST",
@@ -221,7 +221,7 @@ export const fetchCryptoMarketCapData = async () => {
       end: endDate,
     }),
     next: {
-      revalidate: 180,
+      revalidate: 600,
     }
   })
 
@@ -260,7 +260,7 @@ export const fetchFearGreed = async () => {
 
 export const fetchCryptoNews = async () => {
 
-  const generalResponse = await fetch("https://cryptonews-api.com/api/v1/category?section=general&items=9&page=1&token=qglrdr1zt0jdszdtlrzrt6gsj2ipkrbgupszx00f", {
+  const generalResponse = await fetch("https://cryptonews-api.com/api/v1/category?section=general&items=9&page=1&token=qglrdr1zt0jdszdtlrzrt6gsj2ipkrbgupszx00f&source=The+Block,Cointelegraph,Reuters,Coindesk,BeInCrypto,Blockworks,Decrypt,UToday,Bitcoin,Forbes,Crypto+News", {
     method: "GET",
     next: {
       revalidate: 300,
@@ -269,7 +269,7 @@ export const fetchCryptoNews = async () => {
 
   const generalNews = await generalResponse.json();
   
-  const tickerResponse = await fetch("https://cryptonews-api.com/api/v1?tickers=BTC,ETH,SOL&items=9&page=1&token=qglrdr1zt0jdszdtlrzrt6gsj2ipkrbgupszx00f", {
+  const tickerResponse = await fetch("https://cryptonews-api.com/api/v1?tickers=BTC,ETH,SOL&items=9&page=1&token=qglrdr1zt0jdszdtlrzrt6gsj2ipkrbgupszx00f&source=The+Block,Cointelegraph,Reuters,Coindesk,BeInCrypto,Blockworks,Decrypt,UToday,Bitcoin,Forbes,Crypto+News", {
     method: "GET",
     next: {
       revalidate: 300,
