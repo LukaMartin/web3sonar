@@ -1,9 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import PaginationButtons from "./pagination-buttons";
 import { CryptocurrencyCoinData, PageDirection } from "@/lib/types";
+import { useRouter } from "next/navigation";
 
 export default function CryptoCurrencyRankingsTable({
   coinData,
@@ -11,6 +12,7 @@ export default function CryptoCurrencyRankingsTable({
   coinData: CryptocurrencyCoinData[];
 }) {
   let nf = new Intl.NumberFormat("en-US");
+  const router = useRouter();
   const [currentPage, setCurrentPage] = useState(1);
   const resultsPerPage = 10;
   const coinDataSliced = coinData.slice(
@@ -25,6 +27,12 @@ export default function CryptoCurrencyRankingsTable({
       setCurrentPage((prev) => prev - 1);
     }
   }, []);
+
+  useEffect(() => {
+    setInterval(() => {
+      router.refresh();
+    }, 60000)
+  }, [router])
 
   return (
     <section>
