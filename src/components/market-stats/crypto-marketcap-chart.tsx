@@ -47,7 +47,7 @@ export default function CryptoMarketcapChart({
         <Line
           axisBottom={{
             format: "%b %d",
-            tickValues: "every 21 days",
+            tickValues: "every 7 days",
           }}
           axisLeft={null}
           axisRight={{
