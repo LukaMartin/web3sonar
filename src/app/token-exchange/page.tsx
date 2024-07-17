@@ -20,7 +20,7 @@ export default function TokenExchange() {
           </p>
           <p className="text-sm">
             {" "}
-            Earlier today LI.FI was subject to a smart contract exploit. It
+            LI.FI was subject to a smart contract exploit. It
             affected users that had manually set infinite approvals. This is not
             possible through Web 3 Sonar.
           </p>
