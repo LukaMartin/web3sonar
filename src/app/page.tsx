@@ -10,6 +10,7 @@ import {
   fetchFearGreed,
 } from "@/lib/server-utils";
 import dynamic from "next/dynamic";
+import BiggestGainersContainerSkeleton from "@/components/market-stats/biggest-gainers-container-skeleton";
 
 const DynamicFearAndGreed = dynamic(
   () => import("../components/market-stats/fear-and-greed"),
@@ -27,6 +28,14 @@ const DynamicBreakoutStrategyChart = dynamic(
   }
 );
 
+const DynamicBiggestGainersContainer = dynamic(
+  () => import("../components/market-stats/biggest-gainers-container"),
+  {
+    ssr: false,
+    loading: () => <BiggestGainersContainerSkeleton />,
+  }
+);
+
 export default async function Home() {
   const coinData = await fetchCoinData();
   const highCoinsPercentage = await fetchBreakoutStrategy();
@@ -40,13 +49,15 @@ export default async function Home() {
         <div className="flex justify-between">
           <CryptoCurrencyRankingsTable coinData={coinData} />
 
-          <div className="flex flex-col justify-between pb-[4.75rem]">
+          <div className="flex flex-col justify-between pb-[4.6rem]">
             <DynamicFearAndGreed fearAndGreed={fearAndGreed} />
             <DynamicBreakoutStrategyChart
               highCoinsPercentage={highCoinsPercentage[0].toFixed(2)}
             />
           </div>
         </div>
+
+        <DynamicBiggestGainersContainer coinData={coinData} />
 
         <CryptoMarketcapChart
           cryptoTotalMarketCap={cryptoTotalMarketcap}

@@ -31,12 +31,12 @@ export default function CryptoCurrencyRankingsTable({
   useEffect(() => {
     setInterval(() => {
       router.refresh();
-    }, 60000)
-  }, [router])
+    }, 60000);
+  }, [router]);
 
   return (
     <section>
-      <div className="flex justify-between items-center mb-4 w-[44rem]">
+      <div className="flex justify-between items-center mb-[1.05rem] w-[50rem]">
         <h3 className="text-white/85 text-lg">
           Top Cryptocurrenices by Market Cap
         </h3>
@@ -45,12 +45,13 @@ export default function CryptoCurrencyRankingsTable({
       <table className=" bg-white/[3%] rounded-md shadow-[0_7px_7px_rgba(2,2,2,1)] border-collapse outline outline-1 outline-white/20 table-fixed">
         <thead>
           <tr className="text-sm text-white/90">
-            <th className="text-left pt-6 pb-4 pl-6 w-24">RANK</th>
+            <th className="text-left pt-6 pb-4 pl-6 w-[4.25rem]">#</th>
             <th className="text-left pt-6 pb-4 w-20">NAME</th>
             <th className="text-right pt-6 pb-4 w-28">PRICE</th>
             <th className="text-right pt-6 pb-4 w-40">MARKET CAP</th>
-            <th className="text-right pt-6 pb-4 w-20">1H%</th>
-            <th className="text-right pt-6 pb-4 w-20">24H%</th>
+            <th className="text-right pt-6 pb-4 w-[8.75rem]">24H VOLUME</th>
+            <th className="text-right pt-6 pb-4 w-[4.5rem]">1H%</th>
+            <th className="text-right pt-6 pb-4 w-[4.5rem]">24H%</th>
             <th className="text-right pt-6 pb-4 pr-6 w-24">7D%</th>
           </tr>
         </thead>
@@ -80,6 +81,9 @@ export default function CryptoCurrencyRankingsTable({
                 </td>
                 <td className="text-right text-white/75 text-sm">
                   <p>${nf.format(coin.market_cap_usd)}</p>
+                </td>
+                <td className="text-right text-sm text-white/75">
+                  <p>${nf.format(coin.total_volume)}</p>
                 </td>
                 <td className="text-right text-sm">
                   {coin.usd_price_1hr_percent_change > 0 ? (
