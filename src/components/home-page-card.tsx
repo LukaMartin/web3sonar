@@ -15,7 +15,7 @@ export default function HomePageCard({
   return (
     <section
       className={cn(
-        "w-[30%] bg-white/[3%] flex flex-col justify-between rounded-md transition hover:scale-[1.02]",
+        "w-[30%] bg-white/[3%] flex flex-col justify-between border-white/20 border-[1px] rounded-md shadow-[0_7px_7px_rgba(2,2,2,1)] transition hover:scale-[1.02]",
         className
       )}
     >

@@ -22,7 +22,7 @@ const portfolioTracker = {
 
 const news = {
   title: "News",
-  description: "Read up on the latest web 3 news",
+  description: "Read up on the latest web3 news",
   image: newsImage,
   path: "/news",
 };
