@@ -1,4 +1,5 @@
 import { CryptocurrencyCoinData } from "@/lib/types";
+import { removeDecimalsFromString } from "@/lib/utils";
 import Image from "next/image";
 
 export default function BiggestGainersTable({
@@ -39,7 +40,12 @@ export default function BiggestGainersTable({
                   <p className="font-bold pl-2 uppercase">{coin.symbol}</p>
                 </td>
                 <td className="text-right text-white/75 text-sm">
-                  <p>${nf.format(coin.market_cap_24hr_change)}</p>
+                  <p>
+                    $
+                    {removeDecimalsFromString(
+                      nf.format(coin.market_cap_24hr_change)
+                    )}
+                  </p>
                 </td>
                 <td className="text-right text-white/75 text-sm pr-6">
                   <p>
