@@ -10,7 +10,7 @@ export default function CryptoNewsCardContainer({
   data,
 }: CryptoNewsCardContainerProps) {
   return (
-    <div className="flex flex-wrap gap-6">
+    <div className="flex flex-wrap gap-8">
       {data.map((article) => {
         return (
           <div
