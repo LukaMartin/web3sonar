@@ -1,73 +1,63 @@
-import CryptoMarketcapChart from "@/components/market-stats/crypto-marketcap-chart";
-import CryptoCurrencyRankingsTable from "@/components/market-stats/cryptocurrency-rankings-table";
-import FearAndGreedSkeleton from "@/components/market-stats/fear-and-greed-skeleton";
-import BreakoutStrategySkeleton from "@/components/market-stats/breakout-strategy-skeleton";
-import MobileLandingPage from "@/components/mobile-landing-page";
-import {
-  fetchCoinData,
-  fetchBreakoutStrategy,
-  fetchCryptoMarketCapData,
-  fetchFearGreed,
-} from "@/lib/server-utils";
-import dynamic from "next/dynamic";
-import BiggestGainersContainerSkeleton from "@/components/market-stats/biggest-gainers-container-skeleton";
+import HomePageCard from "@/components/home-page-card";
+import marketInsightsImage from "../../public/market-insights.png";
+import portfolioTrackerImage from "../../public/portfolio-tracker.jpg";
+import newsImage from "../../public/news.jpg";
+import tokenExchangeImage from "../../public/token-exchange.jpg";
+import gasDashboardImage from "../../public/gas-dashboard.png";
 
-const DynamicFearAndGreed = dynamic(
-  () => import("../components/market-stats/fear-and-greed"),
-  {
-    ssr: false,
-    loading: () => <FearAndGreedSkeleton />,
-  }
-);
+const marketInsights = {
+  title: "Market Insights",
+  description:
+    "View up to date data on the overall performance of the crypto market",
+  image: marketInsightsImage,
+  path: "/market-insights",
+};
 
-const DynamicBreakoutStrategyChart = dynamic(
-  () => import("../components/market-stats/breakout-strategy-chart"),
-  {
-    ssr: false,
-    loading: () => <BreakoutStrategySkeleton />,
-  }
-);
+const portfolioTracker = {
+  title: "Portfolio Tracker",
+  description: "Coming soon..",
+  image: portfolioTrackerImage,
+  path: "/portfolio-tracker",
+};
 
-const DynamicBiggestGainersContainer = dynamic(
-  () => import("../components/market-stats/biggest-gainers-container"),
-  {
-    ssr: false,
-    loading: () => <BiggestGainersContainerSkeleton />,
-  }
-);
+const news = {
+  title: "News",
+  description: "Read up on the latest web 3 news",
+  image: newsImage,
+  path: "/news",
+};
 
-export default async function Home() {
-  const coinData = await fetchCoinData();
-  const highCoinsPercentage = await fetchBreakoutStrategy();
-  const fearAndGreed = await fetchFearGreed();
-  const { cryptoTotalMarketcap, altcoinTotalMarketcap } =
-    await fetchCryptoMarketCapData();
+const tokenExchange = {
+  title: "Token Exchange",
+  description: "Easily bridge your tokens across EVM blockchains",
+  image: tokenExchangeImage,
+  path: "/token-exchange",
+};
 
+const gasDashboard = {
+  title: "Gas Dashboard",
+  description:
+    "Monitor fees on the Ethereum blockchain and simualte your transactions",
+  image: gasDashboardImage,
+  path: "/gas-dashboard",
+};
+
+export default function Home() {
   return (
-    <>
-      <main className="hidden xl:flex flex-col max-w-7xl mx-auto mb-20 px-4 md:px-8">
-        <div className="flex justify-between">
-          <CryptoCurrencyRankingsTable coinData={coinData} />
+    <main className="hidden xl:flex flex-col mb-20 px-4 md:px-8">
+      <div className="flex justify-between">
+        <h1 className="text-[51px] font-semibold w-[30%]">
+          Navigate through the world of Web3
+        </h1>
+        <HomePageCard cardDetails={marketInsights} />
+        <HomePageCard cardDetails={portfolioTracker} />
+      </div>
 
-          <div className="flex flex-col justify-between pb-[4.6rem]">
-            <DynamicFearAndGreed fearAndGreed={fearAndGreed} />
-            <DynamicBreakoutStrategyChart
-              highCoinsPercentage={highCoinsPercentage[0].toFixed(2)}
-            />
-          </div>
-        </div>
-
-        <DynamicBiggestGainersContainer coinData={coinData} />
-
-        <CryptoMarketcapChart
-          cryptoTotalMarketCap={cryptoTotalMarketcap}
-          altcoinTotalMarketcap={altcoinTotalMarketcap}
-        />
-      </main>
-
-      <main className="xl:hidden">
-        <MobileLandingPage />
-      </main>
-    </>
+      <div className="flex justify-between mt-10">
+        <HomePageCard cardDetails={news} />
+        <HomePageCard cardDetails={tokenExchange} />
+        <HomePageCard cardDetails={gasDashboard} />
+      </div>
+    </main>
   );
 }

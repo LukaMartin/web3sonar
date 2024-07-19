@@ -9,6 +9,7 @@ import { cookieToInitialState } from "wagmi";
 import { wagmiConfig } from "@/config";
 import Web3ModalProvider from "@/context";
 import { Toaster } from "@/components/ui/toaster";
+import Container from "@/components/container";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,15 +30,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.className} bg-gray-950 text-white min-h-[100vh] overflow-y-scroll`}
+        className={`${inter.className} bg-gray-950 text-white overflow-y-scroll`}
       >
         <NextUIProvider>
-          <Header />
-          <Web3ModalProvider initialState={initialState}>
-            {children}
-            <Toaster />
-          </Web3ModalProvider>
-          <Footer />
+          <Container>
+            <Header />
+            <Web3ModalProvider initialState={initialState}>
+              {children}
+              <Toaster />
+            </Web3ModalProvider>
+            <Footer />
+          </Container>
         </NextUIProvider>
       </body>
     </html>

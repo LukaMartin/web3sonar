@@ -4,7 +4,7 @@ import { FaGithub } from "react-icons/fa6";
 
 export default function Footer() {
   return (
-    <footer className="h-40 max-w-7xl flex flex-col mt-auto mx-auto px-4 md:px-8 border-t border-white/10">
+    <footer className="h-40 flex flex-col mt-auto px-4 md:px-8 border-t border-white/10">
       <div className="flex justify-between items-center mt-8">
         <Logo />
         <div className="flex justify-end items-center gap-x-4">

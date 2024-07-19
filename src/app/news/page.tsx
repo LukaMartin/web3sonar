@@ -7,7 +7,7 @@ export default async function News() {
 
   return (
     <>
-      <main className="hidden xl:flex flex-col max-w-7xl mx-auto mb-20 px-4 md:px-8">
+      <main className="hidden xl:flex flex-col mb-20 px-4 md:px-8">
         <h2 className="text-[32px] lg:text-[40px] font-semibold mb-6">
           News Headlines
         </h2>

@@ -1,4 +1,12 @@
 import { ContractRunner, JsonRpcSigner } from "ethers";
+import { StaticImageData } from "next/image";
+
+export type HomePageCardDetails = {
+  title: string;
+  description: string;
+  image: StaticImageData;
+  path: string;
+};
 
 export type BlockDataContainerProps = {
   baseFee: number;
@@ -170,4 +178,4 @@ export type ChainTokens = {
 export type CryptoMarketcapData = {
   x: string;
   y: number;
-}
+};
