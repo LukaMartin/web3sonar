@@ -35,7 +35,7 @@ export default function Header() {
   return (
     <header className="h-32 flex items-center justify-between gap-y-4 sm:gap-y-0 mb-20 px-4 md:px-8 border-b border-white/10">
       <Link href="/">
-        <Logo />
+        <Logo height={60} />
       </Link>
 
       <nav className="h-full hidden xl:block">
@@ -57,7 +57,7 @@ export default function Header() {
                 {activepathname === route.path && (
                   <motion.div
                     layoutId="header-active-link"
-                    className="bg-green-yellow h-1 w-full absolute bottom-0 rounded-md"
+                    className="bg-green-yellow h-[0.175rem] w-full absolute bottom-0 rounded-md"
                   ></motion.div>
                 )}
               </li>

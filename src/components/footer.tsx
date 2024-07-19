@@ -6,7 +6,7 @@ export default function Footer() {
   return (
     <footer className="h-40 flex flex-col mt-auto px-4 md:px-8 border-t border-white/10">
       <div className="flex justify-between items-center mt-8">
-        <Logo />
+        <Logo height={45} />
         <div className="flex justify-end items-center gap-x-4">
           <a target="_blank" href="https://github.com/LukaMartin/web3sonar">
             <FaGithub size={40} className="hover:text-white/60" />

@@ -29,7 +29,7 @@ export default function NewsToggleButton({
       {toggleView === path && (
         <motion.div
           layoutId="news-active-link"
-          className="bg-green-yellow h-1 w-full absolute bottom-0 rounded-md"
+          className="bg-green-yellow h-[0.175rem] w-full absolute bottom-0 rounded-md"
         ></motion.div>
       )}
     </div>
