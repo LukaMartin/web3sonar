@@ -130,7 +130,7 @@ export default function TokenExchangeInterface() {
   return (
     <>
       <div className="flex w-[850px] mx-auto">
-        <section className="w-[375px] flex flex-col mb-12 mx-auto bg-white/[3%] border-[1px] border-white/20 rounded-md shadow-[0_7px_5px_rgba(2,2,2,1)]">
+        <section className="w-[375px] flex flex-col mb-12 mx-auto bg-white/[3%] rounded-md shadow-[0_8px_5px_rgba(2,2,2,1)]">
           <div className="flex px-3 py-2 mt-3 justify-center">
             {isConnected && <w3m-account-button />}
           </div>

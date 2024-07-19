@@ -18,7 +18,7 @@ export default function Error({
     <main className="text-center">
       <h1 className="mb-5 text-3xl">Something went wrong!</h1>
       <button
-      className="hover:bg-white/[6%] active:scale-95 bg-white/[3%] py-2 px-4 rounded-md border-[1px] border-white/20"
+        className="hover:bg-white/[6%] active:scale-95 bg-white/[3%] py-2 px-4 rounded-md border-[1px] border-white/20"
         onClick={
           // Attempt to recover by trying to re-render the segment
           reset

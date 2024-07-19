@@ -37,7 +37,7 @@ export default function FearAndGreed({ fearAndGreed }: FearAndGreedProps) {
           </div>
         </Tooltip>
       </div>
-      <div className="bg-white/[3%] border-[1px] border-white/20 rounded-md w-[24rem] h-[15rem] shadow-[0_7px_7px_rgba(2,2,2,1)]">
+      <div className="bg-white/[3%] rounded-md w-[24rem] h-[15rem] shadow-[0_7px_5px_rgba(2,2,2,1)]">
         <div className="w-[24rem]">
           <GaugeComponent
             type="semicircle"

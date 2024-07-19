@@ -19,7 +19,7 @@ export default function EstimatedPriceItem({
   }
 
   return (
-    <div className="flex flex-col text-center border-[1px] border-white/20 rounded-md p-3 sm:p-6 bg-white/[3%] shadow-[0_6px_5px_rgba(2,2,2,1)]">
+    <div className="flex flex-col text-center rounded-md p-3 sm:p-6 bg-white/[3%] shadow-[0_7px_5px_rgba(2,2,2,1)]">
       <p className="pb-1 text-white/80">Probability</p>
       <p className={`pb-2 ${textColor} font-semibold`}>{confidence}%</p>
       <p className="pb-1 text-white/80">Max Priority Fee</p>

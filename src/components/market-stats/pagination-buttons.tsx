@@ -6,7 +6,7 @@ export default function PaginationButtons({
   currentPage,
 }: PaginationButtonsProps) {
   const buttonStyles =
-    "flex items-center gap-x-2 bg-white/[3%] rounded-md py-3 px-6 hover:bg-white/[6%] border-white/20 border-[1px] shadow-[0_7px_7px_rgba(2,2,2,1)] transition active:scale-95";
+    "flex items-center gap-x-2 bg-white/[3%] rounded-md py-3 px-6 hover:bg-white/[6%] shadow-[0_7px_5px_rgba(2,2,2,1)] transition active:scale-95";
 
   return (
     <section className="flex justify-between w-[50rem] mt-6 ">

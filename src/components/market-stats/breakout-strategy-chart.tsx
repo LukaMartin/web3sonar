@@ -46,7 +46,7 @@ export default function BreakoutStrategyChart({
           </div>
         </Tooltip>
       </div>
-      <div className="relative bg-white/[3%] border-[1px] border-white/20 rounded-md h-[16rem] w-full shadow-[0_7px_7px_rgba(2,2,2,1)]">
+      <div className="relative bg-white/[3%] rounded-md h-[16rem] w-full shadow-[0_7px_5px_rgba(2,2,2,1)]">
         <ResponsivePie
           data={data}
           theme={{

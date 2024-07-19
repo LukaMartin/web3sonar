@@ -43,7 +43,7 @@ export default function CryptoMarketcapChart({
         Crypto Market Cap (USD)
       </h2>
 
-      <div className="flex bg-white/[3%] border-[1px] border-white/20 rounded-md w-full shadow-[0_7px_7px_rgba(2,2,2,1)]">
+      <div className="flex bg-white/[3%] rounded-md w-full shadow-[0_7px_5px_rgba(2,2,2,1)]">
         <Line
           axisBottom={{
             format: "%b %d",
