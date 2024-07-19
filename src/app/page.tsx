@@ -4,6 +4,7 @@ import portfolioTrackerImage from "../../public/portfolio-tracker.jpg";
 import newsImage from "../../public/news.jpg";
 import tokenExchangeImage from "../../public/token-exchange.jpg";
 import gasDashboardImage from "../../public/gas-dashboard.png";
+import MobileLandingPage from "@/components/mobile-landing-page";
 
 const marketInsights = {
   title: "Market Insights",
@@ -15,14 +16,14 @@ const marketInsights = {
 
 const portfolioTracker = {
   title: "Portfolio Tracker",
-  description: "Coming soon..",
+  description: "Coming soon...",
   image: portfolioTrackerImage,
   path: "/portfolio-tracker",
 };
 
 const news = {
   title: "News",
-  description: "Read up on the latest web3 news",
+  description: "Read up on the latest web3 news and key ecenomic events",
   image: newsImage,
   path: "/news",
 };
@@ -44,20 +45,26 @@ const gasDashboard = {
 
 export default function Home() {
   return (
-    <main className="hidden xl:flex flex-col mb-20 px-4 md:px-8">
-      <div className="flex justify-between">
-        <h1 className="text-[51px] font-semibold w-[30%]">
-          Navigate through the world of Web3
-        </h1>
-        <HomePageCard cardDetails={marketInsights} />
-        <HomePageCard cardDetails={portfolioTracker} />
-      </div>
+    <>
+      <main className="hidden xl:flex flex-col mb-20 px-4 md:px-8">
+        <div className="flex justify-between">
+          <h1 className="text-[51px] font-semibold w-[30%]">
+            Navigate through the world of Web3
+          </h1>
+          <HomePageCard cardDetails={marketInsights} />
+          <HomePageCard cardDetails={portfolioTracker} />
+        </div>
 
-      <div className="flex justify-between mt-10">
-        <HomePageCard cardDetails={news} />
-        <HomePageCard cardDetails={tokenExchange} />
-        <HomePageCard cardDetails={gasDashboard} />
-      </div>
-    </main>
+        <div className="flex justify-between mt-10">
+          <HomePageCard cardDetails={news} />
+          <HomePageCard cardDetails={tokenExchange} />
+          <HomePageCard cardDetails={gasDashboard} />
+        </div>
+      </main>
+
+      <main className="xl:hidden">
+        <MobileLandingPage />
+      </main>
+    </>
   );
 }

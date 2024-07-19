@@ -20,15 +20,32 @@ export default function HomePageCard({
       )}
     >
       <div>
-        <Link href={cardDetails.path} className={`${cardDetails.title === "Portfolio Tracker" && "pointer-events-none"}`}>
+        <Link
+          href={cardDetails.path}
+          className={`${
+            cardDetails.title === "Portfolio Tracker" && "pointer-events-none"
+          }`}
+        >
           <h2 className="text-2xl font-semibold text-white/90 p-4">
             {cardDetails.title}
           </h2>
         </Link>
-        <p className="text-white/75 px-4">{cardDetails.description}</p>
+        <Link
+          href={cardDetails.path}
+          className={`${
+            cardDetails.title === "Portfolio Tracker" && "pointer-events-none"
+          }`}
+        >
+          <p className="text-white/75 px-4">{cardDetails.description}</p>
+        </Link>
       </div>
       <div className="h-[200px] relative">
-        <Link href={cardDetails.path} className={`${cardDetails.title === "Portfolio Tracker" && "pointer-events-none"}`}>
+        <Link
+          href={cardDetails.path}
+          className={`${
+            cardDetails.title === "Portfolio Tracker" && "pointer-events-none"
+          }`}
+        >
           <Image
             src={cardDetails.image}
             alt="market insights image"

@@ -107,6 +107,20 @@ export const reverseDate = (date: string) => {
   return formattedDate;
 };
 
+export const convertDate = (date: string) => {
+  let newDate = "";
+  let reversedDate = reverseDate(date.split("T")[0])
+  let day = reversedDate.substring(0, 2)
+  let month = Number(reversedDate.substring(3, 5)) - 1
+  let year = reversedDate.substring(8, 10)
+  const months = ["Jan","Feb","Mar","Apr","May","June","July","Aug","Sep","Oct","Nov","Dec"];
+  let newMonth = months[Number(month)]
+
+  newDate = day + " " + newMonth + " "  + year
+
+  return newDate
+}
+
 export const shortenNewsTitle = (headline: string) => {
   return headline.length > 65 ? headline.substring(0, 65) + "..." : headline;
 };

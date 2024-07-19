@@ -1,21 +1,22 @@
 "use client";
 
-import { CryptoNewsData } from "@/lib/types";
+import { CryptoNewsData, NewsEvent } from "@/lib/types";
 import { useState } from "react";
 import CryptoNewsCardContainer from "./crypto-news-card-container";
 import NewsToggleButton from "./news-toggle-button";
-import { motion } from "framer-motion";
+import NewsEventsTable from "./news-events-table";
 
 type CryptoNewsContainerProps = {
   generalNews: CryptoNewsData[];
   tickerNews: CryptoNewsData[];
   nftNews: CryptoNewsData[];
+  newsEvents: NewsEvent[];
 };
 
 const paths = [
   {
     path: "general",
-    name: "General News",
+    name: "General",
   },
   {
     path: "tickers",
@@ -25,12 +26,17 @@ const paths = [
     path: "nfts",
     name: "NFTs",
   },
+  {
+    path: "events",
+    name: "Key Events",
+  },
 ];
 
 export default function CryptoNewsContainer({
   generalNews,
   tickerNews,
   nftNews,
+  newsEvents,
 }: CryptoNewsContainerProps) {
   const [toggleView, setToggleView] = useState("general");
 
@@ -57,6 +63,7 @@ export default function CryptoNewsContainer({
         <CryptoNewsCardContainer data={tickerNews} />
       )}
       {toggleView === "nfts" && <CryptoNewsCardContainer data={nftNews} />}
+      {toggleView === "events" && <NewsEventsTable newsEvents={newsEvents} />}
     </section>
   );
 }
