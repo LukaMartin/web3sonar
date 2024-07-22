@@ -35,7 +35,9 @@ export default function CryptoCurrencyRankingsTable({
   }, [router]);
 
   useEffect(() => {
-    router.refresh();
+    setTimeout(() => {
+      router.refresh();
+    }, 500);
   }, [router]);
 
   return (

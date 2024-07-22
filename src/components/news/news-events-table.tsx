@@ -49,7 +49,7 @@ export default function NewsEventsTable({ newsEvents }: NewsEventsTableProps) {
                 <td className="text-left pb-4">
                   <p>
                     <Link href={event.url} target="_blank">
-                      <FaLink size={22} />
+                      <FaLink size={22} className="hover:text-white/60"/>
                     </Link>
                   </p>
                 </td>
