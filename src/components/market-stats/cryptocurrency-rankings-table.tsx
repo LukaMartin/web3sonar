@@ -34,6 +34,10 @@ export default function CryptoCurrencyRankingsTable({
     }, 60000);
   }, [router]);
 
+  useEffect(() => {
+    router.refresh();
+  }, [router]);
+
   return (
     <section>
       <div className="flex justify-between items-center mb-[1.05rem] w-[50rem]">
