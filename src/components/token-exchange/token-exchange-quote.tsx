@@ -1,4 +1,4 @@
-import { addFees, convertToEth, convertUsdcDown } from "@/lib/utils";
+import { addFees, convertToEth, convertUsdcDown, shortenProviderName } from "@/lib/utils";
 import { TbRouteX } from "react-icons/tb";
 import ethLogo from "../../../public/eth-logo.svg";
 import usdcLogo from "../../../public/usd-coin-usdc-logo.svg";
@@ -15,14 +15,14 @@ export default function TokenExchangeQuote() {
   return (
     <>
       {quote!.message ? (
-        <section className="w-[375px] h-[200px] flex flex-col justify-center items-center gap-y-6 mx-auto bg-white/[2%] border-[1px] border-white/20 rounded-md shadow-[0_7px_5px_rgba(2,2,2,1)]">
+        <section className="w-[375px] h-[200px] flex flex-col justify-center items-center gap-y-6 mx-auto bg-white/[2%] rounded-md shadow-[0_7px_5px_rgba(2,2,2,1)]">
           <p className="text-xl font-semibold px-4 text-center">
             {quote!.message}
           </p>
           <TbRouteX size={50} />
         </section>
       ) : (
-        <section className="w-[375px] h-[200px] flex flex-col justify-between mx-auto mb-16 py-6 bg-white/[2%] border-[1px] border-white/20 rounded-md shadow-[0_7px_5px_rgba(2,2,2,1)]">
+        <section className="w-[375px] h-[200px] flex flex-col justify-between mx-auto mb-16 py-6 bg-white/[2%] rounded-md shadow-[0_7px_5px_rgba(2,2,2,1)]">
           <div className="flex justify-between px-6">
             <div className="flex gap-x-6">
               {toToken === "ETH" || wethAddresses.includes(toToken) ? (
@@ -72,7 +72,7 @@ export default function TokenExchangeQuote() {
                 width={55}
               />
               <div className="flex flex-col gap-x-4 pt-2">
-                <p className="text-lg">{quote!.toolDetails.name}</p>
+                <p className="text-lg">{shortenProviderName(quote!.toolDetails.name)}</p>
                 <p className="text-white/50 text-sm">Provdier</p>
               </div>
             </div>
