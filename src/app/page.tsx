@@ -51,14 +51,29 @@ export default function Home() {
           <h1 className="text-[51px] font-semibold w-[30%]">
             Navigate through the world of Web3
           </h1>
-          <HomePageCard cardDetails={marketInsights} />
-          <HomePageCard cardDetails={portfolioTracker} />
+          <HomePageCard
+            cardDetails={marketInsights}
+            className="animate-fadeInSlideUpFast"
+          />
+          <HomePageCard
+            cardDetails={portfolioTracker}
+            className="animate-fadeInSlideUpFast"
+          />
         </div>
 
         <div className="flex justify-between mt-10">
-          <HomePageCard cardDetails={news} />
-          <HomePageCard cardDetails={tokenExchange} />
-          <HomePageCard cardDetails={gasDashboard} />
+          <HomePageCard
+            cardDetails={news}
+            className="animate-fadeInSlideUpSlow"
+          />
+          <HomePageCard
+            cardDetails={tokenExchange}
+            className="animate-fadeInSlideUpSlow"
+          />
+          <HomePageCard
+            cardDetails={gasDashboard}
+            className="animate-fadeInSlideUpSlow"
+          />
         </div>
       </main>
 

@@ -1,15 +1,15 @@
-import type { Config } from "tailwindcss"
+import type { Config } from "tailwindcss";
 const { nextui } = require("@nextui-org/react");
 
 const config = {
   darkMode: ["class"],
   content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
     "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
-	],
+  ],
   prefix: "",
   theme: {
     container: {
@@ -21,16 +21,16 @@ const config = {
     },
     extend: {
       screens: {
-        "xs": "400px",
-        "sm": "640px",
-        "md": "768px",
+        xs: "400px",
+        sm: "640px",
+        md: "768px",
         "md-lg": "950px",
-        "lg": "1024px",
-        "xl": "1280px",
+        lg: "1024px",
+        xl: "1280px",
         "2xl": "1536px",
       },
       colors: {
-        "green-yellow": '#a4f839',
+        "green-yellow": "#a4f839",
         "fuel-yellow": "#FF8D22",
         gold: "#E5D10D",
         border: "hsl(var(--border))",
@@ -109,19 +109,23 @@ const config = {
         slideDown: "slideDown 2.5s",
         slideUp: "slideUp 0.7s",
         pulseStrong: "pulseStrong 2s infinite",
-        fadeInSlideUp: "fadeInSlideUp 1s"
+        fadeInSlideUpFast: "fadeInSlideUp 0.7s",
+        fadeInSlideUpSlow: "fadeInSlideUp 1.2s",
       },
     },
   },
-  plugins: [require("tailwindcss-animate"), nextui({
-    themes: {
-      light: {
-        colors: {
-          success: "#a4f839"
+  plugins: [
+    require("tailwindcss-animate"),
+    nextui({
+      themes: {
+        light: {
+          colors: {
+            success: "#a4f839",
+          },
         },
       },
-    },
-  })],
-} satisfies Config
+    }),
+  ],
+} satisfies Config;
 
-export default config
+export default config;
