@@ -97,6 +97,10 @@ const config = {
           "0%, 100%": { opactiy: "1" },
           "50%": { opacity: "0.1" },
         },
+        fadeInSlideUp: {
+          "0%": { transform: "translateY(20%)", opacity: "0" },
+          "100%": { transform: "translateY(0)", opacity: "1" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -105,6 +109,7 @@ const config = {
         slideDown: "slideDown 2.5s",
         slideUp: "slideUp 0.7s",
         pulseStrong: "pulseStrong 2s infinite",
+        fadeInSlideUp: "fadeInSlideUp 1s"
       },
     },
   },
