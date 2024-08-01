@@ -4,7 +4,7 @@ export default function TokenExchangeQuoteSkeleton() {
   return (
     <>
       <section className="w-[375px] h-[200px] flex flex-col justify-between items-center py-4 mx-auto bg-white/10 rounded-md animate-slideIn">
-        <div className="flex gap-x-20 animate-pulse">
+        <div className="flex gap-x-2 animate-pulse">
           <div className="flex">
             <div className="w-16 h-16 rounded-full bg-white/20" />
 
@@ -14,7 +14,12 @@ export default function TokenExchangeQuoteSkeleton() {
             </div>
           </div>
 
-          <div className="w-12 h-12 rounded-full bg-white/20 mt-4 ml-6"/>
+          <div className="pt-4">
+            <div className="h-5 w-12 ml-4 bg-white/20 rounded-sm mb-2" />
+            <div className="h-3 w-8 ml-4 bg-white/20 rounded-sm" />
+          </div>
+
+          <div className="w-12 h-12 rounded-full bg-white/20 mt-4 ml-6" />
         </div>
 
         <div className="flex gap-x-5 animate-pulse">

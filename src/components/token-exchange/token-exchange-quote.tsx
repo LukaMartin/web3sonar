@@ -1,4 +1,9 @@
-import { addFees, convertToEth, convertUsdcDown, shortenProviderName } from "@/lib/utils";
+import {
+  addFees,
+  convertToEth,
+  convertUsdcDown,
+  shortenProviderName,
+} from "@/lib/utils";
 import { TbRouteX } from "react-icons/tb";
 import ethLogo from "../../../public/eth-logo.svg";
 import usdcLogo from "../../../public/usd-coin-usdc-logo.svg";
@@ -57,6 +62,13 @@ export default function TokenExchangeQuote() {
               </div>
             </div>
 
+            <div className="pt-3 pl-2">
+              <p className="text-lg">
+                ${quote?.estimate.gasCosts.map((cost) => cost.amountUSD)}
+              </p>
+              <p className="text-sm text-white/50">Gas</p>
+            </div>
+
             <div className="pt-3">
               <CircularProgressIndicator />
             </div>
@@ -72,7 +84,9 @@ export default function TokenExchangeQuote() {
                 width={55}
               />
               <div className="flex flex-col gap-x-4 pt-2">
-                <p className="text-lg">{shortenProviderName(quote!.toolDetails.name)}</p>
+                <p className="text-lg">
+                  {shortenProviderName(quote!.toolDetails.name)}
+                </p>
                 <p className="text-white/50 text-sm">Provdier</p>
               </div>
             </div>
