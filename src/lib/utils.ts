@@ -109,17 +109,30 @@ export const reverseDate = (date: string) => {
 
 export const convertDate = (date: string) => {
   let newDate = "";
-  let reversedDate = reverseDate(date.split("T")[0])
-  let day = reversedDate.substring(0, 2)
-  let month = Number(reversedDate.substring(3, 5)) - 1
-  let year = reversedDate.substring(8, 10)
-  const months = ["Jan","Feb","Mar","Apr","May","June","July","Aug","Sep","Oct","Nov","Dec"];
-  let newMonth = months[Number(month)]
+  let reversedDate = reverseDate(date.split("T")[0]);
+  let day = reversedDate.substring(0, 2);
+  let month = Number(reversedDate.substring(3, 5)) - 1;
+  let year = reversedDate.substring(8, 10);
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "June",
+    "July",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  let newMonth = months[Number(month)];
 
-  newDate = day + " " + newMonth + " "  + year
+  newDate = day + " " + newMonth + " " + year;
 
-  return newDate
-}
+  return newDate;
+};
 
 export const shortenNewsTitle = (headline: string) => {
   return headline.length > 65 ? headline.substring(0, 65) + "..." : headline;
@@ -143,17 +156,32 @@ export const checkAndSetAllowance = async ({
   const erc20 = new Contract(tokenAddress, erc20Abi, wallet);
 
   if (wethAddresses.includes(fromToken)) {
-    const approveTx = await erc20.approve(approvalAddress, BigInt(convertToWei(amount)));
+    const approveTx = await erc20.approve(
+      approvalAddress,
+      BigInt(convertToWei(amount))
+    );
     await approveTx.wait();
   } else {
-    const approveTx = await erc20.approve(approvalAddress, convertUsdcUp(amount));
+    const approveTx = await erc20.approve(
+      approvalAddress,
+      convertUsdcUp(amount)
+    );
     await approveTx.wait();
   }
-
 };
 
 export const removeDecimalsFromString = (string: string) => {
-  let substring = string.split(".")[0]
+  let substring = string.split(".")[0];
 
-  return substring
-}
+  return substring;
+};
+
+export const shortenProviderName = (providerName: string) => {
+  let name = "";
+
+  providerName.includes("Stargate")
+    ? (name = "Stargate V2")
+    : (name = providerName);
+
+  return name;
+};
