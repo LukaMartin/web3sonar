@@ -53,26 +53,21 @@ export default function Home() {
           </h1>
           <HomePageCard
             cardDetails={marketInsights}
-            className="animate-fadeInSlideUpFast"
           />
           <HomePageCard
             cardDetails={portfolioTracker}
-            className="animate-fadeInSlideUpFast"
           />
         </div>
 
         <div className="flex justify-between mt-10">
           <HomePageCard
             cardDetails={news}
-            className="animate-fadeInSlideUpSlow"
           />
           <HomePageCard
             cardDetails={tokenExchange}
-            className="animate-fadeInSlideUpSlow"
           />
           <HomePageCard
             cardDetails={gasDashboard}
-            className="animate-fadeInSlideUpSlow"
           />
         </div>
       </main>
