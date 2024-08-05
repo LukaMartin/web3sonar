@@ -25,6 +25,7 @@ export default function CryptoNewsCardContainer({
             <div>
               <a href={article.news_url} target="_blank">
                 <Image
+                  unoptimized
                   src={article.image_url}
                   alt="News article image"
                   height={350}
