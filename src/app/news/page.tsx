@@ -1,10 +1,16 @@
 import MobileLandingPage from "@/components/mobile-landing-page";
 import CryptoNewsContainer from "@/components/news/crypto-news-container";
 import { fetchCryptoNews, fetchNewsEvents } from "@/lib/server-utils";
+import { SearchParams } from "@/lib/types";
 
-export default async function News() {
-  const { generalNews, tickerNews, nftNews } = await fetchCryptoNews();
+type NewsPageProps = {
+  searchParams: SearchParams;
+}
+
+export default async function News({ searchParams }: NewsPageProps) {
+  const { generalNews, tokenNews, nftNews } = await fetchCryptoNews();
   const newsEvents = await fetchNewsEvents();
+  const sortBy = searchParams.sortBy as string || "general";
 
   return (
     <>
@@ -14,9 +20,10 @@ export default async function News() {
         </h2>
         <CryptoNewsContainer
           generalNews={generalNews.data}
-          tickerNews={tickerNews.data}
+          tokenNews={tokenNews.data}
           nftNews={nftNews.data}
           newsEvents={newsEvents}
+          sortBy={sortBy}
         />
       </main>
 

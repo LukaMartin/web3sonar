@@ -1,32 +1,34 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 type NewsToggleButtonProps = {
   children: string;
-  toggleView: string;
-  setToggleView: (pathname: string) => void;
   path: string;
+  sortBy: string;
 };
 
 export default function NewsToggleButton({
   children,
-  toggleView,
-  setToggleView,
   path,
+  sortBy,
 }: NewsToggleButtonProps) {
   const buttonStyles = "text-white/65 hover:text-white";
+  const router = useRouter();
 
   return (
     <div className="relative">
       <button
         className={cn(`${buttonStyles}`, {
-          "text-white pb-4": toggleView === path,
+          "text-white pb-4": sortBy === path,
         })}
-        onClick={() => setToggleView(path)}
+        onClick={() => router.push(`/news?sortBy=${path}`)}
       >
         {children}
       </button>
-      {toggleView === path && (
+      {sortBy === path && (
         <motion.div
           layoutId="news-active-link"
           className="bg-green-yellow h-[0.175rem] w-full absolute bottom-0 rounded-md"

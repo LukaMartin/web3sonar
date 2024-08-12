@@ -1,5 +1,6 @@
 import { NewsEvent } from "@/lib/types";
 import { convertDate } from "@/lib/utils";
+import { Tooltip } from "@nextui-org/react";
 import Link from "next/link";
 import { FaLink } from "react-icons/fa";
 
@@ -48,9 +49,21 @@ export default function NewsEventsTable({ newsEvents }: NewsEventsTableProps) {
                 </td>
                 <td className="text-left pb-4">
                   <p>
-                    <Link href={event.url} target="_blank">
-                      <FaLink size={22} className="hover:text-white/60"/>
-                    </Link>
+                    <Tooltip
+                      showArrow={true}
+                      content="Links are currently disabled."
+                      classNames={{
+                        base: [
+                          "before:bg-neutral-400 dark:before:bg-white max-w-96",
+                        ],
+                        content: [
+                          "py-2 px-4 shadow-xl",
+                          "text-gray-950 font-semibold bg-gradient-to-br from-white to-neutral-400",
+                        ],
+                      }}
+                    >
+                      <FaLink size={22} className="text-white/85" />
+                    </Tooltip>
                   </p>
                 </td>
               </tr>

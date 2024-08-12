@@ -269,14 +269,14 @@ export const fetchCryptoNews = async () => {
 
   const generalNews = await generalResponse.json();
   
-  const tickerResponse = await fetch("https://cryptonews-api.com/api/v1?tickers=BTC,ETH,SOL&items=12&page=1&token=qglrdr1zt0jdszdtlrzrt6gsj2ipkrbgupszx00f&source=The+Block,Cointelegraph,Reuters,Coindesk,BeInCrypto,Blockworks,Decrypt,UToday,Bitcoin,Forbes,Crypto+News", {
+  const tokenResponse = await fetch("https://cryptonews-api.com/api/v1?tickers=BTC,ETH,SOL&items=12&page=1&token=qglrdr1zt0jdszdtlrzrt6gsj2ipkrbgupszx00f&source=The+Block,Cointelegraph,Reuters,Coindesk,BeInCrypto,Blockworks,Decrypt,UToday,Bitcoin,Forbes,Crypto+News", {
     method: "GET",
     next: {
       revalidate: 300,
     },
   })
 
-  const tickerNews = await tickerResponse.json();
+  const tokenNews = await tokenResponse.json();
 
   const nftResponse = await fetch("https://cryptonews-api.com/api/v1/category?section=general&items=12&topic=NFT&page=1&token=qglrdr1zt0jdszdtlrzrt6gsj2ipkrbgupszx00f", {
     method: "GET",
@@ -287,7 +287,7 @@ export const fetchCryptoNews = async () => {
 
   const nftNews = await nftResponse.json();
 
-  return { generalNews, tickerNews, nftNews }
+  return { generalNews, tokenNews, nftNews }
 }
 
 export const fetchNewsEvents = async () => {

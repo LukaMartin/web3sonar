@@ -189,3 +189,5 @@ export type CryptoMarketcapData = {
   x: string;
   y: number;
 };
+
+export type SearchParams = { [key: string]: string | string[] | undefined };
