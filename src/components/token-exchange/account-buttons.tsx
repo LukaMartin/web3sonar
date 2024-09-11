@@ -16,7 +16,6 @@ export default function AccountButtons() {
       }`}
     >
       <SolAccountButton />
-
       <EVMAccountButton />
     </div>
   );
