@@ -4,23 +4,15 @@ import { useAccount, useBalance, useReadContracts } from "wagmi";
 import { useEthersProvider } from "@/lib/wagmi-ethers";
 import { erc20Abi } from "viem";
 import { wethAddresses } from "@/lib/constants";
+import { useTokenExchangeStore } from "@/stores/token-exchange-store";
 
-type FetchUserBalanceProps = {
-  fromChain: string;
-  address: `0x${string}` | undefined;
-  fromAmount: number;
-  fromToken: string;
-};
-
-export default function useFetchUserBalance({
-  address,
-  fromAmount,
-  fromChain,
-  fromToken,
-}: FetchUserBalanceProps) {
+export default function useFetchUserBalance() {
   const provider = useEthersProvider();
-  const { chainId } = useAccount();
-  const [insufficientFunds, setInsufficientFunds] = useState(false);
+  const { chainId, address } = useAccount();
+  const fromChain = useTokenExchangeStore((state) => state.fromChain);
+  const fromToken = useTokenExchangeStore((state) => state.fromToken);
+  const fromAmount = useTokenExchangeStore((state) => state.fromAmount);
+  const [insufficientFundsEvm, setInsufficientFundsEvm] = useState(false);
   let fromChainId = findChainId(fromChain)[0];
   const ethBalance = useBalance({
     address: address,
@@ -42,14 +34,14 @@ export default function useFetchUserBalance({
     if (!provider || !address) {
       return;
     }
-    setInsufficientFunds(false);
+    setInsufficientFundsEvm(false);
 
     if (fromToken === "ETH") {
       if (
         convertToEth(Number(ethBalance.data?.value)) < fromAmount! &&
         chainId === fromChainId
       ) {
-        setInsufficientFunds(true);
+        setInsufficientFundsEvm(true);
         return;
       }
     } else if (
@@ -61,7 +53,7 @@ export default function useFetchUserBalance({
       const formattedBalance = convertUsdcDown(Number(balance));
 
       if (formattedBalance < fromAmount! && chainId === fromChainId) {
-        setInsufficientFunds(true);
+        setInsufficientFundsEvm(true);
         return;
       }
     } else if (userBalance.data && wethAddresses.includes(fromToken)) {
@@ -69,7 +61,7 @@ export default function useFetchUserBalance({
       const formattedBalance = convertToEth(Number(balance));
 
       if (formattedBalance < fromAmount! && chainId === fromChainId) {
-        setInsufficientFunds(true);
+        setInsufficientFundsEvm(true);
         return;
       }
     }
@@ -88,5 +80,5 @@ export default function useFetchUserBalance({
     fetchUserBalance();
   }, [fromAmount, fromChain, chainId, fetchUserBalance]);
 
-  return insufficientFunds;
+  return { insufficientFundsEvm, ethBalance, fetchUserBalance };
 }
