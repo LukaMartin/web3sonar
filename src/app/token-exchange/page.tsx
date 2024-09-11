@@ -12,7 +12,7 @@ const DynamicTokenExchangeInterface = dynamic(
 export default function TokenExchange() {
   return (
     <>
-      <main className="hidden xl:block mb-20">
+      <main className="hidden xl:flex flex-col mb-20">
         <DynamicTokenExchangeInterface />
       </main>
 

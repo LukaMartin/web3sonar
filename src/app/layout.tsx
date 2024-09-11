@@ -10,6 +10,7 @@ import { wagmiConfig } from "@/config";
 import Web3ModalProvider from "@/context";
 import { Toaster } from "@/components/ui/toaster";
 import Container from "@/components/container";
+import AppWalletProvider from "@/components/app-wallet-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -36,8 +37,10 @@ export default function RootLayout({
           <Container>
             <Header />
             <Web3ModalProvider initialState={initialState}>
-              {children}
-              <Toaster />
+              <AppWalletProvider>
+                {children}
+                <Toaster />
+              </AppWalletProvider>
             </Web3ModalProvider>
             <Footer />
           </Container>

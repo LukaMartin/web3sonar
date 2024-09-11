@@ -14,9 +14,10 @@ export type TokenExchangeResultData = {
 };
 
 export type TokenExchangeResult = {
-  message?: string;  
+  message?: string;
   fromAddress: string;
   lifiExplorerLink: string;
+  bridgeExplorerLink?: string;
   sending: TokenExchangeResultData;
   receiving: TokenExchangeResultData;
   tool: string;

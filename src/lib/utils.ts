@@ -1,10 +1,19 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { chains, wethAddresses } from "./constants";
-import { FeeCosts } from "./token-exchange-quote-types";
+import {
+  chains,
+  usdcAddresses,
+  usdtAddresses,
+  wethAddresses,
+} from "./constants";
+import { FeeCosts, Quote } from "./token-exchange-quote-types";
 import { CheckAndSetAllowanceParams, GetStatusParams } from "./types";
 import { Contract } from "ethers";
 import { erc20Abi } from "viem";
+import ethLogo from "../../public/eth-logo.svg";
+import usdcLogo from "../../public/usd-coin-usdc-logo.svg";
+import usdtLogo from "../../public/tether-usdt-logo.svg";
+import solLogo from "../../public/solana-logo.svg";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -20,6 +29,14 @@ export function convertToWei(number: number) {
 
 export function convertToEth(number: number) {
   return number / 1000000000000000000;
+}
+
+export function convertSolUp(number: number) {
+  return number * 1000000000;
+}
+
+export function convertSolDown(number: number) {
+  return number / 1000000000;
 }
 
 export function convertUsdcUp(number: number) {
@@ -73,31 +90,15 @@ export const getStatus = async ({
   return data;
 };
 
-export const shortenTx = (transaction: string) => {
-  let substringOne = "";
-  let subStringTwo = "";
-  let finalString = "";
-  let length;
-  let shortenedLength;
+export const formatAddress = (
+  str: string | undefined | null,
+  chars: number
+) => {
+  if (!str) return null;
 
-  if (!transaction) {
-    return;
-  }
-
-  if (transaction.length) {
-    length = transaction.length;
-    shortenedLength = transaction.length - 5;
-  }
-
-  substringOne = transaction.substring(0, 4);
-
-  if (length && shortenedLength) {
-    subStringTwo = transaction.substring(shortenedLength, length);
-  }
-
-  finalString = substringOne + ".." + subStringTwo;
-
-  return finalString;
+  const start = str.substring(0, chars - 1);
+  const end = str.substring(str.length - chars);
+  return `${start}...${end}`;
 };
 
 export const reverseDate = (date: string) => {
@@ -184,4 +185,37 @@ export const shortenProviderName = (providerName: string) => {
     : (name = providerName);
 
   return name;
+};
+
+export const getChainLogo = (chainId: number | undefined) => {
+  if (!chainId) return;
+  const chain = chains.find((chain) => chain.id === chainId);
+  return chain?.logo;
+};
+
+export const getChainLogoByName = (chainName: string) => {
+  const chain = chains.find((chain) => chain.name === chainName);
+  return chain?.logo;
+};
+
+export const getTokenLogo = (token: string) => {
+  if (token === "ETH" || wethAddresses.includes(token)) {
+    return ethLogo;
+  } else if (usdcAddresses.includes(token)) {
+    return usdcLogo;
+  } else if (usdtAddresses.includes(token)) {
+    return usdtLogo;
+  } else if (token === "SOL") {
+    return solLogo;
+  }
+};
+
+export const convertToTokenAmount = (toToken: string, quote: Quote) => {
+  if (toToken === "ETH" || wethAddresses.includes(toToken)) {
+    return convertToEth(Number(quote.estimate.toAmount)).toFixed(7);
+  } else if (toToken === "SOL") {
+    return convertSolDown(Number(quote.estimate.toAmount)).toFixed(7);
+  } else {
+    return convertUsdcDown(Number(quote.estimate.toAmount)).toFixed(3);
+  }
 };

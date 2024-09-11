@@ -1,7 +1,8 @@
 import useFetchEthPrice from "@/hooks/useFetchEthPrice";
+import useFetchSolPrice from "@/hooks/useFetchSolPrice";
 import { wethAddresses } from "@/lib/constants";
 import { useTokenExchangeStore } from "@/stores/token-exchange-store";
-import { useEffect, useState } from "react";
+import { useDebouncedCallback } from "use-debounce";
 
 type TokenExchangeInputProps = {
   inputRef: any;
@@ -13,37 +14,40 @@ export default function TokenExchangeInput({
   const fromToken = useTokenExchangeStore((state) => state.fromToken);
   const fromAmount = useTokenExchangeStore((state) => state.fromAmount);
   const setFromAmount = useTokenExchangeStore((state) => state.setFromAmount);
-  const [input, setInput] = useState(0);
   const ethPrice = useFetchEthPrice();
+  const solPrice = useFetchSolPrice();
   let fromUsd = 0;
   if (
     (fromAmount && fromToken === "ETH") ||
     wethAddresses.includes(fromToken)
   ) {
     fromUsd = fromAmount * ethPrice;
-  } else if (fromAmount && fromToken) {
+  } else if (fromAmount && fromToken && fromToken !== "SOL") {
     fromUsd = fromAmount;
+  } else if (fromAmount && fromToken === "SOL") {
+    fromUsd = fromAmount * solPrice;
   }
 
-  useEffect(() => {
-    const timeOutId = setTimeout(() => setFromAmount(input), 700);
-    return () => clearTimeout(timeOutId);
-  }, [input, setFromAmount]);
+  const debounced = useDebouncedCallback((value) => {
+    setFromAmount(value);
+  }, 1000);
 
   return (
     <>
       <input
-        onChange={(e) => setInput(Number(e.target.value))}
+        onChange={(e) => debounced(Number(e.target.value))}
         type="number"
-        className="h-14 border-white/20 border-[1px] bg-white/[4%] rounded-md mx-6 pl-2 text-xl"
-        placeholder="0"
+        className="h-10 bg-transparent px-4 text-2xl outline-none text-right"
+        placeholder="0.00"
         ref={inputRef}
         required
       />
       {fromAmount ? (
-        <p className="text-sm text-white/50 pl-6 pt-1">${fromUsd.toFixed(2)}</p>
+        <p className="text-sm text-right text-white/50 -mt-4 mr-4 pb-2">
+          ${fromUsd.toFixed(2)}
+        </p>
       ) : (
-        <p className="text-sm text-white/50 pl-6 pt-1">$0</p>
+        <p className="text-sm text-right text-white/50 -mt-4 mr-4 pb-2">$0</p>
       )}
     </>
   );

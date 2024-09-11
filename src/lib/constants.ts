@@ -6,10 +6,36 @@ import bstLogo from "../../public/blast-bls-logo.svg";
 import baseLogo from "../../public/base-logo.svg";
 import zkLogo from "../../public/zksync-logo.svg";
 import usdcLogo from "../../public/usd-coin-usdc-logo.svg";
-import usdtLogo from "../../public/tether-usdt-logo.svg"
-import usdbLogo from "../../public/usdb-icon.svg"
+import usdtLogo from "../../public/tether-usdt-logo.svg";
+import solLogo from "../../public/solana-logo.svg";
+import usdbLogo from "../../public/usdb-icon.svg";
 
 export const chains = [
+  {
+    name: "SOL",
+    id: 1151111081099710,
+    logo: solLogo,
+    tokens: [
+      {
+        name: "Solana",
+        symbol: "SOL",
+        logo: solLogo,
+        tokenAddress: "SOL",
+      },
+      {
+        name: "USDC",
+        symbol: "USDC",
+        logo: usdcLogo,
+        tokenAddress: "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      },
+      {
+        name: "Tether USD",
+        symbol: "USDT",
+        logo: usdtLogo,
+        tokenAddress: "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB",
+      },
+    ],
+  },
   {
     name: "ARB",
     id: 42161,
@@ -31,7 +57,7 @@ export const chains = [
         name: "USDC",
         symbol: "USDC",
         logo: usdcLogo,
-        tokenAddress: "0xaf88d065e77c8cC2239327C5EDb3A432268e5831"
+        tokenAddress: "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
       },
       {
         name: "Bridged USDC",
@@ -44,8 +70,8 @@ export const chains = [
         symbol: "USDT",
         logo: usdtLogo,
         tokenAddress: "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
-      }
-    ]
+      },
+    ],
   },
   {
     name: "BAS",
@@ -68,7 +94,7 @@ export const chains = [
         name: "USDC",
         symbol: "USDC",
         logo: usdcLogo,
-        tokenAddress: "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+        tokenAddress: "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
       },
       {
         name: "USD Base Coin ",
@@ -125,7 +151,7 @@ export const chains = [
         symbol: "USDT",
         logo: usdtLogo,
         tokenAddress: "0xdAC17F958D2ee523a2206206994597C13D831ec7",
-      }
+      },
     ],
   },
   {
@@ -156,33 +182,33 @@ export const chains = [
         symbol: "USDT",
         logo: usdtLogo,
         tokenAddress: "0x493257fD37EDB34451f62EDf8D2a0C418852bA4C",
-      }
+      },
     ],
   },
   {
-      name: "POL",
-      id: 137,
-      logo: polLogo,
-      tokens: [
-        {
-          name: "Wrapped Ethereum",
-          symbol: "WETH",
-          logo: ethLogo,
-          tokenAddress: "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
-        },
-        {
-          name: "USDC.e",
-          symbol: "USDC.e",
-          logo: usdcLogo,
-          tokenAddress: "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
-        },
-        {
-          name: "Tether USD",
-          symbol: "USDT",
-          logo: usdtLogo,
-          tokenAddress: "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
-        }
-      ],
+    name: "POL",
+    id: 137,
+    logo: polLogo,
+    tokens: [
+      {
+        name: "Wrapped Ethereum",
+        symbol: "WETH",
+        logo: ethLogo,
+        tokenAddress: "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
+      },
+      {
+        name: "USDC.e",
+        symbol: "USDC.e",
+        logo: usdcLogo,
+        tokenAddress: "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
+      },
+      {
+        name: "Tether USD",
+        symbol: "USDT",
+        logo: usdtLogo,
+        tokenAddress: "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
+      },
+    ],
   },
   {
     name: "OPT",
@@ -218,7 +244,7 @@ export const chains = [
         symbol: "USDT",
         logo: usdtLogo,
         tokenAddress: "0x94b008aA00579c1307B0EF2c499aD98a8ce58e58",
-      }
+      },
     ],
   },
 ];
@@ -230,7 +256,7 @@ export const wethAddresses = [
   "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
   "0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91",
   "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
-  "0x4200000000000000000000000000000000000006"
+  "0x4200000000000000000000000000000000000006",
 ];
 
 export const usdcAddresses = [
@@ -243,7 +269,8 @@ export const usdcAddresses = [
   "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
   "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
   "0x7F5c764cBc14f9669B88837ca1490cCa17c31607",
-]
+  "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+];
 
 export const usdtAddresses = [
   "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
@@ -251,4 +278,5 @@ export const usdtAddresses = [
   "0x493257fD37EDB34451f62EDf8D2a0C418852bA4C",
   "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
   "0x94b008aA00579c1307B0EF2c499aD98a8ce58e58",
-]
+  "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB",
+];

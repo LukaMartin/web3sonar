@@ -13,7 +13,7 @@ import { PiArrowSquareRightFill } from "react-icons/pi";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { IoCheckmarkDoneCircleOutline } from "react-icons/io5";
 import { RxCrossCircled } from "react-icons/rx";
-import { shortenTx } from "@/lib/utils";
+import { formatAddress } from "@/lib/utils";
 import { useTokenExchangeStore } from "@/stores/token-exchange-store";
 
 type TokenExchangeModalProps = {
@@ -27,11 +27,15 @@ export default function TokenExchangeModal({
   onClose,
   onOpenChange,
 }: TokenExchangeModalProps) {
-  const settingAllowance = useTokenExchangeStore((state) => state.settingAllowance);
-  const awaitingConfirmation = useTokenExchangeStore((state) => state.awaitingConfirmation);
-  const fromChain = useTokenExchangeStore((state) => state.fromChain)
-  const toChain = useTokenExchangeStore((state) => state.toChain)
-  const txResult = useTokenExchangeStore((state) => state.txResult)
+  const settingAllowance = useTokenExchangeStore(
+    (state) => state.settingAllowance
+  );
+  const awaitingConfirmation = useTokenExchangeStore(
+    (state) => state.awaitingConfirmation
+  );
+  const fromChain = useTokenExchangeStore((state) => state.fromChain);
+  const toChain = useTokenExchangeStore((state) => state.toChain);
+  const txResult = useTokenExchangeStore((state) => state.txResult);
   const [fromLogo, setFromLogo] = useState("");
   const [toLogo, setToLogo] = useState("");
 
@@ -46,10 +50,10 @@ export default function TokenExchangeModal({
   useEffect(() => {
     chains.map((chain) => {
       if (chain.name === toChain) {
-        setToLogo(chain.logo)
+        setToLogo(chain.logo);
       }
-    })
-  }, [toChain])
+    });
+  }, [toChain]);
 
   return (
     <>
@@ -172,11 +176,15 @@ export default function TokenExchangeModal({
                       <p className="text-lg">
                         Transaction:{" "}
                         <span className="font-semibold">
-                          {shortenTx(txResult.transactionId)}
+                          {formatAddress(txResult.transactionId, 5) ||
+                            formatAddress(txResult.sending.txHash, 5)}
                         </span>
                       </p>
                       <a
-                        href={txResult.lifiExplorerLink}
+                        href={
+                          txResult.lifiExplorerLink ||
+                          txResult.bridgeExplorerLink
+                        }
                         target="_blank"
                         className="hover:text-gray-600"
                       >

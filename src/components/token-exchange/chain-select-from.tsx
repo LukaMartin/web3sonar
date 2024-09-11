@@ -12,17 +12,24 @@ import Image from "next/image";
 export default function ChainSelectFrom() {
   const fromChain = useTokenExchangeStore((state) => state.fromChain);
   const setFromChain = useTokenExchangeStore((state) => state.setFromChain);
-  
+  const setQuote = useTokenExchangeStore((state) => state.setQuote);
+
   return (
-    <Select onValueChange={setFromChain} value={fromChain}>
-      <SelectTrigger className="w-[55%] h-14 bg-white/[4%] border-white/20">
-        <SelectValue placeholder="Select chain" />
+    <Select
+      onValueChange={(value) => {
+        setFromChain(value);
+        setQuote(null);
+      }}
+      value={fromChain}
+    >
+      <SelectTrigger className="w-[47%] h-10 bg-gray-950 border-none focus-visible:ring-1 focus-visible:ring-offset-0 focus-visible:ring-white/10">
+        <SelectValue placeholder="Chain" />
       </SelectTrigger>
-      <SelectContent>
+      <SelectContent className="bg-gray-950 border-none outline-none">
         {chains.map((chain) => {
           return (
             <SelectItem value={chain.name} key={chain.id}>
-              <div className="flex items-center gap-x-4">
+              <div className="flex items-center gap-x-2">
                 <Image
                   src={chain.logo}
                   alt="Chain Logo"
