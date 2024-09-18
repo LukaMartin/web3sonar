@@ -5,11 +5,11 @@ import { useTokenExchangeStore } from "@/stores/token-exchange-store";
 import { connection, SOL_USDC_MINT, SOL_USDT_MINT } from "@/config/solana";
 import { TOKEN_PROGRAM_ID } from "@solana/spl-token";
 import { useCallback, useEffect, useState } from "react";
-import useSolWalletChange from "./useSolWalletChange";
+import  useSolanaActiveWallet  from "solana-active-wallet-react";
 
 export default function useFetchUserBalanceSol() {
-  const { connected } = useWallet();
-  const { currentPublicKey } = useSolWalletChange();
+  const { connected, publicKey } = useWallet();
+  const { activePublicKey } = useSolanaActiveWallet(publicKey);
   const fromChain = useTokenExchangeStore((state) => state.fromChain);
   const fromToken = useTokenExchangeStore((state) => state.fromToken);
   const fromAmount = useTokenExchangeStore((state) => state.fromAmount);
@@ -18,9 +18,9 @@ export default function useFetchUserBalanceSol() {
   const [solBalance, setSolBalance] = useState(0);
 
   const fetchUserSolBalance = useCallback(async () => {
-    if (currentPublicKey) {
+    if (activePublicKey) {
       setInsufficientFundsSol(false);
-      const balance = await connection.getBalance(currentPublicKey);
+      const balance = await connection.getBalance(activePublicKey);
       const convertedBalance = convertSolDown(balance);
       setSolBalance(convertedBalance);
       if (
@@ -31,7 +31,7 @@ export default function useFetchUserBalanceSol() {
         setInsufficientFundsSol(true);
       }
     }
-  }, [currentPublicKey, fromAmount, fromChain, fromToken]);
+  }, [activePublicKey, fromAmount, fromChain, fromToken]);
 
   const fetchTokenBalance = useCallback(
     async (wallet: PublicKey | null, tokenMint: PublicKey) => {
@@ -61,13 +61,13 @@ export default function useFetchUserBalanceSol() {
   );
 
   useEffect(() => {
-    if (fromChain === "SOL" && currentPublicKey && connected) {
+    if (fromChain === "SOL" && activePublicKey && connected) {
       if (fromToken === "SOL") {
         fetchUserSolBalance();
       } else if (fromToken === SOL_USDC_MINT.toBase58()) {
-        fetchTokenBalance(currentPublicKey, SOL_USDC_MINT);
+        fetchTokenBalance(activePublicKey, SOL_USDC_MINT);
       } else if (fromToken === SOL_USDT_MINT.toBase58()) {
-        fetchTokenBalance(currentPublicKey, SOL_USDT_MINT);
+        fetchTokenBalance(activePublicKey, SOL_USDT_MINT);
       }
     }
   }, [
@@ -76,12 +76,12 @@ export default function useFetchUserBalanceSol() {
     fetchTokenBalance,
     fromChain,
     fromToken,
-    currentPublicKey,
+    activePublicKey,
   ]);
 
   useEffect(() => {
     fetchUserSolBalance();
-  }, [fetchUserSolBalance, currentPublicKey, txResult]);
+  }, [fetchUserSolBalance, activePublicKey, txResult]);
 
   return { insufficientFundsSol, solBalance, fetchUserSolBalance };
 }

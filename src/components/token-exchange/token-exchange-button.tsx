@@ -7,7 +7,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { useAccount } from "wagmi";
 import ChainSelectionDialog from "./chain-selection-dialog";
 import useFetchUserBalanceSol from "@/hooks/useFetchUserBalanceSol";
-import useSolWalletChange from "@/hooks/useSolWalletChange";
+import useSolanaActiveWallet from "solana-active-wallet-react";
 import { connection } from "@/config/solana";
 
 type TokenExchangeButtonProps = {
@@ -20,8 +20,9 @@ export default function TokenExchangeButton({
   clearInput,
 }: TokenExchangeButtonProps) {
   const { isConnected } = useAccount();
-  const { connected, sendTransaction, signTransaction } = useWallet();
-  const { currentPublicKey } = useSolWalletChange();
+  const { connected, sendTransaction, signTransaction, publicKey } =
+    useWallet();
+  const { activePublicKey } = useSolanaActiveWallet(publicKey);
   const fromAmount = useTokenExchangeStore((state) => state.fromAmount);
   const fromChain = useTokenExchangeStore((state) => state.fromChain);
   const isLoading = useTokenExchangeStore((state) => state.isLoading);
@@ -31,9 +32,8 @@ export default function TokenExchangeButton({
     (state) => state.exchangeTokensSol
   );
   const txSigner = useEthersSigner();
-  const { insufficientFundsEvm, fetchUserBalance } = useFetchUserBalance();
-  const { insufficientFundsSol, fetchUserSolBalance } =
-    useFetchUserBalanceSol();
+  const { insufficientFundsEvm } = useFetchUserBalance();
+  const { insufficientFundsSol } = useFetchUserBalanceSol();
   const enabledButtonStyle =
     "h-12 border-white/20 border-[1px] text-lg text-gray-950 font-semibold bg-green-yellow rounded-md mx-6 mt-6 mb-4 hover:bg-green-yellow/70 trasition active:scale-95";
 
@@ -106,9 +106,9 @@ export default function TokenExchangeButton({
               : "bg-green-yellow hover:bg-green-yellow/70"
           } h-12 border-white/20 border-[1px] text-lg text-gray-950 font-semibold rounded-md mx-6 mt-6 mb-4 transition active:scale-95`}
           onClick={() => {
-            currentPublicKey &&
+            activePublicKey &&
               exchangeTokensSol(
-                currentPublicKey,
+                activePublicKey,
                 sendTransaction,
                 signTransaction,
                 connection,

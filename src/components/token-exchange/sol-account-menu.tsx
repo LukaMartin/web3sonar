@@ -9,7 +9,7 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 import useFetchUserBalanceSol from "@/hooks/useFetchUserBalanceSol";
-import useSolWalletChange from "@/hooks/useSolWalletChange";
+import useSolanaActiveWallet from "solana-active-wallet-react";
 import { formatAddress } from "@/lib/utils";
 import Link from "next/link";
 import { useWallet } from "@solana/wallet-adapter-react";
@@ -27,8 +27,8 @@ type SolAccountMenuProps = {
 
 export default function SolAccountMenu({ children }: SolAccountMenuProps) {
   const { solBalance } = useFetchUserBalanceSol();
-  const { currentPublicKey } = useSolWalletChange();
-  const { disconnect } = useWallet();
+  const { disconnect, publicKey } = useWallet();
+  const { activePublicKey } = useSolanaActiveWallet(publicKey);
   const { toast } = useToast();
 
   return (
@@ -43,15 +43,15 @@ export default function SolAccountMenu({ children }: SolAccountMenuProps) {
 
             <div className="flex items-center gap-x-2 mb-5">
               <p className="text-xl">
-                {currentPublicKey &&
-                  formatAddress(currentPublicKey?.toBase58(), 5)}
+                {activePublicKey &&
+                  formatAddress(activePublicKey?.toString(), 5)}
               </p>
               <BiSolidCopy
                 size={25}
                 className="hover:cursor-pointer hover:text-white transition"
                 onClick={() => {
-                  if (currentPublicKey?.toBase58()) {
-                    navigator.clipboard.writeText(currentPublicKey?.toBase58());
+                  if (activePublicKey?.toString()) {
+                    navigator.clipboard.writeText(activePublicKey?.toString());
                     toast({
                       action: (
                         <div className="flex items center justify-center w-full gap-x-2 text-white/90">
@@ -74,8 +74,8 @@ export default function SolAccountMenu({ children }: SolAccountMenuProps) {
 
             <Link
               href={
-                currentPublicKey
-                  ? `https://solscan.io/account/${currentPublicKey?.toBase58()}`
+                activePublicKey
+                  ? `https://solscan.io/account/${activePublicKey?.toString()}`
                   : ""
               }
               target="_blank"

@@ -11,7 +11,7 @@ import Image from "next/image";
 import { useTokenExchangeStore } from "@/stores/token-exchange-store";
 import { useAccount } from "wagmi";
 import { useWallet } from "@solana/wallet-adapter-react";
-import useSolWalletChange from "@/hooks/useSolWalletChange";
+import useSolanaActiveWallet from "solana-active-wallet-react";
 
 export default function QuoteMoreInfo() {
   const quote = useTokenExchangeStore((state) => state.quote);
@@ -26,7 +26,7 @@ export default function QuoteMoreInfo() {
   const isLoading = useTokenExchangeStore((state) => state.isLoading);
   const { address } = useAccount();
   const { publicKey } = useWallet();
-  const { currentPublicKey } = useSolWalletChange();
+  const { activePublicKey } = useSolanaActiveWallet(publicKey);
 
   return (
     <>
@@ -117,7 +117,7 @@ export default function QuoteMoreInfo() {
                   ? formatAddress(destinationAddress, 5)
                   : fromChain === "SOL" && toChain === "SOL"
                   ? formatAddress(
-                      currentPublicKey?.toString() || publicKey?.toString(),
+                    activePublicKey?.toString() || publicKey?.toString(),
                       5
                     )
                   : ""}

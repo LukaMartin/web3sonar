@@ -10,7 +10,7 @@ import {
 } from "@/lib/utils";
 import { wethAddresses } from "@/lib/constants";
 import { useWallet } from "@solana/wallet-adapter-react";
-import useSolWalletChange from "./useSolWalletChange";
+import  useSolanaActiveWallet  from "solana-active-wallet-react";
 
 export function useQuoteFetching(
   inputRef: React.RefObject<HTMLInputElement>,
@@ -18,7 +18,7 @@ export function useQuoteFetching(
 ) {
   const { address } = useAccount();
   const { publicKey } = useWallet();
-  const { currentPublicKey } = useSolWalletChange();
+  const { activePublicKey } = useSolanaActiveWallet(publicKey);
   const fromChain = useTokenExchangeStore((state) => state.fromChain);
   const toChain = useTokenExchangeStore((state) => state.toChain);
   const fromToken = useTokenExchangeStore((state) => state.fromToken);
@@ -28,7 +28,6 @@ export function useQuoteFetching(
     (state) => state.destinationAddress
   );
   const quote = useTokenExchangeStore((state) => state.quote);
-  const txResult = useTokenExchangeStore((state) => state.txResult);
   const setFromAmount = useTokenExchangeStore((state) => state.setFromAmount);
   const fetchQuote = useTokenExchangeStore((state) => state.fetchQuote);
   const fetchQuoteSol = useTokenExchangeStore((state) => state.fetchQuoteSol);
@@ -75,7 +74,7 @@ export function useQuoteFetching(
       toChain !== "SOL"
     ) {
       fetchQuoteSol(
-        currentPublicKey?.toBase58() ||
+        activePublicKey?.toBase58() ||
           publicKey?.toBase58() ||
           "E98rYk1s9mqm75SfBqqwFq73hCKWMtnyceASsWk1cmVp",
         convertedFromAmount
@@ -104,7 +103,7 @@ export function useQuoteFetching(
       toChain === "SOL"
     ) {
       fetchQuoteSol(
-        currentPublicKey?.toBase58() ||
+        activePublicKey?.toBase58() ||
           publicKey?.toBase58() ||
           "E98rYk1s9mqm75SfBqqwFq73hCKWMtnyceASsWk1cmVp",
         convertedFromAmount
@@ -118,7 +117,7 @@ export function useQuoteFetching(
     fromAmount,
     address,
     destinationAddress,
-    currentPublicKey,
+    activePublicKey,
     publicKey,
     fetchQuote,
     fetchQuoteSol,
@@ -155,7 +154,7 @@ export function useQuoteFetching(
     ) {
       interval.current = setInterval(() => {
         fetchQuoteSol(
-          currentPublicKey?.toBase58() ||
+          activePublicKey?.toBase58() ||
             publicKey?.toBase58() ||
             "E98rYk1s9mqm75SfBqqwFq73hCKWMtnyceASsWk1cmVp",
           convertedFromAmount
@@ -188,7 +187,7 @@ export function useQuoteFetching(
     ) {
       interval.current = setInterval(() => {
         fetchQuoteSol(
-          currentPublicKey?.toBase58() ||
+          activePublicKey?.toBase58() ||
             publicKey?.toBase58() ||
             "E98rYk1s9mqm75SfBqqwFq73hCKWMtnyceASsWk1cmVp",
           convertedFromAmount
@@ -206,7 +205,7 @@ export function useQuoteFetching(
     toToken,
     fromAmount,
     address,
-    currentPublicKey,
+    activePublicKey,
     publicKey,
     destinationAddress,
     interval,
