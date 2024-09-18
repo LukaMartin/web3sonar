@@ -6,13 +6,27 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { chains } from "@/lib/constants";
+import { getChainName } from "@/lib/utils";
 import { useTokenExchangeStore } from "@/stores/token-exchange-store";
+import { useWallet } from "@solana/wallet-adapter-react";
 import Image from "next/image";
+import { useEffect } from "react";
+import { useAccount } from "wagmi";
 
 export default function ChainSelectFrom() {
   const fromChain = useTokenExchangeStore((state) => state.fromChain);
   const setFromChain = useTokenExchangeStore((state) => state.setFromChain);
   const setQuote = useTokenExchangeStore((state) => state.setQuote);
+  const { isConnected, chainId } = useAccount();
+  const { connected } = useWallet();
+
+  useEffect(() => {
+    if (isConnected) {
+      setFromChain(getChainName(chainId) || "");
+    } else if (connected && !isConnected) {
+      setFromChain("SOL");
+    }
+  }, [isConnected, connected, chainId, setFromChain]);
 
   return (
     <Select

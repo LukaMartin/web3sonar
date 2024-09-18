@@ -187,6 +187,12 @@ export const shortenProviderName = (providerName: string) => {
   return name;
 };
 
+export const getChainName = (chainId: number | undefined) => {
+  if (!chainId) return;
+  const chain = chains.find((chain) => chain.id === chainId);
+  return chain?.name;
+};
+
 export const getChainLogo = (chainId: number | undefined) => {
   if (!chainId) return;
   const chain = chains.find((chain) => chain.id === chainId);
