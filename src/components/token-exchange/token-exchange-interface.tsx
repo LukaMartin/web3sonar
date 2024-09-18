@@ -37,7 +37,9 @@ export default function TokenExchangeInterface() {
   const interval = useRef<any>(null);
   const setFromChain = useTokenExchangeStore((state) => state.setFromChain);
   const setToChain = useTokenExchangeStore((state) => state.setToChain);
-  const setShowMoreInfo = useTokenExchangeStore((state) => state.setShowMoreInfo);
+  const setShowMoreInfo = useTokenExchangeStore(
+    (state) => state.setShowMoreInfo
+  );
   useQuoteFetching(inputRef, interval);
   useChainSwitching();
   useErrorHandling(onClose);
@@ -53,96 +55,98 @@ export default function TokenExchangeInterface() {
 
   return (
     <>
-      <div className="flex w-[850px] mx-auto">
-        <section className="w-[375px] flex flex-col mb-12 mx-auto bg-white/[3%] rounded-md shadow-[0_8px_5px_rgba(2,2,2,1)]">
-          <AccountButtons />
+      <section className="w-[375px] flex flex-col mb-12 mx-auto bg-white/[3%] rounded-md shadow-[0_8px_5px_rgba(2,2,2,1)]">
+        <AccountButtons />
 
-          <div className="flex justify-between items-center px-6 mt-6">
-            <p className="text-xl text-white/80">From</p>
-            {quote && fromAmount && !isLoading && !quote.message ? (
-              <CircularTimer duration={45} isInfinite={true} size={34} />
-            ) : fromAmount && isLoading ? (
-              <LoadingSpinner size={34} color="rgb(255 255 255 / 50%)"icon={true}/>
-            ) : null}
-          </div>
-
-          <div className="flex flex-col gap-y-4 bg-white/5 rounded-md mx-6 mt-4">
-            <div className="flex justify-between items-center mt-4 px-4">
-              <ChainSelectFrom />
-              <TokenSelectFrom />
-            </div>
-
-            <TokenExchangeInput inputRef={inputRef} />
-          </div>
-
-          <div className="w-[61%] flex justify-between items-center px-6 mt-4">
-            <p className="text-white/80 text-xl">To</p>
-            <div className="flex">
-              <button onClick={() => swapChains()}>
-                <TbSwitchVertical
-                  size={37}
-                  className="bg-[#111620] p-2 rounded-full hover:bg-white/[7%]"
-                />
-              </button>
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-y-4 bg-white/5 rounded-md mx-6 mt-4">
-            <div className="flex justify-between items-center px-4 mt-4">
-              <ChainSelectTo />
-              <TokenSelectTo />
-            </div>
-
-            <Quote />
-          </div>
-
-          <DestinationAddressInput />
-
-          {quote && fromAmount ? (
-            <div className="flex justify-between items-center gap-x-1 mx-6 mt-4">
-              {!isLoading && quote.message ? (
-                <p className="text-red-500 text-sm">
-                  Error, click more info for details
-                </p>
-              ) : null}
-              <button
-                onClick={() => setShowMoreInfo(!showMoreInfo)}
-                className="flex items-center gap-x-1"
-              >
-                <p className=" text-white/80 hover:text-white hover:cursor-pointer transition">
-                  More info
-                </p>
-                {!showMoreInfo ? (
-                  <FaChevronDown size={17} className="text-white/80" />
-                ) : (
-                  <FaChevronUp size={17} className="text-white/80" />
-                )}
-              </button>
-            </div>
+        <div className="flex justify-between items-center px-6 mt-6">
+          <p className="text-xl text-white/80">From</p>
+          {quote && fromAmount && !isLoading && !quote.message ? (
+            <CircularTimer duration={45} isInfinite={true} size={34} />
+          ) : fromAmount && isLoading ? (
+            <LoadingSpinner
+              size={34}
+              color="rgb(255 255 255 / 50%)"
+              icon={true}
+            />
           ) : null}
+        </div>
 
-          {showMoreInfo && quote && fromAmount ? <QuoteMoreInfo /> : null}
+        <div className="flex flex-col gap-y-4 bg-white/5 rounded-md mx-6 mt-4">
+          <div className="flex justify-between items-center mt-4 px-4">
+            <ChainSelectFrom />
+            <TokenSelectFrom />
+          </div>
 
-          <TokenExchangeButton onOpen={onOpen} clearInput={clearInput} />
+          <TokenExchangeInput inputRef={inputRef} />
+        </div>
 
-          <p className="text-sm text-white/50 pb-4 pr-6 self-end">
-            Powered by{" "}
-            <a
-              href="https://li.fi/"
-              target="_blank"
-              className="text-green-yellow hover:text-green-yellow/70"
+        <div className="w-[61%] flex justify-between items-center px-6 mt-4">
+          <p className="text-white/80 text-xl">To</p>
+          <div className="flex">
+            <button onClick={() => swapChains()}>
+              <TbSwitchVertical
+                size={37}
+                className="bg-[#111620] p-2 rounded-full hover:bg-white/[7%]"
+              />
+            </button>
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-y-4 bg-white/5 rounded-md mx-6 mt-4">
+          <div className="flex justify-between items-center px-4 mt-4">
+            <ChainSelectTo />
+            <TokenSelectTo />
+          </div>
+
+          <Quote />
+        </div>
+
+        <DestinationAddressInput />
+
+        {quote && fromAmount ? (
+          <div className="flex justify-between items-center gap-x-1 mx-6 mt-4">
+            {!isLoading && quote.message ? (
+              <p className="text-red-500 text-sm">
+                Error, click more info for details
+              </p>
+            ) : null}
+            <button
+              onClick={() => setShowMoreInfo(!showMoreInfo)}
+              className="flex items-center gap-x-1"
             >
-              LIFI
-            </a>
-          </p>
-        </section>
+              <p className=" text-white/80 hover:text-white hover:cursor-pointer transition">
+                More info
+              </p>
+              {!showMoreInfo ? (
+                <FaChevronDown size={17} className="text-white/80" />
+              ) : (
+                <FaChevronUp size={17} className="text-white/80" />
+              )}
+            </button>
+          </div>
+        ) : null}
 
-        <TokenExchangeModal
-          isOpen={isOpen}
-          onClose={onClose}
-          onOpenChange={onOpenChange}
-        />
-      </div>
+        {showMoreInfo && quote && fromAmount ? <QuoteMoreInfo /> : null}
+
+        <TokenExchangeButton onOpen={onOpen} clearInput={clearInput} />
+
+        <p className="text-sm text-white/50 pb-4 pr-6 self-end">
+          Powered by{" "}
+          <a
+            href="https://li.fi/"
+            target="_blank"
+            className="text-green-yellow hover:text-green-yellow/70"
+          >
+            LIFI
+          </a>
+        </p>
+      </section>
+
+      <TokenExchangeModal
+        isOpen={isOpen}
+        onClose={onClose}
+        onOpenChange={onOpenChange}
+      />
     </>
   );
 }
