@@ -2,7 +2,7 @@ import BlockDataContainer from "@/app/gas-dashboard/components/block-data-contai
 import EstimatedPricesContainer from "@/app/gas-dashboard/components/estimated-prices-container";
 import TransactionSimulationContainer from "@/app/gas-dashboard/components/transaction-simulation-container";
 import MobileLandingPage from "@/components/mobile-landing-page";
-import { fetchBlockValues } from "@/lib/server-utils";
+import { fetchBlockValues } from "./utils/fetchBlockValues";
 
 export default async function GasDashboard() {
   const {

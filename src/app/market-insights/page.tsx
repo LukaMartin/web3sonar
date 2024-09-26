@@ -3,12 +3,10 @@ import CryptoCurrencyRankingsTable from "@/app/market-insights/components/crypto
 import FearAndGreedSkeleton from "@/app/market-insights/components/fear-and-greed-skeleton";
 import BreakoutStrategySkeleton from "@/app/market-insights/components/breakout-strategy-skeleton";
 import MobileLandingPage from "@/components/mobile-landing-page";
-import {
-  fetchCoinData,
-  fetchBreakoutStrategy,
-  fetchCryptoMarketCapData,
-  fetchFearGreed,
-} from "@/lib/server-utils";
+import { fetchFearGreed } from "./utils/fetchFearGreed";
+import { fetchCoinData } from "./utils/fetchCoinData";
+import { fetchBreakoutStrategy } from "./utils/fetchBreakoutStrategy";
+import { fetchCryptoMarketCapData } from "./utils/fetchCryptoMarketCapData";
 import dynamic from "next/dynamic";
 import BiggestGainersContainerSkeleton from "@/app/market-insights/components/biggest-gainers-container-skeleton";
 

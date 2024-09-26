@@ -44,7 +44,7 @@ export default function Quote() {
                 isLoading && "animate-pulseStrong"
               } text-sm text-right text-white/50 pb-2`}
             >
-              ${quote.estimate.toAmountUSD}
+              ${Number(quote.estimate.toAmountUSD).toFixed(2)}
             </p>
           </div>
         ) : !quote ? (

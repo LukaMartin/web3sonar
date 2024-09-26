@@ -37,7 +37,7 @@ export default function LoadingSpinner({
         }
         .spinner {
           display: inline-block;
-          border-width: 4px;
+          border-width: 3px;
           border-style: solid;
           border-radius: 50%;
           animation: spin 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;

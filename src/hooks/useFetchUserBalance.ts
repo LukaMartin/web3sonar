@@ -1,7 +1,7 @@
 import { convertToEth, convertUsdcDown, findChainId } from "@/lib/utils";
 import { useCallback, useEffect, useState } from "react";
 import { useAccount, useBalance, useReadContracts } from "wagmi";
-import { useEthersProvider } from "@/lib/wagmi-ethers";
+import { useEthersProvider } from "@/config/wagmi-ethers";
 import { erc20Abi } from "viem";
 import { wethAddresses } from "@/lib/constants";
 import { useTokenExchangeStore } from "@/stores/token-exchange-store";

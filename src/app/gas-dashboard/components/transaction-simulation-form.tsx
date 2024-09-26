@@ -1,6 +1,6 @@
-import { submitTransaction } from "@/lib/server-utils";
 import { TransactionSimultionFormProps } from "@/lib/types";
 import FormSubmitButton from "./form-submit-button";
+import { submitSimulationTransaction } from "../actions/submitSimulationTransaction";
 
 export default function TransactionSimulationForm({
   setSimulationResult,
@@ -13,7 +13,7 @@ export default function TransactionSimulationForm({
   return (
     <form
       action={async (formData) => {
-        const result = await submitTransaction(formData);
+        const result = await submitSimulationTransaction(formData);
         setSimulationResult(result);
       }}
       className="flex flex-col bg-white/[3%] rounded-md p-6 w-[30rem] shadow-[0_7px_5px_rgba(2,2,2,1)]"

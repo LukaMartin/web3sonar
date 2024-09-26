@@ -1,7 +1,7 @@
 "use client";
 
 import useFetchUserBalance from "@/hooks/useFetchUserBalance";
-import { useEthersSigner } from "@/lib/wagmi-ethers";
+import { useEthersSigner } from "@/config/wagmi-ethers";
 import { useTokenExchangeStore } from "@/stores/token-exchange-store";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useAccount } from "wagmi";

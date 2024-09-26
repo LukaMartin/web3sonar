@@ -1,5 +1,6 @@
 import MobileLandingPage from "@/components/mobile-landing-page";
-import { fetchCryptoNews, fetchNewsEvents } from "@/lib/server-utils";
+import { fetchNewsEvents } from "./utils/fetchNewsEvents";
+import { fetchCryptoNews } from "./utils/fetchCryptoNews";
 import { SearchParams } from "@/lib/types";
 import CryptoNewsContainer from "./components/crypto-news-container";
 
