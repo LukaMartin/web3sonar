@@ -29,15 +29,13 @@ export default function CryptoCurrencyRankingsTable({
   }, []);
 
   useEffect(() => {
-    setInterval(() => {
+    router.refresh();
+  
+    const intervalId = setInterval(() => {
       router.refresh();
     }, 60000);
-  }, [router]);
-
-  useEffect(() => {
-    setTimeout(() => {
-      router.refresh();
-    }, 500);
+  
+    return () => clearInterval(intervalId);
   }, [router]);
 
   return (
