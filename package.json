@@ -41,7 +41,7 @@
     "react-spinners": "^0.13.8",
     "react-ts-tradingview-widgets": "^1.2.5",
     "sharp": "^0.33.4",
-    "solana-active-wallet-react": "^1.0.9",
+    "solana-active-wallet-react": "^1.0.17",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
     "use-debounce": "^10.0.3",
