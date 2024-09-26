@@ -6,7 +6,7 @@ import ChainSelectFrom from "./chain-select-from";
 import ChainSelectTo from "./chain-select-to";
 import TokenSelectTo from "./token-select-to";
 import QuoteMoreInfo from "./quote-more-info";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import TokenSelectFrom from "./token-select-from";
 import { TbSwitchVertical } from "react-icons/tb";
 import { useDisclosure } from "@nextui-org/react";

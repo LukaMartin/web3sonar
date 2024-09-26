@@ -17,8 +17,8 @@ export function useQuoteFetching(
   interval: React.MutableRefObject<any>
 ) {
   const { address } = useAccount();
-  const { publicKey } = useWallet();
-  const { activePublicKey } = useSolanaActiveWallet(publicKey);
+  const { publicKey, wallet } = useWallet();
+  const { activePublicKey } = useSolanaActiveWallet(publicKey, wallet);
   const fromChain = useTokenExchangeStore((state) => state.fromChain);
   const toChain = useTokenExchangeStore((state) => state.toChain);
   const fromToken = useTokenExchangeStore((state) => state.fromToken);

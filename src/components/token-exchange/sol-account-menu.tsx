@@ -27,8 +27,8 @@ type SolAccountMenuProps = {
 
 export default function SolAccountMenu({ children }: SolAccountMenuProps) {
   const { solBalance } = useFetchUserBalanceSol();
-  const { disconnect, publicKey } = useWallet();
-  const { activePublicKey } = useSolanaActiveWallet(publicKey);
+  const { disconnect, publicKey, wallet } = useWallet();
+  const { activePublicKey } = useSolanaActiveWallet(publicKey, wallet);
   const { toast } = useToast();
 
   return (
@@ -43,8 +43,7 @@ export default function SolAccountMenu({ children }: SolAccountMenuProps) {
 
             <div className="flex items-center gap-x-2 mb-5">
               <p className="text-xl">
-                {activePublicKey &&
-                  formatAddress(activePublicKey?.toString(), 5)}
+                {activePublicKey && formatAddress(activePublicKey?.toString(), 5)}
               </p>
               <BiSolidCopy
                 size={25}

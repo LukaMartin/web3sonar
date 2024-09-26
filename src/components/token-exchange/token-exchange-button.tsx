@@ -20,9 +20,9 @@ export default function TokenExchangeButton({
   clearInput,
 }: TokenExchangeButtonProps) {
   const { isConnected } = useAccount();
-  const { connected, sendTransaction, signTransaction, publicKey } =
+  const { connected, sendTransaction, signTransaction, publicKey, wallet } =
     useWallet();
-  const { activePublicKey } = useSolanaActiveWallet(publicKey);
+  const { activePublicKey } = useSolanaActiveWallet(publicKey, wallet);
   const fromAmount = useTokenExchangeStore((state) => state.fromAmount);
   const fromChain = useTokenExchangeStore((state) => state.fromChain);
   const isLoading = useTokenExchangeStore((state) => state.isLoading);

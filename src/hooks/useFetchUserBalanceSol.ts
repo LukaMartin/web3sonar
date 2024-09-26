@@ -5,11 +5,11 @@ import { useTokenExchangeStore } from "@/stores/token-exchange-store";
 import { connection, SOL_USDC_MINT, SOL_USDT_MINT } from "@/config/solana";
 import { TOKEN_PROGRAM_ID } from "@solana/spl-token";
 import { useCallback, useEffect, useState } from "react";
-import  useSolanaActiveWallet  from "solana-active-wallet-react";
+import useSolanaActiveWallet from "solana-active-wallet-react";
 
 export default function useFetchUserBalanceSol() {
-  const { connected, publicKey } = useWallet();
-  const { activePublicKey } = useSolanaActiveWallet(publicKey);
+  const { connected, publicKey, wallet } = useWallet();
+  const { activePublicKey } = useSolanaActiveWallet(publicKey, wallet);
   const fromChain = useTokenExchangeStore((state) => state.fromChain);
   const fromToken = useTokenExchangeStore((state) => state.fromToken);
   const fromAmount = useTokenExchangeStore((state) => state.fromAmount);
@@ -61,7 +61,7 @@ export default function useFetchUserBalanceSol() {
   );
 
   useEffect(() => {
-    if (fromChain === "SOL" && activePublicKey && connected) {
+      if (fromChain === "SOL" && activePublicKey && connected) {
       if (fromToken === "SOL") {
         fetchUserSolBalance();
       } else if (fromToken === SOL_USDC_MINT.toBase58()) {
