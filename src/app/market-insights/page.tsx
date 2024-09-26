@@ -1,7 +1,7 @@
-import CryptoMarketcapChart from "@/components/market-stats/crypto-marketcap-chart";
-import CryptoCurrencyRankingsTable from "@/components/market-stats/cryptocurrency-rankings-table";
-import FearAndGreedSkeleton from "@/components/market-stats/fear-and-greed-skeleton";
-import BreakoutStrategySkeleton from "@/components/market-stats/breakout-strategy-skeleton";
+import CryptoMarketcapChart from "@/app/market-insights/components/crypto-marketcap-chart";
+import CryptoCurrencyRankingsTable from "@/app/market-insights/components/cryptocurrency-rankings-table";
+import FearAndGreedSkeleton from "@/app/market-insights/components/fear-and-greed-skeleton";
+import BreakoutStrategySkeleton from "@/app/market-insights/components/breakout-strategy-skeleton";
 import MobileLandingPage from "@/components/mobile-landing-page";
 import {
   fetchCoinData,
@@ -10,10 +10,10 @@ import {
   fetchFearGreed,
 } from "@/lib/server-utils";
 import dynamic from "next/dynamic";
-import BiggestGainersContainerSkeleton from "@/components/market-stats/biggest-gainers-container-skeleton";
+import BiggestGainersContainerSkeleton from "@/app/market-insights/components/biggest-gainers-container-skeleton";
 
 const DynamicFearAndGreed = dynamic(
-  () => import("../../components/market-stats/fear-and-greed"),
+  () => import("./components/fear-and-greed"),
   {
     ssr: false,
     loading: () => <FearAndGreedSkeleton />,
@@ -21,7 +21,7 @@ const DynamicFearAndGreed = dynamic(
 );
 
 const DynamicBreakoutStrategyChart = dynamic(
-  () => import("../../components/market-stats/breakout-strategy-chart"),
+  () => import("./components/breakout-strategy-chart"),
   {
     ssr: false,
     loading: () => <BreakoutStrategySkeleton />,
@@ -29,7 +29,7 @@ const DynamicBreakoutStrategyChart = dynamic(
 );
 
 const DynamicBiggestGainersContainer = dynamic(
-  () => import("../../components/market-stats/biggest-gainers-container"),
+  () => import("./components/biggest-gainers-container"),
   {
     ssr: false,
     loading: () => <BiggestGainersContainerSkeleton />,
