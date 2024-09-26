@@ -1,7 +1,7 @@
 import MobileLandingPage from "@/components/mobile-landing-page";
-import CryptoNewsContainer from "@/components/news/crypto-news-container";
 import { fetchCryptoNews, fetchNewsEvents } from "@/lib/server-utils";
 import { SearchParams } from "@/lib/types";
+import CryptoNewsContainer from "./components/crypto-news-container";
 
 type NewsPageProps = {
   searchParams: SearchParams;
