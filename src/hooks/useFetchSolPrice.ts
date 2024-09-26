@@ -1,20 +1,16 @@
+import { fetchSolPrice } from "@/lib/utils/fetchSolPrice";
 import { useEffect, useState } from "react";
 
 export default function useFetchSolPrice() {
   const [solPrice, setSolPrice] = useState(0);
 
-  function fetchSolPrice() {
-    fetch("https://api.coinbase.com/v2/prices/SOL-USD/spot", {
-      method: "GET",
-    })
-      .then((response) => response.json())
-      .then((jsonResponse) => {
-        setSolPrice(jsonResponse.data.amount);
-      });
-  }
+  const fetchPrice = async () => {
+    const price = await fetchSolPrice();
+    setSolPrice(price);
+  };
 
   useEffect(() => {
-    fetchSolPrice();
+    fetchPrice();
   }, []);
 
   return solPrice;
