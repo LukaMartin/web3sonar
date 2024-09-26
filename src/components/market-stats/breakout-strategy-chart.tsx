@@ -15,13 +15,13 @@ export default function BreakoutStrategyChart({
     {
       id: "Bullish",
       label: "Bullish",
-      value: highCoinsPercentage,
+      value: Number(highCoinsPercentage).toFixed(2),
       color: "#16A34A",
     },
     {
       id: "Bearish",
       label: "Bearish",
-      value: 100 - highCoinsPercentage,
+      value: Number(100 - highCoinsPercentage).toFixed(2),
       color: "#DC2626",
     },
   ];
