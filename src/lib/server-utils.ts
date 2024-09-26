@@ -1,7 +1,12 @@
 "use server";
 
-import { NewsEvent, SimulateTransactionParameters, TokenMetricsMarketCapData } from "./types";
+import {
+  NewsEvent,
+  SimulateTransactionParameters,
+  TokenMetricsMarketCapData,
+} from "./types";
 import { BlockPricesParameter } from "./types";
+import { findChainId } from "./utils";
 
 export async function fetchEthPrice() {
   const response = await fetch(
@@ -146,163 +151,179 @@ export const submitTransaction = async (formData: FormData) => {
 };
 
 export const fetchCoinData = async () => {
-
-  const response = await fetch("https://deep-index.moralis.io/api/v2.2/market-data/global/market-cap", {
-    method: "GET",
-    headers: {
-      "accept": "application/json",
-      "X-API-Key": `${process.env.MORALIS_API_KEY}`
-    },
-    next: {
-      revalidate: 300,
-    },
-  })
+  const response = await fetch(
+    "https://deep-index.moralis.io/api/v2.2/market-data/global/market-cap",
+    {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        "X-API-Key": `${process.env.MORALIS_API_KEY}`,
+      },
+      next: {
+        revalidate: 300,
+      },
+    }
+  );
 
   const data = await response.json();
 
-  return data
-}
+  return data;
+};
 
 export const fetchBreakoutStrategy = async () => {
-  
   let date = new Date();
-  let dateOffsetOne = (24*60*60*1000) * 0
-  let dateOffsetTwo = (24*60*60*1000) * 180
+  let dateOffsetOne = 24 * 60 * 60 * 1000 * 0;
+  let dateOffsetTwo = 24 * 60 * 60 * 1000 * 180;
 
   let dateOne = new Date(date.setTime(date.getTime() - dateOffsetOne));
   let dateTwo = new Date(date.setTime(date.getTime() - dateOffsetTwo));
-  
-  let finalDateOne =  dateOne.toISOString().split('T')[0];
-  let finalDateTwo = dateTwo.toISOString().split('T')[0];
 
+  let finalDateOne = dateOne.toISOString().split("T")[0];
+  let finalDateTwo = dateTwo.toISOString().split("T")[0];
 
-  const response = await fetch(`https://api.tokenmetrics.com/v2/market-metrics?startDate=${finalDateTwo}&endDate=${finalDateOne}&limit=1000&page=0`, {
-    method: "GET",
-    headers:  {
-      "accept": "application/json",
-      "api_key": `${process.env.TRADING_METRICS_API_KEY}`
-    },
-    next: {
-      revalidate: 3600,
+  const response = await fetch(
+    `https://api.tokenmetrics.com/v2/market-metrics?startDate=${finalDateTwo}&endDate=${finalDateOne}&limit=1000&page=0`,
+    {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        api_key: `${process.env.TRADING_METRICS_API_KEY}`,
+      },
+      next: {
+        revalidate: 3600,
+      },
     }
-  })
-  
+  );
 
   const data = await response.json();
 
-  const highCoinsPercentage = data.data.map((item: TokenMetricsMarketCapData) => {
-    return item.TM_GRADE_PERC_HIGH_COINS
-  })
+  const highCoinsPercentage = data.data.map(
+    (item: TokenMetricsMarketCapData) => {
+      return item.TM_GRADE_PERC_HIGH_COINS;
+    }
+  );
 
   const newDataArray = data.data.map((item: TokenMetricsMarketCapData) => {
-    
     return {
       x: item.DATE,
       y: Number(item.TOTAL_CRYPTO_MCAP).toFixed(0),
-    }
-  })
+    };
+  });
 
-  return  highCoinsPercentage 
-}
+  return highCoinsPercentage;
+};
 
 export const fetchCryptoMarketCapData = async () => {
   let endDate = Date.now();
   let startDate = Date.now() - 7889229001;
 
-  const response = await fetch("https://api.livecoinwatch.com/overview/history", {
-    method: "POST",
-    headers: {
-      "content-type": "application/json",
-      "x-api-key": `${process.env.LIVE_COIN_WATCH_API_KEY}`,
-    },
-    body: JSON.stringify({
-      currency: "USD",
-      start: startDate,
-      end: endDate,
-    }),
-    next: {
-      revalidate: 600,
+  const response = await fetch(
+    "https://api.livecoinwatch.com/overview/history",
+    {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        "x-api-key": `${process.env.LIVE_COIN_WATCH_API_KEY}`,
+      },
+      body: JSON.stringify({
+        currency: "USD",
+        start: startDate,
+        end: endDate,
+      }),
+      next: {
+        revalidate: 600,
+      },
     }
-  })
+  );
 
   const data = await response.json();
 
   const cryptoTotalMarketcap = data.map((item: any) => {
     return {
-      x: new Date(item.date).toISOString().split('T')[0],
-      y: item.cap
-    }
+      x: new Date(item.date).toISOString().split("T")[0],
+      y: item.cap,
+    };
   });
 
   const altcoinTotalMarketcap = data.map((item: any) => {
     return {
-      x: new Date(item.date).toISOString().split('T')[0],
-      y: item.cap * (1 - item.btcDominance)
-    }
-  })
+      x: new Date(item.date).toISOString().split("T")[0],
+      y: item.cap * (1 - item.btcDominance),
+    };
+  });
 
-  return { cryptoTotalMarketcap, altcoinTotalMarketcap }
-}
+  return { cryptoTotalMarketcap, altcoinTotalMarketcap };
+};
 
 export const fetchFearGreed = async () => {
-
   const response = await fetch("https://api.alternative.me/fng/", {
     method: "GET",
     next: {
       revalidate: 3600,
     },
-  })
-  
+  });
+
   const data = await response.json();
 
-  return data.data
-}
+  return data.data;
+};
 
 export const fetchCryptoNews = async () => {
-
-  const generalResponse = await fetch("https://cryptonews-api.com/api/v1/category?section=general&items=12&page=1&token=qglrdr1zt0jdszdtlrzrt6gsj2ipkrbgupszx00f&source=The+Block,Cointelegraph,Reuters,Coindesk,BeInCrypto,Blockworks,Decrypt,UToday,Bitcoin,Forbes,Crypto+News", {
-    method: "GET",
-    next: {
-      revalidate: 300,
-    },
-  })
+  const generalResponse = await fetch(
+    "https://cryptonews-api.com/api/v1/category?section=general&items=12&page=1&token=qglrdr1zt0jdszdtlrzrt6gsj2ipkrbgupszx00f&source=The+Block,Cointelegraph,Reuters,Coindesk,BeInCrypto,Blockworks,Decrypt,UToday,Bitcoin,Forbes,Crypto+News",
+    {
+      method: "GET",
+      next: {
+        revalidate: 300,
+      },
+    }
+  );
 
   const generalNews = await generalResponse.json();
-  
-  const tokenResponse = await fetch("https://cryptonews-api.com/api/v1?tickers=BTC,ETH,SOL&items=12&page=1&token=qglrdr1zt0jdszdtlrzrt6gsj2ipkrbgupszx00f&source=The+Block,Cointelegraph,Reuters,Coindesk,BeInCrypto,Blockworks,Decrypt,UToday,Bitcoin,Forbes,Crypto+News", {
-    method: "GET",
-    next: {
-      revalidate: 300,
-    },
-  })
+
+  const tokenResponse = await fetch(
+    "https://cryptonews-api.com/api/v1?tickers=BTC,ETH,SOL&items=12&page=1&token=qglrdr1zt0jdszdtlrzrt6gsj2ipkrbgupszx00f&source=The+Block,Cointelegraph,Reuters,Coindesk,BeInCrypto,Blockworks,Decrypt,UToday,Bitcoin,Forbes,Crypto+News",
+    {
+      method: "GET",
+      next: {
+        revalidate: 300,
+      },
+    }
+  );
 
   const tokenNews = await tokenResponse.json();
 
-  const nftResponse = await fetch("https://cryptonews-api.com/api/v1/category?section=general&items=12&topic=NFT&page=1&token=qglrdr1zt0jdszdtlrzrt6gsj2ipkrbgupszx00f", {
-    method: "GET",
-    next: {
-      revalidate: 3600,
-    },
-  })
+  const nftResponse = await fetch(
+    "https://cryptonews-api.com/api/v1/category?section=general&items=12&topic=NFT&page=1&token=qglrdr1zt0jdszdtlrzrt6gsj2ipkrbgupszx00f",
+    {
+      method: "GET",
+      next: {
+        revalidate: 3600,
+      },
+    }
+  );
 
   const nftNews = await nftResponse.json();
 
-  return { generalNews, tokenNews, nftNews }
-}
+  return { generalNews, tokenNews, nftNews };
+};
 
 export const fetchNewsEvents = async () => {
-  const response = await fetch("https://nfs.faireconomy.media/cc_calendar_thisweek.json", {
-    method: "GET",
-    next: {
-      revalidate: 14400,
+  const response = await fetch(
+    "https://nfs.faireconomy.media/cc_calendar_thisweek.json",
+    {
+      method: "GET",
+      next: {
+        revalidate: 14400,
+      },
     }
-  })
+  );
 
   const data = await response.json();
 
   const filteredData = data.filter((event: NewsEvent) => {
-    return event.impact === "High"
-  })
+    return event.impact === "High";
+  });
 
-  return filteredData
-}
+  return filteredData;
+};
