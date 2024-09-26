@@ -19,9 +19,9 @@ import {
   useErrorHandling,
 } from "@/hooks/useTokenExchangeEffects";
 import Quote from "./quote";
-import CircularTimer from "../circular-timer-two";
+import CircularTimer from "../../../components/circular-timer-two";
 import { FaChevronDown } from "react-icons/fa";
-import LoadingSpinner from "../loading-spinner";
+import LoadingSpinner from "../../../components/loading-spinner";
 import { FaChevronUp } from "react-icons/fa6";
 import AccountButtons from "./account-buttons";
 

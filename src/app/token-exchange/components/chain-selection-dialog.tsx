@@ -9,8 +9,8 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 import Image from "next/image";
-import ethLogo from "../../../public/eth-logo.svg";
-import solLogo from "../../../public/solana-logo.svg";
+import ethLogo from "../../../../public/eth-logo.svg"
+import solLogo from "../../../../public/solana-logo.svg";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { useWalletModal } from "@solana/wallet-adapter-react-ui";
 import { useEffect } from "react";

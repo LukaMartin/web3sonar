@@ -1,7 +1,7 @@
 import useFetchUserBalanceSol from "@/hooks/useFetchUserBalanceSol";
 import { useWallet } from "@solana/wallet-adapter-react";
 import Image from "next/image";
-import solLogo from "../../../public/solana-logo.svg";
+import solLogo from "../../../../public/solana-logo.svg";
 import { formatAddress } from "@/lib/utils";
 import SolAccountMenu from "./sol-account-menu";
 import useSolanaActiveWallet from "solana-active-wallet-react";

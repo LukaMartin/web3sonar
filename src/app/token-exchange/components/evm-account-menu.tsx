@@ -15,7 +15,7 @@ import { HiOutlineExternalLink } from "react-icons/hi";
 import { BiSolidCopy } from "react-icons/bi";
 import { FaRegCheckCircle } from "react-icons/fa";
 import { FaPowerOff } from "react-icons/fa6";
-import { useToast } from "../ui/use-toast";
+import { useToast } from "../../../components/ui/use-toast";
 import { useAccount, useDisconnect } from "wagmi";
 import useFetchUserBalance from "@/hooks/useFetchUserBalance";
 

@@ -13,13 +13,13 @@ import useSolanaActiveWallet from "solana-active-wallet-react";
 import { formatAddress } from "@/lib/utils";
 import Link from "next/link";
 import { useWallet } from "@solana/wallet-adapter-react";
-import solLogo from "../../../public/solana-logo.svg";
+import solLogo from "../../../../public/solana-logo.svg";
 import Image from "next/image";
 import { BiSolidCopy } from "react-icons/bi";
 import { HiOutlineExternalLink } from "react-icons/hi";
 import { FaRegCheckCircle } from "react-icons/fa";
 import { FaPowerOff } from "react-icons/fa6";
-import { useToast } from "../ui/use-toast";
+import { useToast } from "../../../components/ui/use-toast";
 
 type SolAccountMenuProps = {
   children: React.ReactNode;
@@ -43,7 +43,8 @@ export default function SolAccountMenu({ children }: SolAccountMenuProps) {
 
             <div className="flex items-center gap-x-2 mb-5">
               <p className="text-xl">
-                {activePublicKey && formatAddress(activePublicKey?.toString(), 5)}
+                {activePublicKey &&
+                  formatAddress(activePublicKey?.toString(), 5)}
               </p>
               <BiSolidCopy
                 size={25}
