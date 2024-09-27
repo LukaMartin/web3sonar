@@ -1,17 +1,17 @@
-import CryptoMarketcapChart from "@/app/market-insights/components/crypto-marketcap-chart";
-import CryptoCurrencyRankingsTable from "@/app/market-insights/components/cryptocurrency-rankings-table";
-import FearAndGreedSkeleton from "@/app/market-insights/components/fear-and-greed-skeleton";
-import BreakoutStrategySkeleton from "@/app/market-insights/components/breakout-strategy-skeleton";
+import CryptoMarketcapChart from "@/components/market-insights/crypto-marketcap-chart";
+import CryptoCurrencyRankingsTable from "@/components/market-insights/cryptocurrency-rankings-table";
+import FearAndGreedSkeleton from "@/components/market-insights/fear-and-greed-skeleton";
+import BreakoutStrategySkeleton from "@/components/market-insights/breakout-strategy-skeleton";
 import MobileLandingPage from "@/components/mobile-landing-page";
-import { fetchFearGreed } from "./utils/fetchFearGreed";
-import { fetchCoinData } from "./utils/fetchCoinData";
-import { fetchBreakoutStrategy } from "./utils/fetchBreakoutStrategy";
-import { fetchCryptoMarketCapData } from "./utils/fetchCryptoMarketCapData";
+import { fetchFearGreed } from "../../services/alternative-me/fetchFearGreed";
+import { fetchCoinData } from "../../services/moralis/fetchCoinData";
+import { fetchBreakoutStrategy } from "../../services/token-metrics/fetchBreakoutStrategy";
+import { fetchCryptoMarketCapData } from "../../services/live-coin-watch/fetchCryptoMarketCapData";
 import dynamic from "next/dynamic";
-import BiggestGainersContainerSkeleton from "@/app/market-insights/components/biggest-gainers-container-skeleton";
+import BiggestGainersContainerSkeleton from "@/components/market-insights/biggest-gainers-container-skeleton";
 
 const DynamicFearAndGreed = dynamic(
-  () => import("./components/fear-and-greed"),
+  () => import("../../components/market-insights/fear-and-greed"),
   {
     ssr: false,
     loading: () => <FearAndGreedSkeleton />,
@@ -19,7 +19,7 @@ const DynamicFearAndGreed = dynamic(
 );
 
 const DynamicBreakoutStrategyChart = dynamic(
-  () => import("./components/breakout-strategy-chart"),
+  () => import("../../components/market-insights/breakout-strategy-chart"),
   {
     ssr: false,
     loading: () => <BreakoutStrategySkeleton />,
@@ -27,7 +27,7 @@ const DynamicBreakoutStrategyChart = dynamic(
 );
 
 const DynamicBiggestGainersContainer = dynamic(
-  () => import("./components/biggest-gainers-container"),
+  () => import("../../components/market-insights/biggest-gainers-container"),
   {
     ssr: false,
     loading: () => <BiggestGainersContainerSkeleton />,

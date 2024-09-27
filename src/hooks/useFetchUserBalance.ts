@@ -1,10 +1,11 @@
-import { convertToEth, convertUsdcDown, findChainId } from "@/lib/utils";
+import { formatEther, formatUnits } from "viem";
 import { useCallback, useEffect, useState } from "react";
 import { useAccount, useBalance, useReadContracts } from "wagmi";
 import { useEthersProvider } from "@/config/wagmi-ethers";
 import { erc20Abi } from "viem";
-import { wethAddresses } from "@/lib/constants";
+import { wethAddresses } from "@/constants/wethAddresses";
 import { useTokenExchangeStore } from "@/stores/token-exchange-store";
+import { findChainId } from "@/utils/findChainId";
 
 export default function useFetchUserBalance() {
   const provider = useEthersProvider();
@@ -38,7 +39,8 @@ export default function useFetchUserBalance() {
 
     if (fromToken === "ETH") {
       if (
-        convertToEth(Number(ethBalance.data?.value)) < fromAmount! &&
+        ethBalance.data &&
+        Number(formatEther(BigInt(ethBalance.data?.value))) < fromAmount! &&
         chainId === fromChainId
       ) {
         setInsufficientFundsEvm(true);
@@ -50,7 +52,7 @@ export default function useFetchUserBalance() {
       !wethAddresses.includes(fromToken)
     ) {
       const balance = userBalance.data![0];
-      const formattedBalance = convertUsdcDown(Number(balance));
+      const formattedBalance = Number(formatUnits(balance, 6));
 
       if (formattedBalance < fromAmount! && chainId === fromChainId) {
         setInsufficientFundsEvm(true);
@@ -58,7 +60,7 @@ export default function useFetchUserBalance() {
       }
     } else if (userBalance.data && wethAddresses.includes(fromToken)) {
       const balance = userBalance.data![0];
-      const formattedBalance = convertToEth(Number(balance));
+      const formattedBalance = Number(formatEther(BigInt(balance)));
 
       if (formattedBalance < fromAmount! && chainId === fromChainId) {
         setInsufficientFundsEvm(true);

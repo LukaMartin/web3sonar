@@ -1,6 +1,7 @@
-import { Quote } from "@/lib/token-exchange-quote-types";
-import { TokenExchangeResult } from "@/lib/token-exchange-result-types";
-import { checkAndSetAllowance, getStatus } from "@/lib/utils";
+import { Quote } from "@/types/token-exchange/quote";
+import { TokenExchangeResult } from "@/types/token-exchange/tokenExchangeResult";
+import { checkAndSetAllowance } from "@/utils/checkAndSetAllowance";
+import { getTxStatus } from "@/utils/getTxStatus";
 import { SendTransactionOptions } from "@solana/wallet-adapter-base";
 import {
   Connection,
@@ -282,7 +283,7 @@ export const useTokenExchangeStore = create<Store>((set, get) => ({
     let result: TokenExchangeResult | null;
 
     const interval = setInterval(async () => {
-      result = await getStatus({
+      result = await getTxStatus({
         bridge: get().quote!.tool,
         fromChain: get().fromChain,
         toChain: get().toChain,
@@ -444,7 +445,7 @@ export const useTokenExchangeStore = create<Store>((set, get) => ({
     let result: TokenExchangeResult | null;
 
     const interval = setInterval(async () => {
-      result = await getStatus({
+      result = await getTxStatus({
         bridge: get().quote!.tool,
         fromChain: get().fromChain,
         toChain: get().toChain,

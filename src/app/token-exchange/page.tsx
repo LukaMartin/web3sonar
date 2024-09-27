@@ -1,8 +1,8 @@
 import dynamic from "next/dynamic";
 import MobileLandingPage from "@/components/mobile-landing-page";
-import TokenExchangeInterfaceSkeleton from "@/app/token-exchange/components/token-exchange-interface-skeleton";
+import TokenExchangeInterfaceSkeleton from "@/components/token-exchange/token-exchange-interface-skeleton";
 const DynamicTokenExchangeInterface = dynamic(
-  () => import("./components/token-exchange-interface"),
+  () => import("../../components/token-exchange/token-exchange-interface"),
   {
     ssr: false,
     loading: () => <TokenExchangeInterfaceSkeleton />,

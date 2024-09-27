@@ -1,7 +1,13 @@
-import Image from "next/image";
-import { HomePageCardDetails } from "@/lib/types";
-import { cn } from "@/lib/utils";
+import Image, { StaticImageData } from "next/image";
+import { cn } from "@/utils/cn";
 import Link from "next/link";
+
+type HomePageCardDetails = {
+  title: string;
+  description: string;
+  image: StaticImageData;
+  path: string;
+};
 
 type HomePageCardProps = {
   cardDetails: HomePageCardDetails;

@@ -1,4 +1,4 @@
-import { fetchSolPrice } from "@/lib/utils/fetchSolPrice";
+import { fetchSolPrice } from "@/utils/fetchSolPrice";
 import { useEffect, useState } from "react";
 
 export default function useFetchSolPrice() {

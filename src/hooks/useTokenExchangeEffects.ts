@@ -2,15 +2,11 @@ import { useEffect, useCallback } from "react";
 import { useTokenExchangeStore } from "@/stores/token-exchange-store";
 import { useAccount, useSwitchChain } from "wagmi";
 import { useToast } from "../components/ui/use-toast";
-import {
-  findChainId,
-  convertToWei,
-  convertSolUp,
-  convertUsdcUp,
-} from "@/lib/utils";
-import { wethAddresses } from "@/lib/constants";
+import { wethAddresses } from "@/constants/wethAddresses";
 import { useWallet } from "@solana/wallet-adapter-react";
 import  useSolanaActiveWallet  from "solana-active-wallet-react";
+import { parseEther, parseUnits } from "viem";
+import { findChainId } from "@/utils/findChainId";
 
 export function useQuoteFetching(
   inputRef: React.RefObject<HTMLInputElement>,
@@ -38,11 +34,11 @@ export function useQuoteFetching(
   //Logic for determining convertedFromAmount
   const convertFromAmount = useCallback(() => {
     if (fromToken === "ETH" || wethAddresses.includes(fromToken)) {
-      return convertToWei(fromAmount);
+      return parseEther(fromAmount.toString());
     } else if (fromToken === "SOL") {
-      return convertSolUp(fromAmount);
+      return parseUnits(fromAmount.toString(), 9);
     } else {
-      return convertUsdcUp(fromAmount);
+      return parseUnits(fromAmount.toString(), 6);
     }
   }, [fromAmount, fromToken]);
 
@@ -61,7 +57,7 @@ export function useQuoteFetching(
     ) {
       fetchQuote(
         address || "0xF11aeCE59d2E3959b625bbd664e4A8400e941Fb9",
-        convertedFromAmount
+        Number(convertedFromAmount)
       );
     } else if (
       fromChain &&
@@ -77,7 +73,7 @@ export function useQuoteFetching(
         activePublicKey?.toBase58() ||
           publicKey?.toBase58() ||
           "E98rYk1s9mqm75SfBqqwFq73hCKWMtnyceASsWk1cmVp",
-        convertedFromAmount
+        Number(convertedFromAmount)
       );
     } else if (
       fromChain &&
@@ -91,7 +87,7 @@ export function useQuoteFetching(
     ) {
       fetchQuoteSol(
         address || "0xF11aeCE59d2E3959b625bbd664e4A8400e941Fb9",
-        convertedFromAmount
+        Number(convertedFromAmount)
       );
     } else if (
       fromChain &&
@@ -106,7 +102,7 @@ export function useQuoteFetching(
         activePublicKey?.toBase58() ||
           publicKey?.toBase58() ||
           "E98rYk1s9mqm75SfBqqwFq73hCKWMtnyceASsWk1cmVp",
-        convertedFromAmount
+        Number(convertedFromAmount)
       );
     }
   }, [
@@ -139,7 +135,7 @@ export function useQuoteFetching(
       interval.current = setInterval(() => {
         fetchQuote(
           address || "0xF11aeCE59d2E3959b625bbd664e4A8400e941Fb9",
-          convertedFromAmount
+          Number(convertedFromAmount)
         );
       }, 50000);
     } else if (
@@ -157,7 +153,7 @@ export function useQuoteFetching(
           activePublicKey?.toBase58() ||
             publicKey?.toBase58() ||
             "E98rYk1s9mqm75SfBqqwFq73hCKWMtnyceASsWk1cmVp",
-          convertedFromAmount
+          Number(convertedFromAmount)
         );
       }, 50000);
     } else if (
@@ -173,7 +169,7 @@ export function useQuoteFetching(
       interval.current = setInterval(() => {
         fetchQuoteSol(
           address || "0xF11aeCE59d2E3959b625bbd664e4A8400e941Fb9",
-          convertedFromAmount
+          Number(convertedFromAmount)
         );
       }, 50000);
     } else if (
@@ -190,7 +186,7 @@ export function useQuoteFetching(
           activePublicKey?.toBase58() ||
             publicKey?.toBase58() ||
             "E98rYk1s9mqm75SfBqqwFq73hCKWMtnyceASsWk1cmVp",
-          convertedFromAmount
+          Number(convertedFromAmount)
         );
       }, 50000);
     } else {

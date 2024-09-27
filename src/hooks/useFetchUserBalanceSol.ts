@@ -1,6 +1,6 @@
 import { PublicKey } from "@solana/web3.js";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { convertSolDown } from "@/lib/utils";
+import { formatUnits } from "viem";
 import { useTokenExchangeStore } from "@/stores/token-exchange-store";
 import { connection, SOL_USDC_MINT, SOL_USDT_MINT } from "@/config/solana";
 import { TOKEN_PROGRAM_ID } from "@solana/spl-token";
@@ -21,7 +21,7 @@ export default function useFetchUserBalanceSol() {
     if (activePublicKey) {
       setInsufficientFundsSol(false);
       const balance = await connection.getBalance(activePublicKey);
-      const convertedBalance = convertSolDown(balance);
+      const convertedBalance = Number(formatUnits(BigInt(balance), 9));
       setSolBalance(convertedBalance);
       if (
         fromChain === "SOL" &&

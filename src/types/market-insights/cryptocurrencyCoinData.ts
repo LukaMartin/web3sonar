@@ -1,0 +1,24 @@
+export type CryptocurrencyCoinData = {
+  symbol: string;
+  name: string;
+  logo: string;
+  circulating_supply: number;
+  total_supply: number;
+  max_supply: number;
+  market_cap_usd: number;
+  market_cap_rank: number;
+  market_cap_24hr_change: number;
+  market_cap_24hr_percent_change: number;
+  total_volume: number;
+  usd_price: number;
+  usd_price_24hr_high: number;
+  usd_price_24hr_low: number;
+  usd_price_24hr_change: number;
+  usd_price_24hr_percent_change: number;
+  usd_price_ath: number;
+  ath_percent_change: number;
+  ath_date: number;
+  usd_price_1hr_percent_change: number;
+  usd_price_7d_percent_change: number;
+  usd_price_30d_percent_change: number;
+};

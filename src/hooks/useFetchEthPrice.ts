@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchEthPrice } from "@/lib/utils/fetchEthPrice";
+import { fetchEthPrice } from "@/utils/fetchEthPrice";
 
 export default function useFetchEthPrice() {
   const [ethPrice, setEthPrice] = useState(0);
