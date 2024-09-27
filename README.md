@@ -10,7 +10,27 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-First, run the development server:
+First create an `.env` file in the root of the project and add the following variables:
+
+```bash
+BLOCKNATIVE_API_KEY=<your blocknative api key   >
+BLOCKNATIVE_API_SECRET=<your blocknative api secret>
+NEXT_PUBLIC_PROJECT_ID=<your project id>
+MORALIS_API_KEY=<your moralis api key>
+TRADING_METRICS_API_KEY=<your trading metrics api key>
+MAINNET_RPC_URL=<your mainnet rpc url>
+ARBITRUM_RPC_URL=<your arbitrum rpc url>
+BASE_RPC_URL=<your base rpc url>
+OPTIMISM_RPC_URL=<your optimism rpc url>
+ZKSYNC_RPC_URL=<your zksync rpc url>
+BLAST_RPC_URL=<your blast rpc url>
+POLYGON_RPC_URL=<your polygon rpc url>
+NEXT_PUBLIC_SOLANA_RPC_URL=<your solana rpc url>
+LIVE_COIN_WATCH_API_KEY=<your live coin watch api key>
+OPENAI_API_KEY=<your openai api key>
+```
+
+Then run the development server:
 
 ```bash
 npm run dev
