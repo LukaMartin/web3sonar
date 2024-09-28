@@ -9,8 +9,6 @@ import QuoteMoreInfo from "./quote-more-info";
 import { useRef } from "react";
 import TokenSelectFrom from "./token-select-from";
 import { TbSwitchVertical } from "react-icons/tb";
-import { useDisclosure } from "@nextui-org/react";
-import TokenExchangeModal from "./token-exchange-modal";
 import { useTokenExchangeStore } from "@/stores/token-exchange-store";
 import DestinationAddressInput from "./destination-address-input";
 import {
@@ -24,6 +22,7 @@ import { FaChevronDown } from "react-icons/fa";
 import LoadingSpinner from "../loading-spinner";
 import { FaChevronUp } from "react-icons/fa6";
 import AccountButtons from "./account-buttons";
+import TokenExchangeDialog from "./token-exchange-dialog";
 
 export default function TokenExchangeInterface() {
   const fromChain = useTokenExchangeStore((state) => state.fromChain);
@@ -32,7 +31,6 @@ export default function TokenExchangeInterface() {
   const quote = useTokenExchangeStore((state) => state.quote);
   const isLoading = useTokenExchangeStore((state) => state.isLoading);
   const showMoreInfo = useTokenExchangeStore((state) => state.showMoreInfo);
-  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const inputRef = useRef<any>(null);
   const interval = useRef<any>(null);
   const setFromChain = useTokenExchangeStore((state) => state.setFromChain);
@@ -42,7 +40,7 @@ export default function TokenExchangeInterface() {
   );
   useQuoteFetching(inputRef, interval);
   useChainSwitching();
-  useErrorHandling(onClose);
+  useErrorHandling();
 
   const swapChains = () => {
     setFromChain(toChain);
@@ -128,7 +126,7 @@ export default function TokenExchangeInterface() {
 
         {showMoreInfo && quote && fromAmount ? <QuoteMoreInfo /> : null}
 
-        <TokenExchangeButton onOpen={onOpen} clearInput={clearInput} />
+        <TokenExchangeButton clearInput={clearInput} />
 
         <p className="text-sm text-white/50 pb-4 pr-6 self-end">
           Powered by{" "}
@@ -142,11 +140,7 @@ export default function TokenExchangeInterface() {
         </p>
       </section>
 
-      <TokenExchangeModal
-        isOpen={isOpen}
-        onClose={onClose}
-        onOpenChange={onOpenChange}
-      />
+      <TokenExchangeDialog />
     </>
   );
 }

@@ -11,12 +11,10 @@ import useSolanaActiveWallet from "solana-active-wallet-react";
 import { connection } from "@/config/solana";
 
 type TokenExchangeButtonProps = {
-  onOpen: () => void;
   clearInput: () => void;
 };
 
 export default function TokenExchangeButton({
-  onOpen,
   clearInput,
 }: TokenExchangeButtonProps) {
   const { isConnected } = useAccount();
@@ -27,6 +25,9 @@ export default function TokenExchangeButton({
   const fromChain = useTokenExchangeStore((state) => state.fromChain);
   const isLoading = useTokenExchangeStore((state) => state.isLoading);
   const quote = useTokenExchangeStore((state) => state.quote);
+  const setIsTokenExchangeDialogOpen = useTokenExchangeStore(
+    (state) => state.setIsTokenExchangeDialogOpen
+  );
   const exchangeTokens = useTokenExchangeStore((state) => state.exchangeTokens);
   const exchangeTokensSol = useTokenExchangeStore(
     (state) => state.exchangeTokensSol
@@ -86,7 +87,7 @@ export default function TokenExchangeButton({
           } h-12 border-white/20 border-[1px] text-lg text-gray-950 font-semibold rounded-md mx-6 mt-6 mb-4 transition active:scale-95`}
           onClick={() => {
             exchangeTokens(txSigner, clearInput);
-            onOpen();
+            setIsTokenExchangeDialogOpen(true);
           }}
           disabled={
             isLoading ||
@@ -114,7 +115,7 @@ export default function TokenExchangeButton({
                 connection,
                 clearInput
               );
-            onOpen();
+            setIsTokenExchangeDialogOpen(true);
           }}
           disabled={
             isLoading ||

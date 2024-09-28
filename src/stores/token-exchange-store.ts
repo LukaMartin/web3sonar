@@ -31,6 +31,7 @@ type Store = {
   transactionErrorMessage: string;
   lastWalletConnection: string;
   showMoreInfo: boolean;
+  isTokenExchangeDialogOpen: boolean;
   setFromChain: (chain: string) => void;
   setToChain: (chain: string) => void;
   setFromToken: (token: string) => void;
@@ -43,6 +44,7 @@ type Store = {
   setLastWalletConnection: (chain: string) => void;
   setQuote: (quote: Quote | null) => void;
   setShowMoreInfo: (value: boolean) => void;
+  setIsTokenExchangeDialogOpen: (value: boolean) => void;
   fetchQuote: (address: `0x${string}`, fromAmount: number) => void;
   fetchQuoteSol: (address: `0x${string}` | string, fromAmount: number) => void;
   exchangeTokens: (
@@ -84,6 +86,7 @@ export const useTokenExchangeStore = create<Store>((set, get) => ({
   transactionErrorMessage: "",
   lastWalletConnection: "",
   showMoreInfo: false,
+  isTokenExchangeDialogOpen: false,
   setFromChain: (chain: string) => {
     set(() => ({
       fromChain: chain,
@@ -142,6 +145,11 @@ export const useTokenExchangeStore = create<Store>((set, get) => ({
   setShowMoreInfo: (value: boolean) => {
     set(() => ({
       showMoreInfo: value,
+    }));
+  },
+  setIsTokenExchangeDialogOpen: (value: boolean) => {
+    set(() => ({
+      isTokenExchangeDialogOpen: value,
     }));
   },
   fetchQuote: async (address: `0x${string}`, fromAmount: number) => {
@@ -247,6 +255,9 @@ export const useTokenExchangeStore = create<Store>((set, get) => ({
         set(() => ({
           fromAmount: 0,
         }));
+        set(() => ({
+          isTokenExchangeDialogOpen: false,
+        }));
         clearInput();
         return;
       }
@@ -275,6 +286,9 @@ export const useTokenExchangeStore = create<Store>((set, get) => ({
       }));
       set(() => ({
         fromAmount: 0,
+      }));
+      set(() => ({
+        isTokenExchangeDialogOpen: false,
       }));
       clearInput();
       return;
@@ -437,6 +451,9 @@ export const useTokenExchangeStore = create<Store>((set, get) => ({
       }));
       set(() => ({
         fromAmount: 0,
+      }));
+      set(() => ({
+        isTokenExchangeDialogOpen: false,
       }));
       clearInput();
       return;

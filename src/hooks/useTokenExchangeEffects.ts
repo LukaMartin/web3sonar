@@ -256,7 +256,7 @@ export function useChainSwitching() {
   }, [chainId, fromChain, isConnected, switchChain]);
 }
 
-export function useErrorHandling(onClose: () => void) {
+export function useErrorHandling() {
   const { toast } = useToast();
   const fetchQuoteErrorMessage = useTokenExchangeStore(
     (state) => state.fetchQuoteErrorMessage
@@ -276,9 +276,8 @@ export function useErrorHandling(onClose: () => void) {
         description: allowanceErrorMessage,
         className: "py-3 px-4",
       });
-      onClose();
     }
-  }, [allowanceErrorMessage, toast, onClose]);
+  }, [allowanceErrorMessage, toast]);
 
   // Error handling for transaction
   useEffect(() => {
@@ -289,9 +288,8 @@ export function useErrorHandling(onClose: () => void) {
         description: transactionErrorMessage,
         className: "py-3 px-4",
       });
-      onClose();
     }
-  }, [transactionErrorMessage, toast, onClose]);
+  }, [transactionErrorMessage, toast]);
 
   // Error handling for fetchQuote
   useEffect(() => {
