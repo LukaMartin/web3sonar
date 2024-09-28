@@ -3,7 +3,6 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
-import { NextUIProvider } from "@nextui-org/react";
 import { headers } from "next/headers";
 import { cookieToInitialState } from "wagmi";
 import { wagmiConfig } from "@/config";
@@ -33,18 +32,16 @@ export default function RootLayout({
       <body
         className={`${inter.className} bg-gray-950 text-white overflow-y-scroll`}
       >
-        <NextUIProvider>
-          <Container>
-            <Header />
-            <Web3ModalProvider initialState={initialState}>
-              <AppWalletProvider>
-                {children}
-                <Toaster />
-              </AppWalletProvider>
-            </Web3ModalProvider>
-            <Footer />
-          </Container>
-        </NextUIProvider>
+        <Container>
+          <Header />
+          <Web3ModalProvider initialState={initialState}>
+            <AppWalletProvider>
+              {children}
+              <Toaster />
+            </AppWalletProvider>
+          </Web3ModalProvider>
+          <Footer />
+        </Container>
       </body>
     </html>
   );
