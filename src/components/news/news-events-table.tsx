@@ -1,8 +1,7 @@
-import { Tooltip } from "@nextui-org/react";
 import Link from "next/link";
-import { FaLink } from "react-icons/fa";
 import { NewsEvent } from "../../types/news/newsEvent";
 import { convertDate } from "@/utils/convertDate";
+import Tooltip from "../tooltip";
 
 type NewsEventsTableProps = {
   newsEvents: NewsEvent[];
@@ -24,9 +23,9 @@ export default function NewsEventsTable({ newsEvents }: NewsEventsTableProps) {
           </tr>
         </thead>
         <tbody>
-          {newsEvents.map((event) => {
+          {newsEvents.map((event, index) => {
             return (
-              <tr key={event.url}>
+              <tr key={index}>
                 <td className="pl-6 pb-4">
                   <p>{convertDate(event.date)}</p>
                 </td>
@@ -50,20 +49,10 @@ export default function NewsEventsTable({ newsEvents }: NewsEventsTableProps) {
                 <td className="text-left pb-4">
                   <p>
                     <Tooltip
-                      showArrow={true}
+                      size={22}
                       content="Links are currently disabled."
-                      classNames={{
-                        base: [
-                          "before:bg-neutral-400 dark:before:bg-white max-w-96",
-                        ],
-                        content: [
-                          "py-2 px-4 shadow-xl",
-                          "text-gray-950 font-semibold bg-gradient-to-br from-white to-neutral-400",
-                        ],
-                      }}
-                    >
-                      <FaLink size={22} className="text-white/85" />
-                    </Tooltip>
+                      isLink={true}
+                    />
                   </p>
                 </td>
               </tr>

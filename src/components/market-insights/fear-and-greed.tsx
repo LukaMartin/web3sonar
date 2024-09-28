@@ -2,8 +2,7 @@
 
 import { useEffect, useState } from "react";
 import GaugeComponent from "react-gauge-component";
-import { FiInfo } from "react-icons/fi";
-import { Tooltip } from "@nextui-org/react";
+import Tooltip from "../tooltip";
 
 type FearAndGreed = {
   value: string;
@@ -32,20 +31,9 @@ export default function FearAndGreed({ fearAndGreed }: FearAndGreedProps) {
       <div className="flex gap-x-3">
         <h3 className="text-lg text-white/85 mb-4">Fear and Greed Index</h3>
         <Tooltip
-          showArrow={true}
+          size={23}
           content="The fear and greed index is a gauge to measure investor sentiment. When the sentiment overly fearful it indicates that the market over-sold. When investors are too greedy it indicates a correction in the market is likely. This data is provided by Alternative Me."
-          classNames={{
-            base: ["before:bg-neutral-400 dark:before:bg-white max-w-96"],
-            content: [
-              "py-2 px-4 shadow-xl",
-              "text-gray-950 font-semibold bg-gradient-to-br from-white to-neutral-400",
-            ],
-          }}
-        >
-          <div>
-            <FiInfo size={23} className="text-white/75 mt-1" />
-          </div>
-        </Tooltip>
+        />
       </div>
       <div className="bg-white/[3%] rounded-md w-[24rem] h-[15rem] shadow-[0_7px_5px_rgba(2,2,2,1)]">
         <div className="w-[24rem]">

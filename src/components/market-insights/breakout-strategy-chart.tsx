@@ -1,8 +1,7 @@
 "use client";
 
 import { ResponsivePie } from "@nivo/pie";
-import { Tooltip } from "@nextui-org/react";
-import { FiInfo } from "react-icons/fi";
+import Tooltip from "../tooltip";
 
 type BreakOutStrategyChartProps = {
   highCoinsPercentage: number;
@@ -32,20 +31,9 @@ export default function BreakoutStrategyChart({
         <div className="flex gap-x-3 items-center mb-4">
           <h3 className="text-lg text-white/85">Breakout Strategy</h3>
           <Tooltip
-            showArrow={true}
+            size={23}
             content="The breakout strategy represents the proportion of the top 300 coins by market cap, that are trading above or below their monthly highs and lows. This data is provided by Token Metrics."
-            classNames={{
-              base: ["before:bg-neutral-400 dark:before:bg-white max-w-96"],
-              content: [
-                "py-2 px-4 shadow-xl",
-                "text-gray-950 font-semibold bg-gradient-to-br from-white to-neutral-400",
-              ],
-            }}
-          >
-            <div>
-              <FiInfo size={23} className="text-white/75 mt-1" />
-            </div>
-          </Tooltip>
+          />
         </div>
         <div className="flex gap-x-2 mb-3">
           <div className="flex items-center gap-x-1">

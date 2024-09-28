@@ -1,7 +1,6 @@
 import BiggestGainersTable from "./biggest-gainers-table";
-import { Tooltip } from "@nextui-org/react";
-import { FiInfo } from "react-icons/fi";
 import { CryptocurrencyCoinData } from "../../types/market-insights/cryptocurrencyCoinData";
+import Tooltip from "../tooltip";
 
 export default function BiggestGainersContainer({
   coinData,
@@ -33,20 +32,9 @@ export default function BiggestGainersContainer({
           Biggest Gainers by Market Cap
         </h3>
         <Tooltip
-          showArrow={true}
+          size={23}
           content="This data represents the coins in the top 100 by market cap, that have had the highest percentage increase in market cap over the last 24 hours."
-          classNames={{
-            base: ["before:bg-neutral-400 dark:before:bg-white max-w-96"],
-            content: [
-              "py-2 px-4 shadow-xl",
-              "text-gray-950 font-semibold bg-gradient-to-br from-white to-neutral-400",
-            ],
-          }}
-        >
-          <div>
-            <FiInfo size={23} className="text-white/75 mt-1" />
-          </div>
-        </Tooltip>
+        />
       </div>
       <div className="flex justify-between ">
         <BiggestGainersTable coinData={sortedDataOne} indexIncrease={1} />
